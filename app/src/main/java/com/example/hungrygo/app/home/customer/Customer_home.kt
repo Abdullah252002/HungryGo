@@ -10,4 +10,4 @@ class Customer_home : AppCompatActivity() {
         setContentView(R.layout.customer_home)
 
     }
-}
+}//text
