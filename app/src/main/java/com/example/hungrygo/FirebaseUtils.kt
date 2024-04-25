@@ -1,6 +1,8 @@
 package com.example.hungrygo
 
 import android.net.Uri
+import com.example.hungrygo.app.home.customer.addroom.Room_data
+import com.example.hungrygo.app.home.customer.addroom.Room_data.Companion.collection_name
 import com.example.hungrygo.app.signup.customer.appUser_customer
 import com.example.hungrygo.app.signup.customer.appUser_customer.Companion.Collection_name_customer
 import com.example.hungrygo.app.signup.delivery.appUser_delivery
@@ -69,7 +71,9 @@ fun login_delivery_tofirestore(
     onSuccessListener_image: OnSuccessListener<Uri>
 ) {
     val storage = FirebaseStorage.getInstance()
-        .reference.child("${id ?: "unknown"}/image.jpg").downloadUrl.addOnSuccessListener(onSuccessListener_image)
+        .reference.child("${id ?: "unknown"}/image.jpg").downloadUrl.addOnSuccessListener(
+            onSuccessListener_image
+        )
 
     val db = Firebase.firestore.collection(Collection_name_delivery)
         .document(id).get()
@@ -83,4 +87,16 @@ fun login_resturant_tofirestore(
     val db = Firebase.firestore.collection(Collection_name_restaurant)
         .document(id).get()
         .addOnSuccessListener(onSuccessListener)
+}
+
+fun add_room_tofirebase(
+    room: Room_data,
+    onSuccessListener: OnSuccessListener<Void>,
+    onFailureListener: OnFailureListener
+) {
+    val db = Firebase.firestore.collection(Room_data.collection_name)
+    val doc = db.document()
+    room.id=doc.id
+    val set = doc.set(room).addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
+
 }
