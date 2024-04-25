@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "869891693429",
+    "project_id": "hungry-go-1a46f",
+    "storage_bucket": "hungry-go-1a46f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869891693429:android:90877ebc6b92c92726d13c",
+        "android_client_info": {
+          "package_name": "com.example.hungrygo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAld5UGe8rSsNhATQpPp7PD1uL5o0kEvLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

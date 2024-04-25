@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HungryGo"
+        tools:targetApi="31">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAyaiu-O_U7oCMDXhf6NskzaA6zp_GAwRI" />
+
+        <activity
+            android:name=".app.map.set_Location"
+            android:exported="false"
+            android:label="@string/title_activity_set_location" />
+        <activity
+            android:name=".app.home.restaurant.Restaurant_home"
+            android:exported="false" />
+        <activity
+            android:name=".app.home.delivery.Delivery_home"
+            android:exported="false" />
+        <activity
+            android:name=".app.home.customer.Customer_home"
+            android:exported="false" />
+        <activity
+            android:name=".app.login.Login"
+            android:exported="false" />
+        <activity
+            android:name=".app.signup.restaurant.Restaurant_signup"
+            android:exported="false" />
+        <activity
+            android:name=".app.signup.delivery.Delivery_signup"
+            android:exported="false" />
+        <activity
+            android:name=".app.signup.customer.Customer_signup"
+            android:exported="false" />
+        <activity
+            android:name=".app.signup.Account_Type"
+            android:exported="false" />
+        <activity
+            android:name=".splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
