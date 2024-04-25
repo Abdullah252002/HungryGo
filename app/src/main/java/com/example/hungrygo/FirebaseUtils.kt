@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -99,4 +100,9 @@ fun add_room_tofirebase(
     room.id=doc.id
     val set = doc.set(room).addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
 
+}
+
+fun getroom(onSuccessListener:OnSuccessListener<QuerySnapshot>,onFailureListener: OnFailureListener){
+    val db=Firebase.firestore.collection(collection_name).get()
+        .addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
 }
