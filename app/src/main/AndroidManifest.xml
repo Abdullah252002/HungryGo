@@ -18,6 +18,9 @@
         android:theme="@style/Theme.HungryGo"
         tools:targetApi="31">
         <activity
+            android:name=".app.home.customer.chat.Chat"
+            android:exported="false" />
+        <activity
             android:name=".app.home.customer.addroom.Room"
             android:exported="false" />
 
