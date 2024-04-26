@@ -13,6 +13,8 @@ class Room_viewmodel : Basic_Viewmodel<Navigator>() {
     val name_room_error = ObservableField<String>()
     val details_error = ObservableField<String>()
 
+
+
     fun setroom() {
         if (isvalid()) {
 
