@@ -16,6 +16,17 @@
         android:background="@drawable/background"
         tools:context=".app.home.customer.Customer_home">
 
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="3reqwrfqewrgq"
+            android:elevation="10dp"
+            android:textSize="20sp"
+            />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/buttonaction"
             style="@style/CustomCardViewStyle"
