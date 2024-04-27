@@ -2,7 +2,6 @@ package com.example.hungrygo.app.home.customer
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.chat.Basic.Basic_Activity
@@ -10,17 +9,12 @@ import com.example.hungrygo.R
 import com.example.hungrygo.app.home.customer.addroom.Room
 import com.example.hungrygo.app.home.customer.addroom.Room_data
 import com.example.hungrygo.app.home.customer.chat.Chat
-import com.example.hungrygo.app.signup.customer.appUser_customer
 import com.example.hungrygo.databinding.CustomerHomeBinding
 import com.example.hungrygo.getroom
-import com.example.hungrygo.login_customer_tofirestore
-import com.google.android.gms.common.data.DataHolder
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
+
 
 class Customer_home : Basic_Activity<CustomerHomeBinding, Customer_home_viewmodel>(), Navigator {
     var adapter = adpter_room(null)
@@ -34,6 +28,7 @@ class Customer_home : Basic_Activity<CustomerHomeBinding, Customer_home_viewmode
                 if(validation(holder,item)){
                     Toast.makeText(this@Customer_home, holder.textbox.editText?.text, Toast.LENGTH_SHORT).show()
                     val intent=Intent(this@Customer_home,Chat::class.java)
+                    intent.putExtra("room",item)
                     startActivity(intent)
                 }
             }

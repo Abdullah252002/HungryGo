@@ -5,6 +5,7 @@ plugins {
     id ("kotlin-android")
     id("com.google.gms.google-services")
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+    id("kotlin-parcelize")
 }
 
 android {
