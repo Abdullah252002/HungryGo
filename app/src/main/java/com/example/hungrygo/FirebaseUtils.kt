@@ -1,12 +1,12 @@
 package com.example.hungrygo
 
 import android.net.Uri
-import com.example.hungrygo.app.model.appUser_customer
-import com.example.hungrygo.app.model.appUser_customer.Companion.Collection_name_customer
-import com.example.hungrygo.app.model.appUser_delivery
-import com.example.hungrygo.app.model.appUser_delivery.Companion.Collection_name_delivery
-import com.example.hungrygo.app.model.appUser_restaurant
-import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
+import com.example.hungrygo.app.signup.customer.appUser_customer
+import com.example.hungrygo.app.signup.customer.appUser_customer.Companion.Collection_name_customer
+import com.example.hungrygo.app.signup.delivery.appUser_delivery
+import com.example.hungrygo.app.signup.delivery.appUser_delivery.Companion.Collection_name_delivery
+import com.example.hungrygo.app.signup.restaurant.appUser_restaurant
+import com.example.hungrygo.app.signup.restaurant.appUser_restaurant.Companion.Collection_name_restaurant
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase

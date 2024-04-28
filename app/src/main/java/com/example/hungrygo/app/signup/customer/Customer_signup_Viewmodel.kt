@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.addUser_Customer_ToFirestore
-import com.example.hungrygo.app.model.appUser_customer
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase

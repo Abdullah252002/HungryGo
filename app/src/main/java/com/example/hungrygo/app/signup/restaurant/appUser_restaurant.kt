@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.model
+package com.example.hungrygo.app.signup.restaurant
 
 data class appUser_restaurant(
     val id:String?=null,

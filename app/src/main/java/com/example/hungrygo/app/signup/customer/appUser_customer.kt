@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.model
+package com.example.hungrygo.app.signup.customer
 
 data class appUser_customer(
     var id: String? = null,
