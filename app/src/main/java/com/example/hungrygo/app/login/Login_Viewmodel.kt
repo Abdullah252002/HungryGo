@@ -3,6 +3,7 @@ package com.example.hungrygo.app.login
 import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
+import com.example.hungrygo.DataUtils
 import com.example.hungrygo.app.signup.customer.appUser_customer
 import com.example.hungrygo.app.signup.delivery.appUser_delivery
 import com.example.hungrygo.app.signup.restaurant.appUser_restaurant
@@ -59,6 +60,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
                 val user = it.toObject(appUser_customer::class.java)
                 if (user != null) {
+                    DataUtils.appUser_customer=user
                     navigator?.navigate_customer_home()
                 }
             })
