@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.addUser_delivery_ToFirestore
+import com.example.hungrygo.app.model.appUser_delivery
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
