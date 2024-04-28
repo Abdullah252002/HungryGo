@@ -3,6 +3,7 @@ package com.example.hungrygo.app.login
 import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
+import com.example.hungrygo.DataUtils
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
@@ -59,6 +60,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
                 val user = it.toObject(appUser_customer::class.java)
                 if (user != null) {
+                    DataUtils.appUser_customer=user
                     navigator?.navigate_customer_home()
                 }
             })
@@ -66,9 +68,11 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
               val user=it.toObject(appUser_delivery::class.java)
               if(user!=null){
+                  DataUtils.appuser_Delivery=user
                   navigator?.navigate_delivery_home()
               }
-            }, OnSuccessListener {
+            },
+            OnSuccessListener {
                 val imageUrl=it.toString()
                 /*
                 Glide.with(this)  // Use 'this' if you are inside an Activity, or 'context' if inside a Fragment or other context
@@ -81,6 +85,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
                 val user=it.toObject(appUser_restaurant::class.java)
                 if(user!=null){
+                    DataUtils.appuser_Restaurant=user
                     navigator?.navigate_restaurant_home()
                 }
             })
