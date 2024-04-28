@@ -14,4 +14,5 @@
     <string name="forgot_password"><u>Forgot password?</u></string>
     <string name="create_account"><u>Or Create My Account</u></string>
     <string name="title_activity_set_location">set_Location</string>
+    <string name="title_activity_restaurant_home">Restaurant_home</string>
 </resources>

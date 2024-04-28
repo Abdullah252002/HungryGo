@@ -8,6 +8,7 @@
     tools:context=".app.home.customer.Customer_home">
 
     <TextView
+        android:id="@+id/id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="customer"
