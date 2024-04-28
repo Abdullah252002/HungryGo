@@ -1,6 +1,8 @@
 package com.example.hungrygo
 
 import android.net.Uri
+import com.example.hungrygo.app.home.customer.addroom.Room
+import com.example.hungrygo.app.model.Message
 import com.example.hungrygo.app.model.Room_data
 import com.example.hungrygo.app.model.Room_data.Companion.collection_name
 import com.example.hungrygo.app.model.appUser_customer
@@ -12,6 +14,7 @@ import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_na
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
@@ -97,12 +100,33 @@ fun add_room_tofirebase(
 ) {
     val db = Firebase.firestore.collection(Room_data.collection_name)
     val doc = db.document()
-    room.id=doc.id
-    val set = doc.set(room).addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
+    room.id = doc.id
+    val set = doc.set(room).addOnSuccessListener(onSuccessListener)
+        .addOnFailureListener(onFailureListener)
 
 }
 
-fun getroom(onSuccessListener:OnSuccessListener<QuerySnapshot>,onFailureListener: OnFailureListener){
-    val db=Firebase.firestore.collection(collection_name).get()
+fun getroom(
+    onSuccessListener: OnSuccessListener<QuerySnapshot>,
+    onFailureListener: OnFailureListener
+) {
+    val db = Firebase.firestore.collection(collection_name).get()
         .addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
+}
+
+fun sendmessage_tofirebase(
+    message: Message,
+    onSuccessListener: OnSuccessListener<Void>
+) {
+val db=Firebase.firestore.collection(Room_data.collection_name).document(message.roomId!!).
+        collection(Message.collection_name)
+    val messageRef=db.document()
+    message.id=messageRef.id
+    messageRef.set(message).addOnSuccessListener(onSuccessListener)
+}
+
+fun getmessage_fromfirebase(roomId:String):CollectionReference{
+val collectionRef=Firebase.firestore.collection(Room_data.collection_name).document(roomId)
+    .collection(Message.collection_name)
+    return collectionRef
 }

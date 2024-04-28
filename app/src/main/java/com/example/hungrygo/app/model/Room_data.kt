@@ -11,7 +11,7 @@ data class Room_data(
     val details: String?=null
 ):Parcelable{
     companion object{
-        val collection_name="Room"
+     const val collection_name="Room"
     }
 
 }

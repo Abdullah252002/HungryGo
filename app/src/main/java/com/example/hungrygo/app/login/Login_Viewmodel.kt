@@ -68,6 +68,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
               val user=it.toObject(appUser_delivery::class.java)
               if(user!=null){
+                  DataUtils.appuser_Delivery=user
                   navigator?.navigate_delivery_home()
               }
             }, OnSuccessListener {
@@ -83,6 +84,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
             OnSuccessListener {
                 val user=it.toObject(appUser_restaurant::class.java)
                 if(user!=null){
+                    DataUtils.appuser_Restaurant=user
                     navigator?.navigate_restaurant_home()
                 }
             })
