@@ -32,7 +32,7 @@ fun addUser_delivery_ToFirestore(
 
 ) {
     val storage = FirebaseStorage.getInstance()
-        .reference.child("${user.id ?: "unknown"}/image.jpg")
+        .reference.child("${user.id ?: "unknown"}/Driving License.jpg")
         .putFile(imageUri)
 
     val db = Firebase.firestore.collection(Collection_name_delivery).document(user.id!!).set(user)
@@ -69,7 +69,7 @@ fun login_delivery_tofirestore(
     onSuccessListener_image: OnSuccessListener<Uri>
 ) {
     val storage = FirebaseStorage.getInstance()
-        .reference.child("${id ?: "unknown"}/image.jpg").downloadUrl.addOnSuccessListener(onSuccessListener_image)
+        .reference.child("${id ?: "unknown"}/Driving License.jpg").downloadUrl.addOnSuccessListener(onSuccessListener_image)
 
     val db = Firebase.firestore.collection(Collection_name_delivery)
         .document(id).get()

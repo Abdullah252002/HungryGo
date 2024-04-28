@@ -8,7 +8,8 @@ data class appUser_restaurant(
     val restaurant_mobile_number:String?=null,
     val email:String?=null,
     val latitude:Double?=null,
-    val longitude:Double?=null
+    val longitude:Double?=null,
+    val photo:Boolean?=false
 ){
     companion object{
         const val Collection_name_restaurant="Restaurant Users"

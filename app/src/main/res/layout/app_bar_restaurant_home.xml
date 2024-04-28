@@ -4,28 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".app.home.restaurant.Restaurant_home"
     android:background="@drawable/background"
-    >
+    tools:context=".app.home.restaurant.Restaurant_home">
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#00FFFFFF"
-        android:fitsSystemWindows="true">
-
+        android:background="@drawable/app_bar_ground"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" >
+            android:layout_height="?attr/actionBarSize"
+            >
+            <ImageView
+                android:id="@+id/menu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/menu"
+
+                />
 
         </com.google.android.material.appbar.MaterialToolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    
+<TextView
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/app_bar"/>
 
-
-    
 
 </androidx.constraintlayout.widget.ConstraintLayout>
