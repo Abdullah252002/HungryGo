@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
@@ -124,9 +125,10 @@ val db=Firebase.firestore.collection(Room_data.collection_name).document(message
     message.id=messageRef.id
     messageRef.set(message).addOnSuccessListener(onSuccessListener)
 }
-
+//.orderBy("createdTimestamp", Query.Direction.DESCENDING)
 fun getmessage_fromfirebase(roomId:String):CollectionReference{
-val collectionRef=Firebase.firestore.collection(Room_data.collection_name).document(roomId)
+val collectionRef=Firebase.firestore.collection(Room_data.collection_name)
+    .document(roomId)
     .collection(Message.collection_name)
     return collectionRef
 }

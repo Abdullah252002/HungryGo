@@ -38,7 +38,7 @@
             tools:text="12:30 pm"
             android:textColor="@color/white"
             android:layout_marginEnd="20dp"
-            android:text="@{item.datetime.toString()}"
+            android:text="@{item.date()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

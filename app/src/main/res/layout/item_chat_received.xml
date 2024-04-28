@@ -37,7 +37,7 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/message"
             app:layout_constraintEnd_toEndOf="@+id/message"
-            android:text="@{item.datetime.toString()}"
+            android:text="@{item.date()}"
             />
 
         <TextView
