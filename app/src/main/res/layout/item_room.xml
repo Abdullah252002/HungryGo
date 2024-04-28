@@ -6,7 +6,7 @@
     <data>
 <variable
     name="item"
-    type="com.example.hungrygo.app.home.customer.addroom.Room_data" />
+    type="com.example.hungrygo.app.model.Room_data" />
 
     </data>
 

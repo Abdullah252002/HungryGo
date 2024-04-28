@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.chat.Basic.Basic_Activity
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.customer.addroom.Room
-import com.example.hungrygo.app.home.customer.addroom.Room_data
+import com.example.hungrygo.app.model.Room_data
 import com.example.hungrygo.app.home.customer.chat.Chat
 import com.example.hungrygo.databinding.CustomerHomeBinding
 import com.example.hungrygo.getroom

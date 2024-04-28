@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.hungrygo.R
-import com.example.hungrygo.app.home.customer.addroom.Room_data
+import com.example.hungrygo.app.model.Room_data
 import com.example.hungrygo.databinding.ItemRoomBinding
 import com.google.android.material.textfield.TextInputLayout
 

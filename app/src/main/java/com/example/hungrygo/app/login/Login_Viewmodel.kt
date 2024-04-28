@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.DataUtils
-import com.example.hungrygo.app.signup.customer.appUser_customer
-import com.example.hungrygo.app.signup.delivery.appUser_delivery
-import com.example.hungrygo.app.signup.restaurant.appUser_restaurant
+import com.example.hungrygo.app.model.appUser_customer
+import com.example.hungrygo.app.model.appUser_delivery
+import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.login_customer_tofirestore
 import com.example.hungrygo.login_delivery_tofirestore
 import com.example.hungrygo.login_resturant_tofirestore

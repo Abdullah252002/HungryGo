@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.customer.chat
+package com.example.hungrygo.app.model
 
 data class Message(
     val id:String?=null,

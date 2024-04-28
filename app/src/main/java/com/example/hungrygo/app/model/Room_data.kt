@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.customer.addroom
+package com.example.hungrygo.app.model
 
 import android.os.Parcel
 import android.os.Parcelable

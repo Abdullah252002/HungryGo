@@ -3,6 +3,7 @@ package com.example.hungrygo.app.home.customer.addroom
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.add_room_tofirebase
+import com.example.hungrygo.app.model.Room_data
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 

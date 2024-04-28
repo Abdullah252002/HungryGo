@@ -3,7 +3,8 @@ package com.example.hungrygo.app.home.customer.chat
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.DataUtils
-import com.example.hungrygo.app.home.customer.addroom.Room_data
+import com.example.hungrygo.app.model.Room_data
+import com.example.hungrygo.app.model.Message
 import java.util.Date
 
 class Chat_viewmodel:Basic_Viewmodel<Navigator>() {
