@@ -10,7 +10,7 @@ data class appUser_restaurant(
     val latitude:Double?=null,
     val longitude:Double?=null,
     val photo:Boolean?=false,
-    val menu:List<String>?= listOf("akd","wejfn")
+    val menu:List<String>?=null
 ){
     companion object{
         const val Collection_name_restaurant="Restaurant Users"

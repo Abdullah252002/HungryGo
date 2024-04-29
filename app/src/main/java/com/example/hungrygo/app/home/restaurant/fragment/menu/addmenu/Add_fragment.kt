@@ -13,18 +13,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hungrygo.R
-import com.example.hungrygo.app.model.Menu_Restaurant
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
-import com.example.hungrygo.app.model.appUser_restaurant
 import com.google.firebase.firestore.FieldValue
-
-import com.google.firebase.firestore.firestore
-import com.google.firebase.storage.FirebaseStorage
+import com.example.hungrygo.app.model.Image_Resturant
+import com.google.firebase.storage.ktx.storage
 
 
 class Add_fragment: BottomSheetDialogFragment() {
@@ -81,18 +78,27 @@ class Add_fragment: BottomSheetDialogFragment() {
                     "menu" to FieldValue.arrayUnion(menu_name.editText?.text.toString())
                 )
                 Firebase.firestore.collection(Collection_name_restaurant).document(userid!!).update(hashMap as Map<String, Any>)
-                Firebase.firestore.collection(Collection_name_restaurant).document(userid!!)
-                    .collection(menu_name.editText?.text.toString()).document()
-                    .set(Menu_Restaurant())
-                FirebaseStorage.getInstance()
-                    .reference.child("${userid ?: "unknown"}/${menu_name.editText?.text}.jpg")
-                    .putFile(image!!)
+
+                // upload the user selected image
+                val storage = Firebase.storage.reference.child("${userid ?: "unknown"}/Menu/${menu_name.editText?.text}.jpg")
+                val uploadImage = storage.putFile(image!!)
+
+                uploadImage
+                    .addOnSuccessListener {
+                        storage.downloadUrl.addOnSuccessListener{ uri ->
+                            val dd=Image_Resturant(id=uri.toString())
+                            dd.setimage(userid!!,menu_name,dd)
+                                 }
+
+                    }
+
                 dismiss()
             }
         }else{
             textView.setTextColor(Color.RED)
             textView.setText("upload image")
         }
+
 
         }
 
