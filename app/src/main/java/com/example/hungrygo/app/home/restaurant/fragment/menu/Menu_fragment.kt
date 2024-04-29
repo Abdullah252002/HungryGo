@@ -23,5 +23,13 @@ class Menu_fragment : Basic_fragment<FragmentMenuBinding, Menu_fragment_viewmode
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dataBinding.buttonaction.setOnClickListener {
+            onItemClick?.Onitem(it)
+        }
+    }
+
+     var onItemClick: OnItemClick?=null
+    interface OnItemClick {
+        fun Onitem(view: View)
     }
 }

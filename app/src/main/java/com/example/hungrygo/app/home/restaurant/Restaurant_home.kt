@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.restaurant.addphoto.AddPhoto
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.Delivery_fragment
+import com.example.hungrygo.app.home.restaurant.fragment.delivery.addmenu.Add_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.menu.Menu_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.Orders_fragment
 import com.example.hungrygo.app.login.Login
@@ -23,13 +25,14 @@ import com.google.firebase.auth.auth
 class Restaurant_home : AppCompatActivity() {
     val user = DataUtils.appuser_Restaurant
     lateinit var dataBinding: RestaurantHomeBinding
+    val menuFragment=Menu_fragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
         addphoto()
         dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
             if (it.itemId == R.id.menu) {
-                PushFragment(Menu_fragment())
+                PushFragment(menuFragment)
             } else if (it.itemId == R.id.orders) {
                 PushFragment(Orders_fragment())
             } else if (it.itemId == R.id.delivery) {
@@ -37,7 +40,14 @@ class Restaurant_home : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
-        PushFragment(Menu_fragment())
+        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId=R.id.menu
+
+        menuFragment.onItemClick=object : Menu_fragment.OnItemClick{
+            override fun Onitem(view: View) {
+                val addFragment=Add_fragment()
+                addFragment.show(supportFragmentManager,"")
+            }
+        }
 
     }
 
