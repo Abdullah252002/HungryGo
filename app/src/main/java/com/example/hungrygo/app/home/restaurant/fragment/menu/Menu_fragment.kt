@@ -1,14 +1,16 @@
 package com.example.hungrygo.app.home.restaurant.fragment.menu
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.hungrygo.Basic.Basic_fragment
 import com.example.hungrygo.R
 import com.example.hungrygo.databinding.FragmentMenuBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
+import com.google.firebase.auth.auth
+
 
 class Menu_fragment : Basic_fragment<FragmentMenuBinding, Menu_fragment_viewmodel>(), Navigator {
 
@@ -26,6 +28,13 @@ class Menu_fragment : Basic_fragment<FragmentMenuBinding, Menu_fragment_viewmode
         dataBinding.buttonaction.setOnClickListener {
             onItemClick?.Onitem(it)
         }
+        val currentuser=Firebase.auth.uid
+
+        val db = Firebase.firestore.collection(Collection_name_restaurant).document(currentuser!!).get()
+            .addOnSuccessListener {
+                val db=it.get("email")
+                dataBinding.text.setText(""+db)
+            }
     }
 
      var onItemClick: OnItemClick?=null

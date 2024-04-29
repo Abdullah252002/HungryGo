@@ -31,6 +31,12 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_menu"
             />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
