@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.restaurant.fragment.delivery.addmenu
+package com.example.hungrygo.app.home.restaurant.fragment.menu.addmenu
 
 import android.content.Intent
 import android.graphics.Color
@@ -20,6 +20,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
+import com.example.hungrygo.app.model.appUser_restaurant
+import com.google.firebase.firestore.FieldValue
+
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -74,6 +77,10 @@ class Add_fragment: BottomSheetDialogFragment() {
             if (menu_name.editText?.text.isNullOrBlank()) {
                 menu_name.error = "Enter Menu name"
             } else {
+                val hashMap= hashMapOf(
+                    "menu" to FieldValue.arrayUnion(menu_name.editText?.text.toString())
+                )
+                Firebase.firestore.collection(Collection_name_restaurant).document(userid!!).update(hashMap as Map<String, Any>)
                 Firebase.firestore.collection(Collection_name_restaurant).document(userid!!)
                     .collection(menu_name.editText?.text.toString()).document()
                     .set(Menu_Restaurant())

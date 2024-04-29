@@ -50,6 +50,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.firebase:firebase-firestore-ktx:24.0.0")
+
 
 
     implementation(libs.androidx.navigation.fragment.ktx)

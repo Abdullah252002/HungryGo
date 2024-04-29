@@ -12,7 +12,7 @@ import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.restaurant.addphoto.AddPhoto
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.Delivery_fragment
-import com.example.hungrygo.app.home.restaurant.fragment.delivery.addmenu.Add_fragment
+import com.example.hungrygo.app.home.restaurant.fragment.menu.addmenu.Add_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.menu.Menu_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.Orders_fragment
 import com.example.hungrygo.app.login.Login
@@ -44,7 +44,7 @@ class Restaurant_home : AppCompatActivity() {
 
         menuFragment.onItemClick=object : Menu_fragment.OnItemClick{
             override fun Onitem(view: View) {
-                val addFragment=Add_fragment()
+                val addFragment= Add_fragment()
                 addFragment.show(supportFragmentManager,"")
             }
         }
