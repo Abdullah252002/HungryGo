@@ -1,5 +1,6 @@
 package com.example.hungrygo.app.home.restaurant.fragment.menu.add_button.add_item_menu
 
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import androidx.databinding.ObservableField
@@ -10,11 +11,13 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.storage.storage
 
 class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     val food_name = ObservableField<String>()
     val content = ObservableField<String>()
     val price = ObservableField<String>()
+    val image=MutableLiveData<Uri>()
 
     val food_name_error = ObservableField<String>()
     val content_error = ObservableField<String>()
@@ -35,9 +38,9 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
         val itemMenu = Item_Menu(
             food_name = food_name.get(),
             content = content.get(),
-            price = price.get()
+            price = price.get(),
         )
-        itemMenu.setItem_Menu(currentUser!!, menu_name.value!!, itemMenu, OnSuccessListener {
+        itemMenu.setItem_Menu(currentUser!!, menu_name.value!!,image.value!!, itemMenu, OnSuccessListener {
             showDialog.value = false
             navigator?.dismess()
         },

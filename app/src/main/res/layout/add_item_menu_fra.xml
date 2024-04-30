@@ -87,6 +87,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/price"
             app:layout_constraintEnd_toEndOf="@+id/price"
             app:layout_constraintTop_toTopOf="@+id/price" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/buttom_navigation"
+            android:padding="10dp"
+            android:text="Upload photo"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price"
+            />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/done"
@@ -101,9 +116,11 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/price"
+            app:layout_constraintTop_toBottomOf="@id/choose"
             android:onClick="@{()->vm.Done()}"
             />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
