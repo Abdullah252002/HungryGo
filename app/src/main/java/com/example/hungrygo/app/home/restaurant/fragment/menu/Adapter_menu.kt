@@ -37,15 +37,19 @@ class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
         Glide.with(holder.itemView)
             .load(item?.id)
             .into(holder.image)
-
-
-
+        holder.itemView.setOnClickListener {
+            clickOnItemListener?.onitem(position,item!!)
+        }
 
     }
-
     fun setitems(newitems: MutableList<Image_Resturant>) {
         items=newitems
         notifyDataSetChanged()
+    }
+
+    var clickOnItemListener:ClickOnItemListener?=null
+    interface ClickOnItemListener{
+        fun onitem(position: Int,item:Image_Resturant)
     }
 
 

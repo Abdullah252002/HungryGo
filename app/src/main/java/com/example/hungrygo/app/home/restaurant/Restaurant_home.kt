@@ -6,7 +6,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
@@ -19,7 +18,6 @@ import com.example.hungrygo.app.home.restaurant.fragment.orders.Orders_fragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -63,6 +61,8 @@ class Restaurant_home : AppCompatActivity() {
             }
         }
 
+
+
     }
 
 
@@ -93,7 +93,6 @@ class Restaurant_home : AppCompatActivity() {
     }
 
     private val handler = Handler()
-
 
     override fun onStop() {
         super.onStop()

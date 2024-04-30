@@ -30,11 +30,6 @@ class Menu_fragment : Fragment() {
         return dataBinding.root
     }
 
-    lateinit var viewModel:Menu_fragment_viewmodel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(Menu_fragment_viewmodel::class.java)
-    }
     var adapterMenu = Adapter_menu()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +38,11 @@ class Menu_fragment : Fragment() {
         }
         getdata()
         dataBinding.recycleview.adapter = adapterMenu
+        adapterMenu.clickOnItemListener=object :Adapter_menu.ClickOnItemListener{
+            override fun onitem(position: Int, item: Image_Resturant) {
+                openItemListener?.onitemclick(position,item)
+            }
+        }
     }
 
 
@@ -57,6 +57,10 @@ fun getdata(){
     })
 }
 
+    var openItemListener:OpenItemListener?=null
+    interface OpenItemListener{
+        fun onitemclick(position: Int, item: Image_Resturant)
+    }
 
     var onItemClick: OnItemClick? = null
     interface OnItemClick {
