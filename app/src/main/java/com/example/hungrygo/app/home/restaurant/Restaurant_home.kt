@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.postDelayed
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
@@ -25,7 +26,8 @@ import com.google.firebase.auth.auth
 class Restaurant_home : AppCompatActivity() {
     val user = DataUtils.appuser_Restaurant
     lateinit var dataBinding: RestaurantHomeBinding
-    val menuFragment=Menu_fragment()
+    val menuFragment = Menu_fragment()
+    val addFragment = Add_fragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
@@ -40,14 +42,9 @@ class Restaurant_home : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
-        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId=R.id.menu
+        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
 
-        menuFragment.onItemClick=object : Menu_fragment.OnItemClick{
-            override fun Onitem(view: View) {
-                val addFragment= Add_fragment()
-                addFragment.show(supportFragmentManager,"")
-            }
-        }
+
 
     }
 
@@ -76,6 +73,22 @@ class Restaurant_home : AppCompatActivity() {
     fun PushFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment)
             .addToBackStack("").commit()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
+            override fun Onitem(view: View) {
+                addFragment.show(supportFragmentManager, "")
+
+                addFragment.clickButtonListener = object : Add_fragment.ClickButtonListener {
+                    override fun onclick() {
+                        menuFragment.getdata()
+                    }
+                }
+
+            }
+        }
     }
 
 

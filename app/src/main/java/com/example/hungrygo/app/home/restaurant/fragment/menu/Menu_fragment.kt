@@ -47,7 +47,6 @@ class Menu_fragment : Fragment() {
             onItemClick?.Onitem(it)
         }
         getdata()
-
         dataBinding.recycleview.adapter = adapterMenu
     }
 
@@ -59,6 +58,7 @@ fun getdata(){
     imageResturant.getimage(userid = currentuser!!, onSuccessListener = OnSuccessListener {
         val items=it.toObjects(Image_Resturant::class.java)
         adapterMenu.setitems(items)
+        adapterMenu.notifyDataSetChanged()
     })
 }
 
