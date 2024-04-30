@@ -44,7 +44,24 @@ class Restaurant_home : AppCompatActivity() {
         }
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
 
+        handler.post(object : Runnable {
+            override fun run() {
+           menuFragment.clickButtonListener=object :Menu_fragment.ClickButtonListener{
+               override fun onclick() {
+                   menuFragment.getdata()
+               }
 
+           }
+                handler.postDelayed(this,1000) // Repeat every 10 seconds
+            }
+        })
+
+        menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
+            override fun Onitem(view: View) {
+                addFragment.show(supportFragmentManager, "")
+
+            }
+        }
 
     }
 
@@ -75,20 +92,12 @@ class Restaurant_home : AppCompatActivity() {
             .addToBackStack("").commit()
     }
 
-    override fun onStart() {
-        super.onStart()
-        menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
-            override fun Onitem(view: View) {
-                addFragment.show(supportFragmentManager, "")
+    private val handler = Handler()
 
-                addFragment.clickButtonListener = object : Add_fragment.ClickButtonListener {
-                    override fun onclick() {
-                        menuFragment.getdata()
-                    }
-                }
 
-            }
-        }
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacksAndMessages(null)
     }
 
 

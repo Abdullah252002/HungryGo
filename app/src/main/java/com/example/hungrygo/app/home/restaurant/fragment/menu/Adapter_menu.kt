@@ -1,6 +1,5 @@
 package com.example.hungrygo.app.home.restaurant.fragment.menu
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
 
     }
 
-    fun setitems(newitems: List<Image_Resturant>) {
+    fun setitems(newitems: MutableList<Image_Resturant>) {
         items=newitems
         notifyDataSetChanged()
     }

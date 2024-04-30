@@ -94,13 +94,9 @@ class Add_fragment: BottomSheetDialogFragment() {
             textView.setText("upload image")
         }
 
-            clickButtonListener?.onclick()
         }
 
     }
-    var clickButtonListener:ClickButtonListener?=null
-    interface ClickButtonListener{
-        fun onclick()
-    }
+
 
 }
