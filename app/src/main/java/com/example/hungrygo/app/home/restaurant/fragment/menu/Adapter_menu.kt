@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.hungrygo.R
+import com.example.hungrygo.app.model.Image_Resturant
 
 class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
-    var items: List<String>? = null
-    var images:List<Uri>?=null
+    var items: List<Image_Resturant>? = null
 
 
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,25 +34,19 @@ class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         val item = items?.get(position)
-        val item_image = images?.getOrNull(position)
-        holder.name_menu.setText(item)
+        holder.name_menu.setText(item?.image_name)
+        Glide.with(holder.itemView)
+            .load(item?.id)
+            .into(holder.image)
 
-        item_image?.let {
-            Glide.with(holder.itemView)
-                .load(it)
-                .into(holder.image)
-        }
+
 
 
     }
 
-    fun setlist(it: List<String>?) {
-        items = it
+    fun setitems(newitems: List<Image_Resturant>) {
+        items=newitems
         notifyDataSetChanged()
-    }
-
-    fun setimage(it: List<Uri>) {
-        images = it
     }
 
 

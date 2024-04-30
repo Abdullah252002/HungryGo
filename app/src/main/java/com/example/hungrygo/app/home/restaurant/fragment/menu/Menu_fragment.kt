@@ -20,6 +20,7 @@ import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_na
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.app.model.Image_Resturant
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.toObjects
 
 
 lateinit var  dataBinding:FragmentMenuBinding
@@ -45,47 +46,21 @@ class Menu_fragment : Fragment() {
         dataBinding.buttonaction.setOnClickListener {
             onItemClick?.Onitem(it)
         }
-        val currentuser = Firebase.auth.uid
-        getmenuname_data(currentuser!!)
-        getimage_data(currentuser)
-        viewModel.menu_name_list.observe(viewLifecycleOwner, Observer {
-            adapterMenu.setlist(it)
-        })
-        viewModel.image_list.observe(viewLifecycleOwner, Observer {
-            adapterMenu.setimage(it)
-        })
+        getdata()
+
         dataBinding.recycleview.adapter = adapterMenu
     }
 
 
 
-    fun getmenuname_data(currentuser: String) {
-        Firebase.firestore.collection(Collection_name_restaurant)
-            .document(currentuser).get()
-            .addOnSuccessListener {
-                val item = it.toObject(appUser_restaurant::class.java)
-                viewModel.menu_name_list.value = item?.menu
-
-
-                for (i in 0 until item?.menu?.size!!) {
-                    val imageUris = mutableListOf<Uri>()
-                    val imageResturant = Image_Resturant()
-                    imageResturant.getimage(currentuser, item?.menu?.get(i)!!, OnSuccessListener {
-                        val dd = it.toObject(Image_Resturant::class.java)
-                        val uri = Uri.parse(dd?.id)
-                        imageUris.add(uri)
-
-                    })
-                    viewModel.image_list.value = imageUris
-
-                }
-            }
-    }
-
-    fun getimage_data(currentuser: String) {
-
-
-    }
+fun getdata(){
+    val currentuser = Firebase.auth.uid
+    val imageResturant=Image_Resturant()
+    imageResturant.getimage(userid = currentuser!!, onSuccessListener = OnSuccessListener {
+        val items=it.toObjects(Image_Resturant::class.java)
+        adapterMenu.setitems(items)
+    })
+}
 
 
     var onItemClick: OnItemClick? = null

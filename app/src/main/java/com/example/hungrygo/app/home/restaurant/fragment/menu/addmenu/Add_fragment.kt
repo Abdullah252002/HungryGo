@@ -74,12 +74,7 @@ class Add_fragment: BottomSheetDialogFragment() {
             if (menu_name.editText?.text.isNullOrBlank()) {
                 menu_name.error = "Enter Menu name"
             } else {
-                val hashMap= hashMapOf(
-                    "menu" to FieldValue.arrayUnion(menu_name.editText?.text.toString())
-                )
-                Firebase.firestore.collection(Collection_name_restaurant).document(userid!!).update(hashMap as Map<String, Any>)
 
-                // upload the user selected image
                 val storage = Firebase.storage.reference.child("${userid ?: "unknown"}/Menu/${menu_name.editText?.text}.jpg")
                 val uploadImage = storage.putFile(image!!)
 

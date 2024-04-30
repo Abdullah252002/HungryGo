@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -17,9 +18,8 @@ data class Image_Resturant(
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(userid).collection("Image")
             .document(menu_name.editText?.text.toString()).set(imageResturant)
     }
-    fun getimage(userid:String,image_name:String,onSuccessListener: OnSuccessListener<DocumentSnapshot>){
+    fun getimage(userid:String,onSuccessListener: OnSuccessListener<QuerySnapshot>){
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
-            .document(userid).collection("Image")
-            .document(image_name).get().addOnSuccessListener(onSuccessListener)
+            .document(userid).collection("Image").get().addOnSuccessListener(onSuccessListener)
     }
 }
