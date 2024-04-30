@@ -65,20 +65,25 @@ class Menu_fragment : Fragment() {
             .addOnSuccessListener {
                 val item = it.toObject(appUser_restaurant::class.java)
                 viewModel.menu_name_list.value = item?.menu
+
+
+                for (i in 0 until item?.menu?.size!!) {
+                    val imageUris = mutableListOf<Uri>()
+                    val imageResturant = Image_Resturant()
+                    imageResturant.getimage(currentuser, item?.menu?.get(i)!!, OnSuccessListener {
+                        val dd = it.toObject(Image_Resturant::class.java)
+                        val uri = Uri.parse(dd?.id)
+                        imageUris.add(uri)
+
+                    })
+                    viewModel.image_list.value = imageUris
+
+                }
             }
     }
 
     fun getimage_data(currentuser: String) {
-        val imageUris = mutableListOf<Uri>()
-        val imageResturant=Image_Resturant()
-        imageResturant.getimage(currentuser,"h", OnSuccessListener {
-            val dd=it.toObject(Image_Resturant::class.java)
-            val uri = Uri.parse(dd?.id)
-            imageUris.add(uri)
-            imageUris.add(uri)
 
-        })
-        viewModel.image_list.value=imageUris
 
     }
 

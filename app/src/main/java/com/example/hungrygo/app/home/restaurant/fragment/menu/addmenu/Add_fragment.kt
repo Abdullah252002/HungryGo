@@ -86,7 +86,7 @@ class Add_fragment: BottomSheetDialogFragment() {
                 uploadImage
                     .addOnSuccessListener {
                         storage.downloadUrl.addOnSuccessListener{ uri ->
-                            val dd=Image_Resturant(id=uri.toString())
+                            val dd=Image_Resturant(id=uri.toString(), image_name =menu_name.editText?.text.toString())
                             dd.setimage(userid!!,menu_name,dd)
                                  }
 

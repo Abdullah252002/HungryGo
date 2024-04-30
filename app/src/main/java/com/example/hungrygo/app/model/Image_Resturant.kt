@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 
 data class Image_Resturant(
     val id:String?=null,
+    val image_name:String?=null,
     val createdTimestamp: Long? = System.currentTimeMillis()
 ){
     fun setimage(userid:String,menu_name:TextInputLayout,imageResturant: Image_Resturant){
@@ -18,9 +19,7 @@ data class Image_Resturant(
     }
     fun getimage(userid:String,image_name:String,onSuccessListener: OnSuccessListener<DocumentSnapshot>){
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
-
             .document(userid).collection("Image")
-
             .document(image_name).get().addOnSuccessListener(onSuccessListener)
     }
 }
