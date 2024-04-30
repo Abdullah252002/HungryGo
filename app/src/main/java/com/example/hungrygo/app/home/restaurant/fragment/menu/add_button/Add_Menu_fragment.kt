@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.restaurant.fragment.menu.addmenu
+package com.example.hungrygo.app.home.restaurant.fragment.menu.add_button
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,15 +16,12 @@ import com.example.hungrygo.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
-import com.google.firebase.firestore.FieldValue
 import com.example.hungrygo.app.model.Image_Resturant
 import com.google.firebase.storage.ktx.storage
 
 
-class Add_fragment: BottomSheetDialogFragment() {
+class Add_Menu_fragment: BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

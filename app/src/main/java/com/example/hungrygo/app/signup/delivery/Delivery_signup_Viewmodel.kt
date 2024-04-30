@@ -1,6 +1,8 @@
 package com.example.hungrygo.app.signup.delivery
 
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -77,42 +79,40 @@ class Delivery_signup_Viewmodel : Basic_Viewmodel<Navigator>() {
         var valid = true
         if (name.get().isNullOrBlank()) {
             name_error.set("Enter your Name")
+            handler(name_error)
             valid = false
-        } else {
-            name_error.set(null)
         }
         if (mobile_no.get().isNullOrBlank()) {
             mobile_no_error.set("Enter your Phone number")
+            handler(mobile_no_error)
             valid = false
         } else if (mobile_no.get()?.length!! < 11 || mobile_no.get()?.length!! > 11) {
             mobile_no_error.set("phone should be 11 number")
+            handler(mobile_no_error)
             valid = false
-        } else {
-            mobile_no_error.set(null)
         }
         if (national_ID.get().isNullOrBlank()) {
             national_ID_error.set("Enter your National ID")
+            handler(national_ID_error)
             valid = false
         } else if (national_ID.get()?.length!! < 14 || national_ID.get()?.length!! > 14) {
             national_ID_error.set("National ID should be 14 number")
+            handler(national_ID_error)
             valid = false
-        } else {
-            national_ID_error.set(null)
         }
         if (email.get().isNullOrBlank()) {
             email_error.set("Enter your Email")
+            handler(email_error)
             valid = false
-        } else {
-            email_error.set(null)
         }
         if (password.get().isNullOrBlank()) {
             password_error.set("Enter your Password")
+            handler(password_error)
             valid = false
         } else if (password.get()?.length!! < 8) {
             password_error.set("length less than 8 digits")
+            handler(password_error)
             valid = false
-        } else {
-            password_error.set(null)
         }
         if (image.value == null) {
             image_error.value = "image is empty"
@@ -121,6 +121,9 @@ class Delivery_signup_Viewmodel : Basic_Viewmodel<Navigator>() {
             image_error.value = ""
         }
         return valid
+    }
+    fun handler(error:ObservableField<String>){
+        Handler(Looper.getMainLooper()).postDelayed({error.set(null)},3000)
     }
 }
 

@@ -1,5 +1,7 @@
 package com.example.hungrygo.app.signup.restaurant
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -84,48 +86,45 @@ class Restaurant_signup_Viewmodel : Basic_Viewmodel<Navigator>() {
         var valid = true
         if (manager_name.get().isNullOrBlank()) {
             manager_name_error.set("Enter your Name")
+            handler(manager_name_error)
             valid = false
-        } else {
-            manager_name_error.set(null)
         }
         if (restaurant_name.get().isNullOrBlank()) {
             restaurant_name_error.set("Enter your Name")
+            handler(restaurant_name_error)
             valid = false
-        } else {
-            restaurant_name_error.set(null)
         }
         if (manager_mobile_no.get().isNullOrBlank()) {
             manager_mobile_no_error.set("Enter your Phone number")
+            handler(manager_mobile_no_error)
             valid = false
         } else if (manager_mobile_no.get()?.length!! < 11 || manager_mobile_no.get()?.length!! > 11) {
             manager_mobile_no_error.set("phone num should be 11 number")
+            handler(manager_mobile_no_error)
             valid=false
-        } else {
-            manager_mobile_no_error.set(null)
         }
         if (restaurant_mobile_no.get().isNullOrBlank()) {
             restaurant_mobile_no_error.set("Enter your Phone number")
+            handler(restaurant_mobile_no_error)
             valid = false
         } else if (restaurant_mobile_no.get()?.length!! < 11 || restaurant_mobile_no.get()?.length!! > 11) {
             restaurant_mobile_no_error.set("phone num should be 11 number")
+            handler(restaurant_mobile_no_error)
             valid=false
-        } else {
-            restaurant_mobile_no_error.set(null)
         }
         if (email.get().isNullOrBlank()) {
             email_error.set("Enter your Email")
+            handler(email_error)
             valid = false
-        } else {
-            email_error.set(null)
         }
         if (password.get().isNullOrBlank()) {
             password_error.set("Enter your Password")
+            handler(password_error)
             valid = false
         } else if (password.get()?.length!! < 8) {
             password_error.set("length less than 8 digits")
+            handler(password_error)
             valid = false
-        } else {
-            password_error.set(null)
         }
         if(latitude.value==null || longitude.value==null){
             location_error.value="set location"
@@ -135,6 +134,9 @@ class Restaurant_signup_Viewmodel : Basic_Viewmodel<Navigator>() {
         }
 
         return valid
+    }
+    fun handler(error:ObservableField<String>){
+        Handler(Looper.getMainLooper()).postDelayed({error.set(null)},3000)
     }
 
 }

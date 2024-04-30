@@ -18,8 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentChange
 
 
-lateinit var  dataBinding:FragmentMenuBinding
 class Menu_fragment : Fragment() {
+    lateinit var  dataBinding:FragmentMenuBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,

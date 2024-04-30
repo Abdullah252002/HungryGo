@@ -1,5 +1,7 @@
 package com.example.hungrygo.app.login
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
@@ -97,16 +99,17 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
         var valid = true
         if (email.get().isNullOrBlank()) {
             email_error.set("Enter your Email")
+            handler(email_error)
             valid = false
-        } else {
-            email_error.set(null)
         }
         if (password.get().isNullOrBlank()) {
             password_error.set("Enter your Password")
+            handler(password_error)
             valid = false
-        } else {
-            password_error.set(null)
         }
         return valid
+    }
+    fun handler(error:ObservableField<String>){
+        Handler(Looper.getMainLooper()).postDelayed({error.set(null)},3000)
     }
 }
