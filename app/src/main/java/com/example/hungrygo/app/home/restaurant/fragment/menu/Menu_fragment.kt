@@ -76,7 +76,6 @@ class Menu_fragment : Fragment() {
             val uri = Uri.parse(dd?.id)
             imageUris.add(uri)
             imageUris.add(uri)
-            imageUris.add(uri)
 
         })
         viewModel.image_list.value=imageUris
