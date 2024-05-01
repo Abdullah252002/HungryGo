@@ -6,17 +6,16 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Image_Resturant
-import com.example.hungrygo.app.model.appUser_restaurant
+import com.example.hungrygo.app.model.Item_Menu
+import com.example.hungrygo.app.model.Item_Menu.Companion.getItem_Menu
 import com.example.hungrygo.databinding.DetailsItemBinding
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
-import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.auth.auth
 
 
 class Item_fragment(val item: Image_Resturant):Fragment() {
@@ -31,6 +30,8 @@ class Item_fragment(val item: Image_Resturant):Fragment() {
         return dataBinding.root
     }
 
+
+    val adapterItem=Adapter_item(null)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.menuName.setText(item.image_name)
@@ -38,14 +39,30 @@ class Item_fragment(val item: Image_Resturant):Fragment() {
             onItemClick?.Onitem(item)
         }
 
+        getdata()
+        dataBinding.recycleview.adapter=adapterItem
+
 
     }
+
+    fun getdata(){
+        val currentuser=Firebase.auth.currentUser?.uid
+        getItem_Menu(currentuser!!,item.image_name!!, OnSuccessListener {
+            val items=it.toObjects(Item_Menu::class.java)
+            adapterItem.setlist(items)
+            update?.onclick()
+        })
+    }
+
     var onItemClick: OnItemClick? = null
     interface OnItemClick {
         fun Onitem(item: Image_Resturant)
     }
 
-
+    var update:Update?=null
+    interface Update{
+        fun onclick()
+    }
 
 
 }

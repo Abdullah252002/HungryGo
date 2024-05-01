@@ -47,17 +47,18 @@ class Restaurant_home : AppCompatActivity() {
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
 
 
-         handler.post(object : Runnable {
+        handler.post(object : Runnable {
             override fun run() {
-           menuFragment.clickButtonListener=object :Menu_fragment.ClickButtonListener{
-               override fun onclick() {
-                   menuFragment.getdata()
-               }
-
-           }
-                handler.postDelayed(this,1000) // Repeat every 10 seconds
+                menuFragment.update = object : Menu_fragment.Update {
+                    override fun onclick() {
+                        menuFragment.getdata()
+                    }
+                }
+                handler.postDelayed(this, 3000)
             }
         })
+
+
 
         menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
             override fun Onitem(view: View) {
@@ -67,23 +68,33 @@ class Restaurant_home : AppCompatActivity() {
         }
 
 
-        menuFragment.openItemListener=object :Menu_fragment.OpenItemListener{
+        menuFragment.openItemListener = object : Menu_fragment.OpenItemListener {
             override fun onitemclick(position: Int, item: Image_Resturant) {
-                val itemFragment=Item_fragment(item)
-                PushFragment(itemFragment,true)
+                val itemFragment = Item_fragment(item)
+                PushFragment(itemFragment, true)
 //------------------------------------------------------------------------------------------------------------------
-                itemFragment.onItemClick=object :Item_fragment.OnItemClick{
+                itemFragment.onItemClick = object : Item_fragment.OnItemClick {
                     override fun Onitem(item: Image_Resturant) {
-                        val addAdd_Item_Menu_fra= Add_Item_Menu_fra(item)
-                        addAdd_Item_Menu_fra.show(supportFragmentManager,"")
+                        val addAdd_Item_Menu_fra = Add_Item_Menu_fra(item)
+                        addAdd_Item_Menu_fra.show(supportFragmentManager, "")
                     }
-
                 }
+
+//---------------------------------------------------------------------------------------------------------------
+                handler.post(object : Runnable {
+                    override fun run() {
+                     itemFragment.update=object :Item_fragment.Update{
+                         override fun onclick() {
+                             itemFragment.getdata()
+                         }
+
+                     }
+                        handler.postDelayed(this, 1000)
+                    }
+                })
             }
 
         }
-
-
 
 
     }
@@ -110,11 +121,12 @@ class Restaurant_home : AppCompatActivity() {
         }
     }
 
-    fun PushFragment(fragment: Fragment,addtobackstack: Boolean = false) {
-     val push=   supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment)
-         if(addtobackstack){ push.addToBackStack("")
-         }
-             push.commit()
+    fun PushFragment(fragment: Fragment, addtobackstack: Boolean = false) {
+        val push = supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment)
+        if (addtobackstack) {
+            push.addToBackStack("")//
+        }
+        push.commit()
     }
 
     private val handler = Handler()

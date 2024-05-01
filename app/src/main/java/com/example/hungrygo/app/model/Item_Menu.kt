@@ -6,6 +6,7 @@ import com.google.firebase.firestore.firestore
 import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.storage
@@ -16,8 +17,7 @@ data class Item_Menu(
     val food_name: String? = null,
     val content: String? = null,
     val price: String? = null,
-    val EGP: String = "EGP",
-    var image: String? = null
+    val image:String?=null
 ) {
     fun setItem_Menu(
         userId: String,
@@ -27,6 +27,15 @@ data class Item_Menu(
         onSuccessListener: OnSuccessListener<Void>,
         onFailureListener: OnFailureListener
     ) {
+
+        val db =
+            Firebase.firestore.collection(Collection_name_restaurant).document(userId)
+                .collection(menuname)
+        val collectionref = db.document(food_name!!)
+        id = collectionref.id
+        collectionref.set(itemMenu).addOnSuccessListener(onSuccessListener)
+            .addOnFailureListener(onFailureListener)
+
         val storage =
             com.google.firebase.ktx.Firebase.storage.reference.child("${userId ?: "unknown"}/item/${food_name}.jpg")
         val uploadImage = storage.putFile(Image_uri)
@@ -34,19 +43,22 @@ data class Item_Menu(
         uploadImage
             .addOnSuccessListener {
                 storage.downloadUrl.addOnSuccessListener { uri ->
-                    image = uri.toString()
-                    val db =
-                        Firebase.firestore.collection(Collection_name_restaurant).document(userId)
-                            .collection(menuname)
-                    val collectionref = db.document()
-                    id = collectionref.id
-                    collectionref.set(itemMenu).addOnSuccessListener(onSuccessListener)
-                        .addOnFailureListener(onFailureListener)
-
+                    val image = uri.toString()
+                    val hash = hashMapOf(
+                        "image" to image
+                    )
+                    Firebase.firestore.collection(Collection_name_restaurant).document(userId)
+                        .collection(menuname)
+                        .document(food_name).update(hash as Map<String, Any>)
                 }
-
-
             }
 
+    }
+
+    companion object{
+        fun getItem_Menu(userId: String, menuname: String,onSuccessListener: OnSuccessListener<QuerySnapshot>){
+            Firebase.firestore.collection(Collection_name_restaurant).document(userId).collection(menuname)
+                .get().addOnSuccessListener(onSuccessListener)
+        }
     }
 }

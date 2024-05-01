@@ -17,7 +17,7 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     val food_name = ObservableField<String>()
     val content = ObservableField<String>()
     val price = ObservableField<String>()
-    val image=MutableLiveData<Uri>()
+    val image = MutableLiveData<Uri>()
 
     val food_name_error = ObservableField<String>()
     val content_error = ObservableField<String>()
@@ -34,7 +34,7 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     }
 
     fun additem() {
-        showDialog.value =true
+        showDialog.value = true
         val itemMenu = Item_Menu(
             food_name = food_name.get(),
             content = content.get(),
@@ -46,7 +46,7 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
         },
             OnFailureListener {
                 showDialog.value = false
-                messageLiveData.value=it.localizedMessage
+                messageLiveData.value = it.localizedMessage
             })
     }
 

@@ -1,21 +1,17 @@
 package com.example.hungrygo.app.home.restaurant.fragment.menu
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.hungrygo.R
 import com.example.hungrygo.databinding.FragmentMenuBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.example.hungrygo.app.model.Image_Resturant
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentChange
 
 
 class Menu_fragment : Fragment() {
@@ -53,7 +49,7 @@ fun getdata(){
         val items=it.toObjects(Image_Resturant::class.java)
         adapterMenu.setitems(items)
         adapterMenu.notifyDataSetChanged()
-        clickButtonListener?.onclick()
+        update?.onclick()
     })
 }
 
@@ -67,8 +63,8 @@ fun getdata(){
         fun Onitem(view: View)
     }
 
-    var clickButtonListener:ClickButtonListener?=null
-    interface ClickButtonListener{
+    var update:Update?=null
+    interface Update{
         fun onclick()
     }
 
