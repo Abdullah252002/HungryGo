@@ -11,6 +11,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
+import com.google.firebase.storage.storage
 
 
 class AddPhoto : AppCompatActivity() {
@@ -36,14 +37,37 @@ class AddPhoto : AppCompatActivity() {
         val id=intent.getStringExtra("id")
         if(resultCode== RESULT_OK){
             photo.setImageURI(data?.data)
-             FirebaseStorage.getInstance()
-                .reference.child("${id ?: "unknown"}/photo restaurant.jpg")
-                .putFile(data?.data!!)
-            val hash= hashMapOf(
-                "photo" to true
-            )
+            //
+            val storage = Firebase.storage.reference.child("${id ?: "unknown"}/photo restaurant.jpg")
+            val uploadImage = storage.putFile(data?.data!!)
 
-            Firebase.firestore.collection(Collection_name_restaurant).document(id!!).update(hash as Map<String, Any>)
+            uploadImage
+                .addOnSuccessListener {
+                    storage.downloadUrl.addOnSuccessListener{ uri ->
+                        val hash= hashMapOf(
+                            "photo" to true,
+                            "image" to uri.toString()
+                        )
+                        Firebase.firestore.collection(Collection_name_restaurant).document(id!!).update(hash as Map<String, Any>)
+                    }
+
+                }
+
+
+
         }
     }
 }
+/*
+ val storage = Firebase.storage.reference.child("${userid ?: "unknown"}/photo restaurant.jpg")
+                val uploadImage = storage.putFile(image!!)
+
+                uploadImage
+                    .addOnSuccessListener {
+                        storage.downloadUrl.addOnSuccessListener{ uri ->
+                            val dd=Image_Resturant(id=uri.toString(), image_name =menu_name.editText?.text.toString())
+                            dd.setimage(userid!!,menu_name,dd)
+                                 }
+
+                    }
+ */

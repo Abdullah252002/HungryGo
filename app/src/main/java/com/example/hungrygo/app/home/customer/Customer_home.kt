@@ -1,22 +1,54 @@
 package com.example.hungrygo.app.home.customer
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.TextView
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
+import com.example.hungrygo.app.home.customer.fragment.offers.Offers_fragment
+import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fragment
+import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
 import com.example.hungrygo.app.login.Login
+import com.example.hungrygo.app.map.set_Location
 import com.example.hungrygo.databinding.CustomerHomeBinding
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import com.example.hungrygo.app.model.appUser_customer.Companion.Collection_name_customer
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
+
 
 class Customer_home : AppCompatActivity() {
     lateinit var dataBinding:CustomerHomeBinding
+     var currentuser:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentuser=Firebase.auth.currentUser?.uid
         dataBinding = DataBindingUtil.setContentView(this, R.layout.customer_home)
         open_signout()
+        dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
+            if (it.itemId == R.id.restaurant) {
+                PushFragment(Restaurant_fragment())
+            } else if (it.itemId == R.id.offers) {
+                PushFragment(Offers_fragment())
+            } else if (it.itemId == R.id.shoping) {
+                PushFragment(Shoping_fragment())
+            }
+            return@setOnItemSelectedListener true
+        }
+        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId=R.id.restaurant
+
+
 
 
     }
@@ -31,4 +63,74 @@ class Customer_home : AppCompatActivity() {
             finish()
         }
     }
+    fun PushFragment(fragment: Fragment, addtobackstack: Boolean = false) {
+        val push = supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment)
+        if (addtobackstack) {
+            push.addToBackStack("")//
+        }
+        push.commit()
+    }
+
+    fun getLocation() {
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this , Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permission is not Granted", Toast.LENGTH_SHORT).show()
+            //
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),100 )
+        }
+
+        val location = fusedLocationProviderClient.lastLocation
+        location.addOnSuccessListener {
+            if (it != null){
+                val latitude = it.latitude
+                val longitude =  it.longitude
+                val hashmap= hashMapOf(
+                    "latitude" to latitude,
+                    "longitude" to longitude
+                )
+                Firebase.firestore.collection(Collection_name_customer).document(currentuser!!)
+                    .update(hashmap as Map<String, Any>)
+            }
+            else{
+                val intent=Intent(this,set_Location::class.java)
+                startActivity(intent)
+
+
+            }}
+    }
+
+    private val handler = Handler()
+    private fun updateLocation() {
+        handler.post(object : Runnable {
+            override fun run() {
+                getLocation()
+                handler.postDelayed(this, 10 * 1000) // Repeat every 10 seconds
+            }
+        })
+    }
+    override fun onStart() {
+        super.onStart()
+        updateLocation()
+    }
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    fun calculateDistanceInKilometers(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val radiusOfEarth = 6371 // نصف قطر الأرض بالكيلومترات
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = sin(dLat / 2) * sin(dLat / 2) +
+                cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+                sin(dLon / 2) * sin(dLon / 2)
+        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        return radiusOfEarth * c
+    }
+
 }
+
+
