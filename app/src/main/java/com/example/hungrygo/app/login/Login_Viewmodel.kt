@@ -51,6 +51,8 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                 Log.e("firebase", it.exception?.localizedMessage!!)
                 password_error.set("Email or Password is not correct")
                 email_error.set("Email or Password is not correct")
+                handler(password_error)
+                handler(email_error)
             }
 
 

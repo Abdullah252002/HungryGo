@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/restaurant"
+    android:title="Restaurant"
+    android:icon="@drawable/menu_cus"
+    />
+    <item android:id="@+id/offers"
+        android:title="Offers"
+        android:icon="@drawable/orders"
+        />
+</menu>
