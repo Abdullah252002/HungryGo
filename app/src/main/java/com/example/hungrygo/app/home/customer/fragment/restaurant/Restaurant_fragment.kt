@@ -5,6 +5,8 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
@@ -35,55 +37,77 @@ class Restaurant_fragment() : Fragment() {
         return dataBinding.root
     }
 
+    val adapterRestaurant = Adapter_restaurant(null)
     val handler = Handler()
-    val adapterRestaurant=Adapter_restaurant(null)
+    private var isSearching = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-     //   getdataa()
-        dataBinding.recycleview.adapter=adapterRestaurant
+        dataBinding.recycleview.adapter = adapterRestaurant
 
 
-
-
+       getdata()
+        dataBinding.search.setOnSearchClickListener {
+            isSearching = true
+            getusers_res(OnSuccessListener {
+                adapterRestaurant.setlist(it.toObjects(appUser_restaurant::class.java))
+                adapterRestaurant.notifyDataSetChanged()
+            })
+            dataBinding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return true
+                }
+                override fun onQueryTextChange(newText: String): Boolean {
+                    adapterRestaurant.filterUsers(newText)
+                    return true
+                }
+            })
+        }
+        dataBinding.search.setOnCloseListener {
+            getdata()
+            false
+        }
 
     }
 
-    fun getdataa(){
-        val id = Firebase.auth.currentUser?.uid
 
+
+    fun getdata() {
+
+        val id = Firebase.auth.currentUser?.uid
         getusers_res(OnSuccessListener {
             val item = it.toObjects(appUser_restaurant::class.java)
-            handler.post(object : Runnable {
-                override fun run() {
-                    Firebase.firestore.collection(Collection_name_customer).document(id!!).get()
-                        .addOnSuccessListener {
-                            val db = it.toObject(appUser_customer::class.java)
-                            val lat1 = db?.latitude
-                            val lon1 = db?.longitude
-                            val m:MutableList<appUser_restaurant> = mutableListOf()
-                            for (i in 0 until item.size) {
-                                val lat2 = item[i].latitude
-                                val lon2 = item[i].longitude
-                                if (calc_dis(lat1!!, lon1!!, lat2!!, lon2!!) < 3.5) {
-                                    m.add(item[i])
-                                }
-                            }
-                            adapterRestaurant.setlist(m)
-                            adapterRestaurant.notifyDataSetChanged()
-                            update?.onclick()
+
+            Firebase.firestore.collection(Collection_name_customer).document(id!!).get()
+                .addOnSuccessListener {
+                    val db = it.toObject(appUser_customer::class.java)
+                    val lat1 = db?.latitude
+                    val lon1 = db?.longitude
+                    val m: MutableList<appUser_restaurant> = mutableListOf()
+                    for (i in 0 until item.size) {
+                        val lat2 = item[i].latitude
+                        val lon2 = item[i].longitude
+                        if (calc_dis(lat1!!, lon1!!, lat2!!, lon2!!) < 3.5) {
+                            m.add(item[i])
                         }
-                    handler.postDelayed(this, 30 * 1000)
+                    }
+                    adapterRestaurant.setlist(m)
+                    adapterRestaurant.notifyDataSetChanged()
+                    if (!isSearching)
+                    update?.onclick()
                 }
 
-            })
-        })
 
-   }
-    var update:Update?=null
-    interface Update{
+        })
+    }
+
+
+    var update: Update? = null
+    interface Update {
         fun onclick()
     }
+
     fun calc_dis(
         lat1: Double,
         lon1: Double,

@@ -34,8 +34,34 @@ class Adapter_restaurant(var items: List<appUser_restaurant>?) : Adapter<Adapter
         holder.res_name.setText(item?.restaurant_name)
     }
 
-    fun setlist(m: MutableList<appUser_restaurant>) {
+    fun setlist(m: List<appUser_restaurant>?) {
         items=m
         notifyDataSetChanged()
+    }
+
+    interface ClickOnItemListener{
+
+    }
+
+
+    private var originalUsersList: List<appUser_restaurant>? = null
+    fun filterUsers(query: String) {
+        if (originalUsersList == null) {
+            originalUsersList = items
+        }
+
+        val filteredList = mutableListOf<appUser_restaurant>()
+
+        if (query.isEmpty()) {
+            filteredList.addAll(originalUsersList ?: emptyList())
+        } else {
+            originalUsersList?.forEach { user ->
+                if (user?.restaurant_name?.contains(query, ignoreCase = true) == true) {
+                    filteredList.add(user)
+                }
+            }
+        }
+
+        setlist(filteredList)
     }
 }

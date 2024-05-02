@@ -14,10 +14,8 @@ import com.example.hungrygo.R
 import com.example.hungrygo.app.home.customer.fragment.offers.Offers_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fragment
 import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
-import com.example.hungrygo.app.home.restaurant.fragment.menu.Menu_fragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
-import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.databinding.CustomerHomeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
@@ -55,9 +53,12 @@ class Customer_home : AppCompatActivity() {
 
         handler.post(object : Runnable {
             override fun run() {
+                restaurantFragment.update=object :Restaurant_fragment.Update{
+                    override fun onclick() {
+                       // restaurantFragment.getdata()
+                    }
 
-
-
+                }
                 handler.postDelayed(this, 3000)
             }
         })
