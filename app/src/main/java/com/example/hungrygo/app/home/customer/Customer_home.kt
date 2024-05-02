@@ -55,7 +55,7 @@ class Customer_home : AppCompatActivity() {
             override fun run() {
                 restaurantFragment.update=object :Restaurant_fragment.Update{
                     override fun onclick() {
-                       // restaurantFragment.getdata()
+                        restaurantFragment.getdata()
                     }
 
                 }

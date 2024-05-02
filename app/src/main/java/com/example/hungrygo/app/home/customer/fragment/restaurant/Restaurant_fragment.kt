@@ -46,8 +46,6 @@ class Restaurant_fragment() : Fragment() {
 
         dataBinding.recycleview.adapter = adapterRestaurant
 
-
-       getdata()
         dataBinding.search.setOnSearchClickListener {
             isSearching = true
             getusers_res(OnSuccessListener {
@@ -65,9 +63,12 @@ class Restaurant_fragment() : Fragment() {
             })
         }
         dataBinding.search.setOnCloseListener {
+            isSearching=false
             getdata()
             false
         }
+       getdata()
+
 
     }
 
