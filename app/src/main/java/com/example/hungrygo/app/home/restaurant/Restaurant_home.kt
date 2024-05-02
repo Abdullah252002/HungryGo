@@ -35,12 +35,16 @@ class Restaurant_home : AppCompatActivity() {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
         addphoto()
         dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
-            if (it.itemId == R.id.menu) {
-                PushFragment(menuFragment)
-            } else if (it.itemId == R.id.orders) {
-                PushFragment(Orders_fragment())
-            } else if (it.itemId == R.id.delivery) {
-                PushFragment(Delivery_fragment())
+            when (it.itemId) {
+                R.id.menu -> {
+                    PushFragment(menuFragment)
+                }
+                R.id.orders -> {
+                    PushFragment(Orders_fragment())
+                }
+                R.id.delivery -> {
+                    PushFragment(Delivery_fragment())
+                }
             }
             return@setOnItemSelectedListener true
         }

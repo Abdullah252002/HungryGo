@@ -58,16 +58,3 @@ class AddPhoto : AppCompatActivity() {
         }
     }
 }
-/*
- val storage = Firebase.storage.reference.child("${userid ?: "unknown"}/photo restaurant.jpg")
-                val uploadImage = storage.putFile(image!!)
-
-                uploadImage
-                    .addOnSuccessListener {
-                        storage.downloadUrl.addOnSuccessListener{ uri ->
-                            val dd=Image_Resturant(id=uri.toString(), image_name =menu_name.editText?.text.toString())
-                            dd.setimage(userid!!,menu_name,dd)
-                                 }
-
-                    }
- */

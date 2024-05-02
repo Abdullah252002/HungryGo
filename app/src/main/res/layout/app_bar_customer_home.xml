@@ -48,6 +48,4 @@
         app:layout_constraintBottom_toTopOf="@+id/Bottom_navigation"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
