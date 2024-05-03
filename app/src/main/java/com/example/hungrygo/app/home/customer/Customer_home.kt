@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.customer.fragment.offers.Offers_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fragment
+import com.example.hungrygo.app.home.customer.fragment.restaurant.menu.Res_menu_fragment
 import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
@@ -22,12 +23,15 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.example.hungrygo.app.model.appUser_customer.Companion.Collection_name_customer
+import com.example.hungrygo.app.model.appUser_restaurant
 
 
 class Customer_home : AppCompatActivity() {
     lateinit var dataBinding: CustomerHomeBinding
     var currentuser: String? = null
     val restaurantFragment=Restaurant_fragment()
+    private val handler = Handler()
+    private val handler1 = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentuser = Firebase.auth.currentUser?.uid
@@ -51,17 +55,13 @@ class Customer_home : AppCompatActivity() {
         }
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
 
-        handler.post(object : Runnable {
-            override fun run() {
-                restaurantFragment.update=object :Restaurant_fragment.Update{
-                    override fun onclick() {
-                        restaurantFragment.getdata()
-                    }
-
-                }
-                handler.postDelayed(this, 3000)
+        restaurantFragment.navigateToMenu=object :Restaurant_fragment.Navigate_to_menu{
+            override fun navigate(item: appUser_restaurant) {
+                val resMenuFragment=Res_menu_fragment(item)
+                PushFragment(resMenuFragment,true)
             }
-        })
+
+        }
 
 
     }
@@ -122,7 +122,7 @@ class Customer_home : AppCompatActivity() {
         }
     }
 
-    private val handler = Handler()
+
     private fun updateLocation() {
         handler.post(object : Runnable {
             override fun run() {

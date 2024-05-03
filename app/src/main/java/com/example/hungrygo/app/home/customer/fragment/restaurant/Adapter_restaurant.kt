@@ -32,6 +32,13 @@ class Adapter_restaurant(var items: List<appUser_restaurant>?) : Adapter<Adapter
         Glide.with(holder.itemView).load(item?.image)
             .into(holder.image)
         holder.res_name.setText(item?.restaurant_name)
+        holder.itemView.setOnClickListener {
+            clickOnItemListener?.onitem(item!!,position)
+        }
+    }
+    var clickOnItemListener:ClickOnItemListener?=null
+    interface ClickOnItemListener{
+        fun onitem(item:appUser_restaurant,position: Int)
     }
 
     fun setlist(m: List<appUser_restaurant>?) {
@@ -39,29 +46,26 @@ class Adapter_restaurant(var items: List<appUser_restaurant>?) : Adapter<Adapter
         notifyDataSetChanged()
     }
 
-    interface ClickOnItemListener{
-
-    }
 
 
-    private var originalUsersList: List<appUser_restaurant>? = null
+
+    private var NewList: List<appUser_restaurant>? = null
     fun filterUsers(query: String) {
-        if (originalUsersList == null) {
-            originalUsersList = items
+        if (NewList == null) {
+            NewList = items
         }
 
-        val filteredList = mutableListOf<appUser_restaurant>()
+        val getitemList = mutableListOf<appUser_restaurant>()
 
         if (query.isEmpty()) {
-            filteredList.addAll(originalUsersList ?: emptyList())
+            getitemList.addAll(NewList ?: emptyList())
         } else {
-            originalUsersList?.forEach { user ->
-                if (user?.restaurant_name?.contains(query, ignoreCase = true) == true) {
-                    filteredList.add(user)
+            NewList?.forEach { user ->
+                if (user.restaurant_name?.contains(query, ignoreCase = true) == true) {
+                    getitemList.add(user)
                 }
             }
         }
-
-        setlist(filteredList)
+        setlist(getitemList)
     }
 }

@@ -1,12 +1,10 @@
 package com.example.hungrygo.app.home.customer.fragment.restaurant
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
@@ -38,14 +36,12 @@ class Restaurant_fragment() : Fragment() {
     }
 
     val adapterRestaurant = Adapter_restaurant(null)
-    val handler = Handler()
     private var isSearching = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         dataBinding.recycleview.adapter = adapterRestaurant
-
         dataBinding.search.setOnSearchClickListener {
             isSearching = true
             getusers_res(OnSuccessListener {
@@ -56,6 +52,7 @@ class Restaurant_fragment() : Fragment() {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     return true
                 }
+
                 override fun onQueryTextChange(newText: String): Boolean {
                     adapterRestaurant.filterUsers(newText)
                     return true
@@ -63,16 +60,33 @@ class Restaurant_fragment() : Fragment() {
             })
         }
         dataBinding.search.setOnCloseListener {
-            isSearching=false
+            isSearching = false
             getdata()
             false
         }
-       getdata()
+
+        dataBinding.swiperefresh.setOnRefreshListener {
+            dataBinding.swiperefresh.isRefreshing = false
+            getdata()
+        }
+        if (!isSearching)
+        getdata()
+
+        adapterRestaurant.clickOnItemListener = object : Adapter_restaurant.ClickOnItemListener {
+            override fun onitem(item: appUser_restaurant, position: Int) {
+                navigateToMenu?.navigate(item)
+
+            }
+        }
 
 
     }
 
+    var navigateToMenu: Navigate_to_menu? = null
 
+    interface Navigate_to_menu {
+        fun navigate(item: appUser_restaurant)
+    }
 
     fun getdata() {
 
@@ -95,16 +109,14 @@ class Restaurant_fragment() : Fragment() {
                     }
                     adapterRestaurant.setlist(m)
                     adapterRestaurant.notifyDataSetChanged()
-                    if (!isSearching)
-                    update?.onclick()
-                }
 
+                }
 
         })
     }
 
-
     var update: Update? = null
+
     interface Update {
         fun onclick()
     }

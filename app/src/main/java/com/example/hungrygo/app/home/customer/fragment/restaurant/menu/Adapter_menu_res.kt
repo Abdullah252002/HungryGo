@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.restaurant.fragment.menu
+package com.example.hungrygo.app.home.customer.fragment.restaurant.menu
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Image_Resturant
 
-class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
+class Adapter_menu_res:Adapter<Adapter_menu_res.Viewholder>() {
     var items: List<Image_Resturant>? = null
-
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name_menu: TextView = itemView.findViewById(R.id.name_menu)
         val image: ImageView = itemView.findViewById(R.id.image)
@@ -46,8 +45,7 @@ class Adapter_menu() : Adapter<Adapter_menu.Viewholder>() {
 
     var clickOnItemListener:ClickOnItemListener?=null
     interface ClickOnItemListener{
-        fun onitem(position: Int,item:Image_Resturant)
+        fun onitem(position: Int,item: Image_Resturant)
     }
-
 
 }
