@@ -13,10 +13,12 @@ import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.customer.fragment.offers.Offers_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fragment
+import com.example.hungrygo.app.home.customer.fragment.restaurant.item_menu.Item_res_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.menu.Res_menu_fragment
 import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
+import com.example.hungrygo.app.model.Image_Resturant
 import com.example.hungrygo.databinding.CustomerHomeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
@@ -55,10 +57,19 @@ class Customer_home : AppCompatActivity() {
         }
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
 
+
         restaurantFragment.navigateToMenu=object :Restaurant_fragment.Navigate_to_menu{
             override fun navigate(item: appUser_restaurant) {
                 val resMenuFragment=Res_menu_fragment(item)
                 PushFragment(resMenuFragment,true)
+
+                resMenuFragment.navigateToitemmenu=object :Res_menu_fragment.Navigate_toitemmenu{
+                    override fun navigate(item: Image_Resturant, id_res: String?) {
+                        PushFragment(Item_res_fragment(item,id_res),true)
+                    }
+
+                }
+
             }
 
         }

@@ -58,7 +58,7 @@ class Restaurant_home : AppCompatActivity() {
                         menuFragment.getdata()
                     }
                 }
-                handler.postDelayed(this, 3000)
+                handler.postDelayed(this, 4000)
             }
         })
 

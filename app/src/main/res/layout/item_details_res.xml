@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-  <data>
-    <variable
-        name="item"
-        type="com.example.hungrygo.app.model.Item_Menu" />
-
-  </data>
-
-  <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:padding="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    >
 
     <ImageView
         android:id="@+id/image"
@@ -48,39 +40,54 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="pizzzzzzzzzzzza"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/food_name"
         android:layout_marginStart="20dp"
         app:layout_constraintEnd_toStartOf="@+id/price"
         android:layout_marginEnd="7dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <TextView
         android:id="@+id/egp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="EGP"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginBottom="3dp"
+        />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/egp"
         tools:text="150"
         android:layout_marginEnd="7dp"
         android:textSize="15sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/add"
+        android:layout_marginBottom="3dp"
+
+        />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/egp"
+        android:drawableTop="@drawable/add"
+
         />
 
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
