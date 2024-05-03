@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Menu
+import com.example.hungrygo.app.model.appUser_restaurant
 
 class Adapter_item_res(var items: List<Item_Menu>?) : Adapter<Adapter_item_res.Viewholder>() {
     class Viewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,9 +40,16 @@ class Adapter_item_res(var items: List<Item_Menu>?) : Adapter<Adapter_item_res.V
         holder.foodname.setText(item?.food_name)
         holder.content.setText(item?.content)
         holder.price.setText(item?.price)
+        holder.button.setOnClickListener {
+            clickOnItemListener?.onitem(item!!,position)
+        }
     }
     fun setlist(newitems: List<Item_Menu>) {
         items = newitems
         notifyDataSetChanged()
+    }
+    var clickOnItemListener:ClickOnItemListener?=null
+    interface ClickOnItemListener{
+        fun onitem(item: Item_Menu, position: Int)
     }
 }

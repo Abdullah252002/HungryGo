@@ -26,16 +26,27 @@ class Item_res_fragment(val item: Image_Resturant,val id_res: String?) :Fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView=view.findViewById(R.id.recycle)
-
         recyclerView.adapter=adapterItemRes
         getdata()
+
+        adapterItemRes.clickOnItemListener=object :Adapter_item_res.ClickOnItemListener{
+            override fun onitem(item: Item_Menu, position: Int) {
+               addItemShoping?.onclick(true)
+            }
+
+        }
 
 
     }
     fun getdata(){
         Item_Menu.getItem_Menu(id_res!!, item.image_name!!, OnSuccessListener {
             val items = it.toObjects(Item_Menu::class.java)
-                adapterItemRes.setlist(items)
+                adapterItemRes.setlist(items)//
         })
+    }
+
+    var addItemShoping:Add_item_shoping?=null
+    interface Add_item_shoping{
+        fun onclick(isVisible:Boolean)
     }
 }

@@ -3,11 +3,16 @@ package com.example.hungrygo.app.home.customer
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
@@ -19,6 +24,7 @@ import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
 import com.example.hungrygo.app.model.Image_Resturant
+import com.example.hungrygo.app.model.Item_Menu
 import com.example.hungrygo.databinding.CustomerHomeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
@@ -31,7 +37,7 @@ import com.example.hungrygo.app.model.appUser_restaurant
 class Customer_home : AppCompatActivity() {
     lateinit var dataBinding: CustomerHomeBinding
     var currentuser: String? = null
-    val restaurantFragment=Restaurant_fragment()
+    val restaurantFragment = Restaurant_fragment()
     private val handler = Handler()
     private val handler1 = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,17 +64,27 @@ class Customer_home : AppCompatActivity() {
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
 
 
-        restaurantFragment.navigateToMenu=object :Restaurant_fragment.Navigate_to_menu{
+        restaurantFragment.navigateToMenu = object : Restaurant_fragment.Navigate_to_menu {
             override fun navigate(item: appUser_restaurant) {
-                val resMenuFragment=Res_menu_fragment(item)
-                PushFragment(resMenuFragment,true)
+                val resMenuFragment = Res_menu_fragment(item)
+                PushFragment(resMenuFragment, true)
 
-                resMenuFragment.navigateToitemmenu=object :Res_menu_fragment.Navigate_toitemmenu{
-                    override fun navigate(item: Image_Resturant, id_res: String?) {
-                        PushFragment(Item_res_fragment(item,id_res),true)
+                resMenuFragment.navigateToitemmenu =
+                    object : Res_menu_fragment.Navigate_toitemmenu {
+                        override fun navigate(item: Image_Resturant, id_res: String?) {
+                            val itemResFragment = Item_res_fragment(item, id_res)
+                            PushFragment(itemResFragment, true)
+
+                            itemResFragment.addItemShoping =
+                                object : Item_res_fragment.Add_item_shoping {
+                                    override fun onclick(isVisible: Boolean) {
+                                        change_badgeDrawable(isVisible)
+                                    }
+
+                                }
+                        }
+
                     }
-
-                }
 
             }
 
@@ -76,6 +92,7 @@ class Customer_home : AppCompatActivity() {
 
 
     }
+
 
     fun open_signout() {
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
@@ -151,6 +168,17 @@ class Customer_home : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    fun change_badgeDrawable(isVisible: Boolean) {
+
+        val menuItem: MenuItem? =
+            dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(R.id.shoping)
+        val badgeDrawable = dataBinding.appBarRestaurantHome.BottomNavigation
+            .getOrCreateBadge(menuItem?.itemId!!)
+        badgeDrawable.isVisible = isVisible
+        badgeDrawable.number = 1
+        badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
     }
 
 
