@@ -98,7 +98,7 @@ class Customer_home : AppCompatActivity() {
                     }
 
                 }
-                handler.postDelayed(this, 5 * 1000) // Repeat every 10 seconds
+                handler.postDelayed(this, 7 * 1000) // Repeat every 10 seconds
             }
         })
 

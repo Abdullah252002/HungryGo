@@ -1,6 +1,8 @@
 package com.example.hungrygo.app.model
 
+import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_name_restaurant
@@ -60,7 +62,7 @@ data class Item_Menu(
                 .get().addOnSuccessListener(onSuccessListener)
         }
 
-        fun add_counter_tofirestore(userId: String, item:String){
+        fun add_counter_tofirestore(userId: String, item:String,context: Context){
             Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
                 .document(item).get().addOnSuccessListener {
                     val item=it.toObject(Item_Menu::class.java)
@@ -71,10 +73,12 @@ data class Item_Menu(
                     )
                     Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
                         .document(item.food_name!!).update(hash as Map<String, Any>)
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+
                 }
         }
 
-        fun minus_counter_tofirestore(userId: String, item: String){
+        fun minus_counter_tofirestore(userId: String, item: String,context: Context){
             Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
                 .document(item).get().addOnSuccessListener {
                     val item=it.toObject(Item_Menu::class.java)
@@ -86,9 +90,12 @@ data class Item_Menu(
                     if (item.counter==1){
                         Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
                             .document(item.food_name!!).delete()
+                        Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
                     }else{
                         Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
                             .document(item.food_name!!).update(hash as Map<String, Any>)
+                        Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show()
+
                     }
 
                 }

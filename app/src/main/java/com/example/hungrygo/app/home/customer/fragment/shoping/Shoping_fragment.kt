@@ -40,12 +40,12 @@ class Shoping_fragment : Fragment() {
         dataBinding.recycleview.adapter = adapterShoping
         adapterShoping.add = object : Adapter_shoping.ClickOnAdd {
             override fun add_counter(item: Item_Menu) {
-                add_counter_tofirestore(userid!!, item.food_name!!)
+                add_counter_tofirestore(userid!!, item.food_name!!,requireContext())
             }
         }
         adapterShoping.minus=object :Adapter_shoping.ClickOnMinus{
             override fun minus_counter(item: Item_Menu) {
-                minus_counter_tofirestore(userid!!,item.food_name!!)
+                minus_counter_tofirestore(userid!!,item.food_name!!,requireContext())
             }
 
         }
