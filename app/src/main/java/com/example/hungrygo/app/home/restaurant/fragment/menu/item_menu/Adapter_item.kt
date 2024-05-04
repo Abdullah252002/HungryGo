@@ -37,7 +37,7 @@ class Adapter_item(var items: List<Item_Menu?>?) : Adapter<Adapter_item.Viewhold
             .into(holder.image)
         holder.foodname.setText(item?.food_name)
         holder.content.setText(item?.content)
-        holder.price.setText(item?.price)
+        holder.price.setText(""+item?.price)
 
     }
 

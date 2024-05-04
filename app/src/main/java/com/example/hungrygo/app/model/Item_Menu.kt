@@ -7,17 +7,16 @@ import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_na
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
-import com.google.firebase.storage.storage
 
 
 data class Item_Menu(
     var id: String? = null,
     val food_name: String? = null,
     val content: String? = null,
-    val price: String? = null,
-    val image:String?=null
+    val price: Int? = null,
+    val image:String?=null,
+    val counter:Int?=null
 ) {
     fun setItem_Menu(
         userId: String,
@@ -60,5 +59,40 @@ data class Item_Menu(
             Firebase.firestore.collection(Collection_name_restaurant).document(userId).collection(menuname)
                 .get().addOnSuccessListener(onSuccessListener)
         }
+
+        fun add_counter_tofirestore(userId: String, item:String){
+            Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
+                .document(item).get().addOnSuccessListener {
+                    val item=it.toObject(Item_Menu::class.java)
+                    var counter=0
+                    counter=item?.counter!!+1
+                    val hash= hashMapOf(
+                        "counter" to counter
+                    )
+                    Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
+                        .document(item.food_name!!).update(hash as Map<String, Any>)
+                }
+        }
+
+        fun minus_counter_tofirestore(userId: String, item: String){
+            Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
+                .document(item).get().addOnSuccessListener {
+                    val item=it.toObject(Item_Menu::class.java)
+                    var counter=0
+                    counter=item?.counter!!-1
+                    val hash= hashMapOf(
+                        "counter" to counter
+                    )
+                    if (item.counter==1){
+                        Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
+                            .document(item.food_name!!).delete()
+                    }else{
+                        Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(userId).collection("Shop")
+                            .document(item.food_name!!).update(hash as Map<String, Any>)
+                    }
+
+                }
+        }
+
     }
 }

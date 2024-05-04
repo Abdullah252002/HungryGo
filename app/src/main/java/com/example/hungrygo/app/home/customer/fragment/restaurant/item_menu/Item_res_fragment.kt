@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hungrygo.R
+import com.example.hungrygo.add_item_into_shoping
 import com.example.hungrygo.app.model.Image_Resturant
 import com.example.hungrygo.app.model.Item_Menu
+import com.example.hungrygo.get_item_into_shoping
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class Item_res_fragment(val item: Image_Resturant,val id_res: String?) :Fragment() {
     override fun onCreateView(
@@ -26,12 +30,16 @@ class Item_res_fragment(val item: Image_Resturant,val id_res: String?) :Fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView=view.findViewById(R.id.recycle)
+        val currentuser=Firebase.auth.currentUser?.uid
         recyclerView.adapter=adapterItemRes
         getdata()
 
         adapterItemRes.clickOnItemListener=object :Adapter_item_res.ClickOnItemListener{
             override fun onitem(item: Item_Menu, position: Int) {
-               addItemShoping?.onclick(true)
+                add_item_into_shoping(currentuser!!,item.food_name!!,item, OnSuccessListener {
+                    addItemShoping?.onclick(true)
+                })
+
             }
 
         }
@@ -41,7 +49,7 @@ class Item_res_fragment(val item: Image_Resturant,val id_res: String?) :Fragment
     fun getdata(){
         Item_Menu.getItem_Menu(id_res!!, item.image_name!!, OnSuccessListener {
             val items = it.toObjects(Item_Menu::class.java)
-                adapterItemRes.setlist(items)//
+                adapterItemRes.setlist(items)
         })
     }
 

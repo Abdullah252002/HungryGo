@@ -1,6 +1,7 @@
 package com.example.hungrygo
 
 import android.net.Uri
+import com.example.hungrygo.app.model.Item_Menu
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_customer.Companion.Collection_name_customer
 import com.example.hungrygo.app.model.appUser_delivery
@@ -11,6 +12,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -83,4 +85,13 @@ fun login_resturant_tofirestore(
     val db = Firebase.firestore.collection(Collection_name_restaurant)
         .document(id).get()
         .addOnSuccessListener(onSuccessListener)
+}
+
+fun add_item_into_shoping(userid:String,food_name:String,itemMenu: Item_Menu,onSuccessListener: OnSuccessListener<Void>){
+    Firebase.firestore.collection(Collection_name_customer).document(userid).collection("Shop")
+        .document(food_name).set(itemMenu).addOnSuccessListener(onSuccessListener)
+}
+fun get_item_into_shoping(userid:String,onSuccessListener: OnSuccessListener<QuerySnapshot>){
+    Firebase.firestore.collection(Collection_name_customer).document(userid).collection("Shop")
+        .get().addOnSuccessListener(onSuccessListener)
 }

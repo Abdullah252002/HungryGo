@@ -19,6 +19,7 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     val price = ObservableField<String>()
     val image = MutableLiveData<Uri>()
 
+
     val food_name_error = ObservableField<String>()
     val content_error = ObservableField<String>()
     val price_error = ObservableField<String>()
@@ -38,7 +39,8 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
         val itemMenu = Item_Menu(
             food_name = food_name.get(),
             content = content.get(),
-            price = price.get(),
+            price = price.get()?.toInt(),
+            counter = 1
         )
         itemMenu.setItem_Menu(currentUser!!, menu_name.value!!,image.value!!, itemMenu, OnSuccessListener {
             showDialog.value = false
