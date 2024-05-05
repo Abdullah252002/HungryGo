@@ -13,8 +13,7 @@ import com.example.hungrygo.app.model.Item_Menu
 import com.example.hungrygo.app.model.Item_request
 import com.example.hungrygo.databinding.ItemPendingBinding
 
-class Adapter_shpoing_total(var items: List<Item_request>?) :
-    Adapter<Adapter_shpoing_total.Viewholder>() {
+class Adapter_shpoing_total(var items: List<Item_request>?) : Adapter<Adapter_shpoing_total.Viewholder>() {
     class Viewholder(val dataBinding: ItemPendingBinding) : RecyclerView.ViewHolder(dataBinding.root) {
         fun bind(itemRequest: Item_request){
             dataBinding.item=itemRequest

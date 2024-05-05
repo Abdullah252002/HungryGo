@@ -17,8 +17,10 @@ import com.example.hungrygo.app.home.restaurant.fragment.menu.Menu_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.menu.add_button.add_item_menu.Add_Item_Menu_fra
 import com.example.hungrygo.app.home.restaurant.fragment.menu.item_menu.Item_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.Orders_fragment
+import com.example.hungrygo.app.home.restaurant.fragment.orders.user.user_profile
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.Image_Resturant
+import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.firebase.Firebase
@@ -29,6 +31,7 @@ class Restaurant_home : AppCompatActivity() {
     lateinit var dataBinding: RestaurantHomeBinding
     val menuFragment = Menu_fragment()
     val addFragment = Add_Menu_fragment()
+    val ordersFragment=Orders_fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,7 @@ class Restaurant_home : AppCompatActivity() {
                     PushFragment(menuFragment)
                 }
                 R.id.orders -> {
-                    PushFragment(Orders_fragment())
+                    PushFragment(ordersFragment)
                 }
                 R.id.delivery -> {
                     PushFragment(Delivery_fragment())
@@ -58,11 +61,15 @@ class Restaurant_home : AppCompatActivity() {
                         menuFragment.getdata()
                     }
                 }
-                handler.postDelayed(this, 4000)
+                ordersFragment.updateData=object :Orders_fragment.Update_data{
+                    override fun update() {
+                        ordersFragment.getdata()
+                    }
+
+                }
+                handler.postDelayed(this, 5000)
             }
         })
-
-
 
         menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
             override fun Onitem(view: View) {
@@ -99,6 +106,15 @@ class Restaurant_home : AppCompatActivity() {
             }
 
         }
+
+        ordersFragment.navigateProfile=object :Orders_fragment.Navigate_profile{
+            override fun click(appuserCustomer: appUser_customer) {
+                val userProfile=user_profile(appuserCustomer)
+                userProfile.show(supportFragmentManager,"")
+            }
+
+        }
+
 
 
     }

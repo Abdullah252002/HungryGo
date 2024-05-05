@@ -12,10 +12,11 @@
         android:layout_height="match_parent">
 
        <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recycleview"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-           tools:listitem="@layout/item_pending"
+           tools:listitem="@layout/item_pending_res"
            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

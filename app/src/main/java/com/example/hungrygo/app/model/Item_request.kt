@@ -8,7 +8,7 @@ import com.google.firebase.firestore.firestore
 data class Item_request(
     val user_id: String? = null,
     val resturant_id: String? = null,
-    val resturant_name:String?=null,
+    val resturant_name: String? = null,
     val list_item: String? = null,
     val total_price: Int? = null,
     val status: String = "pending"
@@ -25,8 +25,6 @@ data class Item_request(
 
             }
     }
-
-
 
     fun set_Item_request(
         user_id: String,
@@ -48,19 +46,78 @@ data class Item_request(
     }
 
     companion object {
-        fun get_Item_request(user_id: String,onSuccessListener: OnSuccessListener<QuerySnapshot>) {
-            Firebase.firestore.collection(appUser_customer.Collection_name_customer).document(user_id)
+        fun get_Item_request(user_id: String, onSuccessListener: OnSuccessListener<QuerySnapshot>) {
+            Firebase.firestore.collection(appUser_customer.Collection_name_customer)
+                .document(user_id)
                 .collection("Request").get().addOnSuccessListener(onSuccessListener)
         }
-        fun delete_shoping_total(user_id: String, resturant_id: String,onSuccessListener:OnSuccessListener<Void>){
+
+        fun get_Item_request_res(
+            user_id: String,
+            onSuccessListener: OnSuccessListener<QuerySnapshot>
+        ) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(user_id)
+                .collection("Request").get().addOnSuccessListener(onSuccessListener)
+        }
+
+        fun delete_shoping_total(
+            user_id: String,
+            resturant_id: String,
+            onSuccessListener: OnSuccessListener<Void>
+        ) {
+            val db = Firebase.firestore
+            val Customer =
+                db.collection(appUser_customer.Collection_name_customer).document(user_id)
+                    .collection("Request").document(resturant_id)
+            val Restaurant =
+                db.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
+                    .collection("Request").document(user_id)
+            db.runBatch { batch ->
+                batch.delete(Customer)
+                batch.delete(Restaurant)
+            }.addOnSuccessListener(onSuccessListener)
+
+        }
+
+        fun accept_Item_request(
+            user_id: String,
+            resturant_id: String,
+            onSuccessListener: OnSuccessListener<Void>
+        ) {
             val db = Firebase.firestore
             val Customer = db.collection(appUser_customer.Collection_name_customer).document(user_id)
                 .collection("Request").document(resturant_id)
             val Restaurant =
                 db.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
                     .collection("Request").document(user_id)
+            val accept= hashMapOf(
+                "status" to "Accept"
+            )
             db.runBatch { batch ->
-                batch.delete(Customer)
+                batch.update(Customer, accept as Map<String, Any>)
+                batch.update(Restaurant, accept as Map<String, Any>)
+            }.addOnSuccessListener(onSuccessListener)
+
+        }
+
+        fun refused_Item_request(
+            user_id: String,
+            resturant_id: String,
+            status:String,
+            onSuccessListener: OnSuccessListener<Void>
+        ) {
+            val db = Firebase.firestore
+            val Customer = db.collection(appUser_customer.Collection_name_customer).document(user_id)
+                .collection("Request").document(resturant_id)
+            val Restaurant =
+                db.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
+                    .collection("Request").document(user_id)
+            val accept= hashMapOf(
+                "status" to status
+            )
+            db.runBatch { batch ->
+                batch.update(Customer, accept as Map<String, Any>)
                 batch.delete(Restaurant)
             }.addOnSuccessListener(onSuccessListener)
 
