@@ -25,7 +25,10 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     val price_error = ObservableField<String>()
 
     val currentUser = Firebase.auth.currentUser?.uid
+    val res_name=MutableLiveData<String>()
     val menu_name = MutableLiveData<String>()
+
+
 
     fun Done() {
         if (isvalid()) {
@@ -35,12 +38,16 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     }
 
     fun additem() {
+
         showDialog.value = true
         val itemMenu = Item_Menu(
+            id = currentUser,
             food_name = food_name.get(),
             content = content.get(),
             price = price.get()?.toInt(),
-            counter = 1
+            counter = 1,
+            resturant_name = res_name.value!!
+
         )
         itemMenu.setItem_Menu(currentUser!!, menu_name.value!!,image.value!!, itemMenu, OnSuccessListener {
             showDialog.value = false

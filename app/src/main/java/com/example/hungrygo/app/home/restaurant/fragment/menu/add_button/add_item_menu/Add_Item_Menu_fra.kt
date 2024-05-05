@@ -11,8 +11,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Image_Resturant
+import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.AddItemMenuFraBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 class Add_Item_Menu_fra(val item: Image_Resturant) : BottomSheetDialogFragment(), Navigator {
     lateinit var databinding: AddItemMenuFraBinding
@@ -37,12 +41,16 @@ class Add_Item_Menu_fra(val item: Image_Resturant) : BottomSheetDialogFragment()
         databinding.vm = viewmodel
         viewmodel.navigator = this
         viewmodel.menu_name.value = item.image_name
+        Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(Firebase.auth.currentUser?.uid!!)
+            .get().addOnSuccessListener {
+                val db=it.toObject(appUser_restaurant::class.java)
+                viewmodel.res_name.value=db?.restaurant_name
+            }
         databinding.choose.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, 1000)
         }
-
 
     }
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+<variable
+    name="item"
+    type="com.example.hungrygo.app.model.Item_request" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/tab_selected"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="gollden sppon"
+            android:textStyle="bold"
+            android:text="@{item.resturant_name}"
+            />
+
+        <Button
+            android:id="@+id/pending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_selected"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restaurant_name"
+            tools:text="pending"
+            android:text="@{item.status}"
+            />
+
+        <TextView
+            android:id="@+id/list_item"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toStartOf="@+id/pending"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="1 rwgfnlkeklrg\n2 prmfewrmpferfpkm3r"
+            app:layout_constraintTop_toTopOf="@+id/pending"
+            android:layout_marginEnd="20dp"
+            android:text="@{item.list_item}"
+            />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/list_item"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Total :"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/list_item"
+            app:layout_constraintStart_toEndOf="@+id/total"
+            tools:text="30"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"
+            android:textSize="15sp"
+            android:text="@{item.total_price.toString()}"
+            />
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/total"
+            android:text="Delete"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:drawableStart="@drawable/delete"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

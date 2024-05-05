@@ -18,7 +18,8 @@ data class Item_Menu(
     val content: String? = null,
     val price: Int? = null,
     val image:String?=null,
-    val counter:Int?=null
+    val counter:Int?=null,
+    val resturant_name:String?=null
 ) {
     fun setItem_Menu(
         userId: String,
@@ -33,7 +34,6 @@ data class Item_Menu(
             Firebase.firestore.collection(Collection_name_restaurant).document(userId)
                 .collection(menuname)
         val collectionref = db.document(food_name!!)
-        id = collectionref.id
         collectionref.set(itemMenu).addOnSuccessListener(onSuccessListener)
             .addOnFailureListener(onFailureListener)
 

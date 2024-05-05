@@ -31,6 +31,8 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.example.hungrygo.app.model.appUser_customer.Companion.Collection_name_customer
 import com.example.hungrygo.app.model.appUser_restaurant
+import com.example.hungrygo.get_item_into_shoping
+import com.google.android.gms.tasks.OnSuccessListener
 
 
 class Customer_home : AppCompatActivity() {
@@ -56,6 +58,7 @@ class Customer_home : AppCompatActivity() {
 
                 R.id.shoping -> {
                     PushFragment(shopingFragment)
+                    change_badgeDrawable(false)
                 }
             }
             return@setOnItemSelectedListener true
@@ -96,9 +99,11 @@ class Customer_home : AppCompatActivity() {
                     override fun update() {
                         shopingFragment.getdata()
                     }
-
+                    override fun update_total() {
+                        shopingFragment.getdata_total()
+                    }
                 }
-                handler.postDelayed(this, 7 * 1000) // Repeat every 10 seconds
+                handler.postDelayed(this, 7 * 1000)
             }
         })
 
@@ -184,14 +189,19 @@ class Customer_home : AppCompatActivity() {
 
     fun change_badgeDrawable(isVisible: Boolean) {
 
+
         val menuItem: MenuItem? =
             dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(R.id.shoping)
         val badgeDrawable = dataBinding.appBarRestaurantHome.BottomNavigation
             .getOrCreateBadge(menuItem?.itemId!!)
         badgeDrawable.isVisible = isVisible
-        badgeDrawable.number = 1
+        get_item_into_shoping(Firebase.auth.currentUser?.uid!!, OnSuccessListener {
+            badgeDrawable.number = it.size()
+        })
         badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
     }
+
+
 
 
 }

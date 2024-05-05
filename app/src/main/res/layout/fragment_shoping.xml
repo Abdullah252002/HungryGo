@@ -17,9 +17,19 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/total"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycle_shoping"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_shoping"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_shoping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/recycleview"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_pending"
             />
 
         <Button
