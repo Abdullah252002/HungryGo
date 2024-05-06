@@ -45,6 +45,29 @@
             android:textSize="25sp"
             android:autoLink="phone"
             />
+        <TextView
+            android:id="@+id/addres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/phone"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="address : "
+            android:layout_marginTop="20dp"
+            android:textSize="22sp"
+            android:layout_marginStart="20dp"
+            />
+        <TextView
+            android:id="@+id/content_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/phone"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toEndOf="@+id/addres"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="wefwef\ndknknsdksndfks\nsdnfksdkn"
+            android:textSize="22sp"
+
+            />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/location"
@@ -57,7 +80,7 @@
             android:text="location"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintTop_toBottomOf="@+id/phone"
+            app:layout_constraintTop_toBottomOf="@+id/content_address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
