@@ -14,13 +14,13 @@ import com.example.hungrygo.app.model.Item_Menu.Companion.minus_counter_tofirest
 import com.example.hungrygo.app.model.Item_request
 import com.example.hungrygo.app.model.Item_request.Companion.delete_shoping_total
 import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request
-import com.example.hungrygo.app.model.appUser_customer
+import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.FragmentShopingBinding
 import com.example.hungrygo.get_item_into_shoping
+import com.example.hungrygo.login_resturant_tofirestore
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
 
 class Shoping_fragment : Fragment() {
     lateinit var dataBinding: FragmentShopingBinding
@@ -61,6 +61,14 @@ class Shoping_fragment : Fragment() {
                 delete_shoping_total(item.user_id!!,item.resturant_id!!, OnSuccessListener {
                     Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show()
                 })
+            }
+
+            override fun button(item: Item_request) {
+                login_resturant_tofirestore(item.resturant_id!!, OnSuccessListener {
+                    val db=it.toObject(appUser_restaurant::class.java)
+                    profileResturant?.profile(db)
+                })
+
             }
 
         }
@@ -134,6 +142,11 @@ class Shoping_fragment : Fragment() {
     interface Update_data {
         fun update()
         fun update_total()
+    }
+
+    var profileResturant:Profile_resturant?=null
+    interface Profile_resturant{
+        fun profile(item: appUser_restaurant?)
     }
 
 }

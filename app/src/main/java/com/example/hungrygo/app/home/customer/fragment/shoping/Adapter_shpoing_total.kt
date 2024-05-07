@@ -41,11 +41,16 @@ class Adapter_shpoing_total(var items: List<Item_request>?) : Adapter<Adapter_sh
         holder.dataBinding.delete.setOnClickListener {
             clickOnitemListener?.onitem(item)
         }
+        holder.dataBinding.pending.setOnClickListener {
+            clickOnitemListener?.button(item)
+        }
     }
 
     var clickOnitemListener:ClickOnitemListener?=null
     interface ClickOnitemListener{
         fun onitem(item:Item_request)
+
+        fun button(item:Item_request)
     }
 
     fun setlist(itemRequest: List<Item_request>) {

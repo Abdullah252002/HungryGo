@@ -3,12 +3,9 @@ package com.example.hungrygo.app.home.customer
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,6 +18,7 @@ import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fra
 import com.example.hungrygo.app.home.customer.fragment.restaurant.item_menu.Item_res_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.menu.Res_menu_fragment
 import com.example.hungrygo.app.home.customer.fragment.shoping.Shoping_fragment
+import com.example.hungrygo.app.home.customer.fragment.shoping.profile_res.Profile_res
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
 import com.example.hungrygo.app.model.Image_Resturant
@@ -106,6 +104,14 @@ class Customer_home : AppCompatActivity() {
                 handler.postDelayed(this, 7 * 1000)
             }
         })
+
+        shopingFragment.profileResturant=object :Shoping_fragment.Profile_resturant{
+            override fun profile(item: appUser_restaurant?) {
+                val profileRes= Profile_res(item)
+                profileRes.show(supportFragmentManager,"")
+            }
+
+        }
 
 
     }
