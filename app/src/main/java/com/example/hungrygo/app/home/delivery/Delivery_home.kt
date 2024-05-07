@@ -5,9 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
@@ -21,6 +23,7 @@ import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
+import com.example.hungrygo.get_item_into_shoping
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -47,6 +50,7 @@ class Delivery_home : AppCompatActivity() {
 
                 R.id.orders -> {
                     PushFragment(orders_del_fragment)
+                    change_badgeDrawable(false)
                 }
             }
             return@setOnItemSelectedListener true
@@ -68,6 +72,13 @@ class Delivery_home : AppCompatActivity() {
                 val getOrder=Get_order(item)
                 getOrder.show(supportFragmentManager,"")
 
+                getOrder.onItemClickListener=object :Get_order.OnItemClickListener{
+                    override fun onItemClick(ckeck: Boolean) {
+                        change_badgeDrawable(ckeck)
+                    }
+
+                }
+
             }
 
         }
@@ -80,9 +91,6 @@ class Delivery_home : AppCompatActivity() {
 
 
         }
-
-
-
 
     }
     fun open_signout() {
@@ -156,6 +164,17 @@ class Delivery_home : AppCompatActivity() {
         super.onStop()
         handler.removeCallbacksAndMessages(null)
     }
+
+    fun change_badgeDrawable(isVisible: Boolean) {
+
+        val menuItem: MenuItem? =
+            dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(R.id.orders)
+        val badgeDrawable = dataBinding.appBarRestaurantHome.BottomNavigation
+            .getOrCreateBadge(menuItem?.itemId!!)
+        badgeDrawable.isVisible = isVisible
+        badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
+    }
+
 
 
 

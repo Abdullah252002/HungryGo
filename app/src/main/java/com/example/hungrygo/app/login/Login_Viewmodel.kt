@@ -75,15 +75,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                   DataUtils.appuser_Delivery=user
                   navigator?.navigate_delivery_home()
               }
-            },
-            OnSuccessListener {
-                val imageUrl=it.toString()
-                /*
-                Glide.with(this)  // Use 'this' if you are inside an Activity, or 'context' if inside a Fragment or other context
-                    .load(imageUrl)
-                    .into(image)
-                 */
-
             })
         login_resturant_tofirestore(uid!!,
             OnSuccessListener {

@@ -68,11 +68,7 @@ fun login_customer_tofirestore(
 fun login_delivery_tofirestore(
     id: String,
     onSuccessListener: OnSuccessListener<DocumentSnapshot>,
-    onSuccessListener_image: OnSuccessListener<Uri>
 ) {
-    val storage = FirebaseStorage.getInstance()
-        .reference.child("${id ?: "unknown"}/Driving License.jpg").downloadUrl.addOnSuccessListener(onSuccessListener_image)
-
     val db = Firebase.firestore.collection(Collection_name_delivery)
         .document(id).get()
         .addOnSuccessListener(onSuccessListener)

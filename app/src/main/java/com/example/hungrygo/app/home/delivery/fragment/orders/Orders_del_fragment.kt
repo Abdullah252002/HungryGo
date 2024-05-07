@@ -59,17 +59,19 @@ class Orders_del_fragment : Fragment() {
 
             }
 
-        }
-
-        adapterOrdersDel.deleteItem=object :Adapter_orders_del.Delete_item{
-            override fun delete(item: Item_request) {
-
+            override fun delete(item: Item_request, holder: Adapter_orders_del.Viewholer) {
                 delete_delivery_request(item.user_id!!,item.delivery_id!!, OnSuccessListener {
+                    holder.dataBinding.accept.visibility=View.GONE
+                    holder.dataBinding.profile.visibility=View.GONE
+                    holder.dataBinding.refused.visibility=View.GONE
                     Toast.makeText(requireContext(), "deleted", Toast.LENGTH_SHORT).show()
                 })
             }
 
+
         }
+
+
 
     }
 

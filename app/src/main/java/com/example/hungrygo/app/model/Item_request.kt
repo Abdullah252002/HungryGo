@@ -193,7 +193,18 @@ data class Item_request(
                 .collection("Request").document(user_id).delete().addOnSuccessListener(onSuccessListener)
         }
 
+        fun get_delivery_restarant(resturant_id:String,onSuccessListener: OnSuccessListener<QuerySnapshot>){
+                Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
+                    .collection("Delivery").get().addOnSuccessListener(onSuccessListener)
+        }
+
+        fun delete_delivery_restarant(user_id: String,resturant_id: String,onSuccessListener: OnSuccessListener<Void>){
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
+                .collection("Delivery").document(user_id).delete().addOnSuccessListener(onSuccessListener)
+        }
+
     }
+
 
 
 }

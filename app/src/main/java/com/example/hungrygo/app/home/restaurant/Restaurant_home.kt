@@ -4,14 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.restaurant.addphoto.AddPhoto
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.Delivery_fragment
+import com.example.hungrygo.app.home.restaurant.fragment.delivery.profile.profile
 import com.example.hungrygo.app.home.restaurant.fragment.menu.add_button.Add_Menu_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.menu.Menu_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.menu.add_button.add_item_menu.Add_Item_Menu_fra
@@ -22,7 +25,10 @@ import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.Image_Resturant
 import com.example.hungrygo.app.model.Item_request
 import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_del
+import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_res
+import com.example.hungrygo.app.model.Item_request.Companion.get_delivery_restarant
 import com.example.hungrygo.app.model.appUser_customer
+import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.android.gms.tasks.OnSuccessListener
@@ -36,6 +42,7 @@ class Restaurant_home : AppCompatActivity() {
     val menuFragment = Menu_fragment()
     val addFragment = Add_Menu_fragment()
     val ordersFragment = Orders_fragment()
+    val deliveryFragment=Delivery_fragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +60,7 @@ class Restaurant_home : AppCompatActivity() {
                 }
 
                 R.id.delivery -> {
-                    PushFragment(Delivery_fragment())
+                    PushFragment(deliveryFragment)
                 }
             }
             return@setOnItemSelectedListener true
@@ -74,13 +81,33 @@ class Restaurant_home : AppCompatActivity() {
                     }
 
                 }
-                get_Item_request_del(user?.id!!, OnSuccessListener {
+
+
+                get_Item_request_res(user?.id!!, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                        change_badgeDrawable(true,R.id.orders)
+                    }else{
+                        change_badgeDrawable(false,R.id.orders)
+                    }
+
+                })
+
+                get_Item_request_del(user.id, OnSuccessListener {
                     if (it.toObjects(Item_request::class.java).isNotEmpty()) {
                         update_data(true)
                     }else{
                         update_data(false)
                     }
                 })
+
+                get_delivery_restarant(user.id, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                        change_badgeDrawable(true,R.id.delivery)
+                    }else{
+                        change_badgeDrawable(false,R.id.delivery)
+                    }
+                })
+
                 handler.postDelayed(this, 5000)
             }
         })
@@ -125,6 +152,14 @@ class Restaurant_home : AppCompatActivity() {
             override fun click(appuserCustomer: appUser_customer) {
                 val userProfile = user_profile(appuserCustomer)
                 userProfile.show(supportFragmentManager, "")
+            }
+
+        }
+
+        deliveryFragment.navigateToprofile=object :Delivery_fragment.Navigate_toprofile{
+            override fun navigate(appUser_delivery: appUser_delivery) {
+                val userProfile = profile(appUser_delivery)
+                userProfile.show(supportFragmentManager,"")
             }
 
         }
@@ -176,6 +211,16 @@ class Restaurant_home : AppCompatActivity() {
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
             .document(user?.id!!)
             .update(hash as Map<String, Any>)
+    }
+
+    fun change_badgeDrawable(isVisible: Boolean,item:Int) {
+
+        val menuItem: MenuItem? =
+            dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(item)
+        val badgeDrawable = dataBinding.appBarRestaurantHome.BottomNavigation
+            .getOrCreateBadge(menuItem?.itemId!!)
+        badgeDrawable.isVisible = isVisible
+        badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
     }
 
 

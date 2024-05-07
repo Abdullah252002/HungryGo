@@ -59,6 +59,7 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
                     newObject,
                     OnSuccessListener {
                         holder.dataBinding.accept.visibility = View.GONE
+                        onItemClickListener?.onItemClick(true)
                     })//
 
             }
@@ -93,6 +94,12 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
             val list = it.toObjects(Item_request::class.java)
             adapterGetorder.setlist(list)
         })
+
+    }
+
+    var onItemClickListener : OnItemClickListener?=null
+    interface OnItemClickListener {
+        fun onItemClick(ckeck:Boolean)
 
     }
 
