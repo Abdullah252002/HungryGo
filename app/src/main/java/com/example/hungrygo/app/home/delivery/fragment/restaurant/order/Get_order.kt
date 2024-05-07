@@ -54,7 +54,7 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
                     itemRequest,
                     OnSuccessListener {
                         holder.dataBinding.accept.visibility = View.GONE
-                    })
+                    })//
 
             }
 
