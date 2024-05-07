@@ -3,6 +3,7 @@ package com.example.hungrygo.app.home.delivery.fragment.restaurant.order
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,18 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
     }
 
     val adapterGetorder = Adapter_getorder(null)
+    val handler= Handler()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.name.text = item.restaurant_name
         dataBinding.number.text = item.restaurant_mobile_number
-        getdata()
+        handler.post(object : Runnable {
+            override fun run() {
+                getdata()
+                handler.postDelayed(this, 3 * 1000) // Repeat every 10 seconds
+            }
+        })
+
         dataBinding.recyclerView.adapter = adapterGetorder
         dataBinding.location.setOnClickListener {
             openLocationInGoogleMaps(item.latitude!!, item.longitude!!)
