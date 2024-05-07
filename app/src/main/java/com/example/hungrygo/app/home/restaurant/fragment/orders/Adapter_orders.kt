@@ -66,6 +66,7 @@ class Adapter_orders(var items: List<Item_request>?) : Adapter<Adapter_orders.Vi
             holder.dataBinding.accept.visibility = View.GONE
         } else {
             holder.dataBinding.accept.visibility = View.VISIBLE
+
         }
     }
 

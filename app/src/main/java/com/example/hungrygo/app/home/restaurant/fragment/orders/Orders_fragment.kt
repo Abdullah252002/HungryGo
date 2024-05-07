@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
@@ -35,23 +36,28 @@ class Orders_fragment : Fragment() {
     val userId = Firebase.auth.currentUser?.uid
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dataBinding.progress.isVisible=false
         getdata()
         dataBinding.recycleview.adapter = adapterOrders
         adapterOrders.clickOnitemListener = object : Adapter_orders.ClickOnitemListener {
+
             override fun Click_accept(item: Item_request, holder: Adapter_orders.Viewholder) {
-                accept_Item_request(item.user_id!!,item.resturant_id!!, OnSuccessListener {
+                dataBinding.progress.isVisible = true
+                accept_Item_request(item.user_id!!, item.resturant_id!!,item, OnSuccessListener {
+                    dataBinding.progress.isVisible = false
                     Toast.makeText(requireContext(), "Accept ✔", Toast.LENGTH_SHORT).show()
                 })
             }
 
             override fun Click_refused(item: Item_request, holder: Adapter_orders.Viewholder) {
-                if (item.status=="pending"){
-                    refused_Item_request(item.user_id!!,item.resturant_id!!,"Refused",
+                if (item.status == "pending") {
+                    refused_Item_request(item.user_id!!, item.resturant_id!!, "Refused",
                         OnSuccessListener {
-                            Toast.makeText(requireContext(), "order Cancelled", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "order Cancelled", Toast.LENGTH_SHORT)
+                                .show()
                         })
-                }else{
-                    refused_Item_request(item.user_id!!,item.resturant_id!!,"Done",
+                } else {
+                    refused_Item_request(item.user_id!!, item.resturant_id!!, "Done",
                         OnSuccessListener {
                             Toast.makeText(requireContext(), "Done", Toast.LENGTH_SHORT).show()
                         })
@@ -59,12 +65,13 @@ class Orders_fragment : Fragment() {
             }
 
             override fun Click_profile(item: Item_request, holder: Adapter_orders.Viewholder) {
+                dataBinding.progress.isVisible = true
                 login_customer_tofirestore(item.user_id!!, OnSuccessListener {
-                    val item_customer=it.toObject(appUser_customer::class.java)
+                    dataBinding.progress.isVisible = false
+                    val item_customer = it.toObject(appUser_customer::class.java)
                     navigateProfile?.click(item_customer!!)
                 })
             }
-
 
         }
 
@@ -78,17 +85,17 @@ class Orders_fragment : Fragment() {
         })
     }
 
-    var navigateProfile:Navigate_profile?=null
-    interface Navigate_profile{
+    var navigateProfile: Navigate_profile? = null
+
+    interface Navigate_profile {
         fun click(appuserCustomer: appUser_customer)
     }
 
     var updateData: Update_data? = null
+
     interface Update_data {
         fun update()
     }
-
-
 
 
 }

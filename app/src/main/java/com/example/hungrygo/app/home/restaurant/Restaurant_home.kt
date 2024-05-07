@@ -20,18 +20,23 @@ import com.example.hungrygo.app.home.restaurant.fragment.orders.Orders_fragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.user.user_profile
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.Image_Resturant
+import com.example.hungrygo.app.model.Item_request
+import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_del
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 class Restaurant_home : AppCompatActivity() {
     val user = DataUtils.appuser_Restaurant
     lateinit var dataBinding: RestaurantHomeBinding
     val menuFragment = Menu_fragment()
     val addFragment = Add_Menu_fragment()
-    val ordersFragment=Orders_fragment()
+    val ordersFragment = Orders_fragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +47,11 @@ class Restaurant_home : AppCompatActivity() {
                 R.id.menu -> {
                     PushFragment(menuFragment)
                 }
+
                 R.id.orders -> {
                     PushFragment(ordersFragment)
                 }
+
                 R.id.delivery -> {
                     PushFragment(Delivery_fragment())
                 }
@@ -61,12 +68,19 @@ class Restaurant_home : AppCompatActivity() {
                         menuFragment.getdata()
                     }
                 }
-                ordersFragment.updateData=object :Orders_fragment.Update_data{
+                ordersFragment.updateData = object : Orders_fragment.Update_data {
                     override fun update() {
                         ordersFragment.getdata()
                     }
 
                 }
+                get_Item_request_del(user?.id!!, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                        update_data(true)
+                    }else{
+                        update_data(false)
+                    }
+                })
                 handler.postDelayed(this, 5000)
             }
         })
@@ -94,12 +108,12 @@ class Restaurant_home : AppCompatActivity() {
 //---------------------------------------------------------------------------------------------------------------
                 handler.post(object : Runnable {
                     override fun run() {
-                     itemFragment.update=object :Item_fragment.Update{
-                         override fun onclick() {
-                             itemFragment.getdata()
-                         }
+                        itemFragment.update = object : Item_fragment.Update {
+                            override fun onclick() {
+                                itemFragment.getdata()
+                            }
 
-                     }
+                        }
                         handler.postDelayed(this, 1000)
                     }
                 })
@@ -107,14 +121,13 @@ class Restaurant_home : AppCompatActivity() {
 
         }
 
-        ordersFragment.navigateProfile=object :Orders_fragment.Navigate_profile{
+        ordersFragment.navigateProfile = object : Orders_fragment.Navigate_profile {
             override fun click(appuserCustomer: appUser_customer) {
-                val userProfile=user_profile(appuserCustomer)
-                userProfile.show(supportFragmentManager,"")
+                val userProfile = user_profile(appuserCustomer)
+                userProfile.show(supportFragmentManager, "")
             }
 
         }
-
 
 
     }
@@ -154,6 +167,15 @@ class Restaurant_home : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    fun update_data(ckeck: Boolean) {
+        val hash = hashMapOf(
+            "order" to ckeck
+        )
+        Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+            .document(user?.id!!)
+            .update(hash as Map<String, Any>)
     }
 
 

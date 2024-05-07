@@ -15,7 +15,8 @@ data class appUser_restaurant(
     val latitude:Double?=null,
     val longitude:Double?=null,
     val photo:Boolean?=false,
-    val image:String?=null
+    val image:String?=null,
+    val order:Boolean?=false
 ){
     companion object{
         const val Collection_name_restaurant="Restaurant Users"

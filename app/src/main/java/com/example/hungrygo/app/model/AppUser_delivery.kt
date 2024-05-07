@@ -5,7 +5,9 @@ data class appUser_delivery(
     val name:String?=null,
     val mobile_number:String?=null,
     val national_ID:String?=null,
-    val email:String?=null
+    val email:String?=null,
+    var latitude:Double?=null,
+    var longitude:Double?=null
 ){
     companion object{
         const val Collection_name_delivery="Delivery Users"

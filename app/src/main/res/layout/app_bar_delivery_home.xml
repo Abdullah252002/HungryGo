@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     >
 
@@ -41,7 +40,8 @@
         app:itemTextColor="@color/icon_color"
         app:itemIconTint="@color/icon_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_customer" />
+        app:menu="@menu/menu_delivery"
+         />
 
     <FrameLayout
         android:id="@+id/fragment"
@@ -49,5 +49,6 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/Bottom_navigation"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
