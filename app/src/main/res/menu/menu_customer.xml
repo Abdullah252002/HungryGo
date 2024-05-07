@@ -4,10 +4,6 @@
         android:id="@+id/restaurant"
         android:icon="@drawable/menu_cus"
         android:title="Restaurant" />
-    <item
-        android:id="@+id/offers"
-        android:icon="@drawable/orders"
-        android:title="Offers" />
     <item android:id="@+id/shoping"
         android:title="Shop"
         android:icon="@drawable/shoping"

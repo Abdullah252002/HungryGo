@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
-import com.example.hungrygo.app.home.customer.fragment.offers.Offers_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.Restaurant_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.item_menu.Item_res_fragment
 import com.example.hungrygo.app.home.customer.fragment.restaurant.menu.Res_menu_fragment
@@ -48,10 +47,6 @@ class Customer_home : AppCompatActivity() {
             when (it.itemId) {
                 R.id.restaurant -> {
                     PushFragment(restaurantFragment)
-                }
-
-                R.id.offers -> {
-                    PushFragment(Offers_fragment())
                 }
 
                 R.id.shoping -> {
