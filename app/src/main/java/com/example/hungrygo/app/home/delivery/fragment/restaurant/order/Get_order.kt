@@ -45,7 +45,7 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
         handler.post(object : Runnable {
             override fun run() {
                 getdata()
-                handler.postDelayed(this, 3 * 1000) // Repeat every 10 seconds
+                handler.postDelayed(this,100)
             }
         })
 
