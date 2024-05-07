@@ -2,6 +2,7 @@ package com.example.hungrygo.app.model
 
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import io.grpc.okhttp.internal.proxy.Request
@@ -12,7 +13,8 @@ data class Item_request(
     val resturant_name: String? = null,
     val list_item: String? = null,
     val total_price: Int? = null,
-    val status: String = "pending"
+    val status: String = "pending",
+    var delivery_id: String? = null
 ) {
     fun delete_shoping(user_id: String) {
         Firebase.firestore.collection(appUser_customer.Collection_name_customer)
@@ -112,7 +114,7 @@ data class Item_request(
             db.runBatch { batch ->
                 batch.update(Customer, accept as Map<String, Any>)
                 batch.update(Restaurant, accept as Map<String, Any>)
-                batch.set(Restaurant_accept,itemRequest)
+                batch.set(Restaurant_accept, itemRequest)
             }.addOnSuccessListener(onSuccessListener)
 
         }
@@ -164,10 +166,31 @@ data class Item_request(
             db.runBatch { batch ->
                 batch.delete(Restaurant_req)
                 batch.delete(Restaurant_acc)
-                batch.set(Restaurant_del,itemRequest)
-                batch.set(Delivery,itemRequest)
+                batch.set(Restaurant_del, itemRequest)
+                batch.set(Delivery, itemRequest)
             }.addOnSuccessListener(onSuccessListener)
 
+        }
+
+
+        fun get_request_for_delivery(
+            delivery_id: String,
+            onSuccessListener: OnSuccessListener<QuerySnapshot>
+        ) {
+            val db = Firebase.firestore
+            db.collection(appUser_delivery.Collection_name_delivery).document(delivery_id)
+                .collection("Request").get().addOnSuccessListener(onSuccessListener)
+
+        }
+
+        fun delete_delivery_request(
+            user_id: String,
+            delivery_id: String,
+            onSuccessListener: OnSuccessListener<Void>
+        ) {
+            val db = Firebase.firestore
+            db.collection(appUser_delivery.Collection_name_delivery).document(delivery_id)
+                .collection("Request").document(user_id).delete().addOnSuccessListener(onSuccessListener)
         }
 
     }

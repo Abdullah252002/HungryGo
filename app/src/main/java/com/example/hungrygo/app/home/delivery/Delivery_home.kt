@@ -14,8 +14,10 @@ import com.example.hungrygo.R
 import com.example.hungrygo.app.home.delivery.fragment.orders.Orders_del_fragment
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.Restaurant_del_fragment
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.order.Get_order
+import com.example.hungrygo.app.home.restaurant.fragment.orders.user.user_profile
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
+import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
@@ -29,6 +31,7 @@ class Delivery_home : AppCompatActivity() {
     var currentuser: String? = null
     private val handler = Handler()
     val restaurantDelFragment=Restaurant_del_fragment()
+    val orders_del_fragment=Orders_del_fragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +46,7 @@ class Delivery_home : AppCompatActivity() {
                 }
 
                 R.id.orders -> {
-                    PushFragment(Orders_del_fragment())
+                    PushFragment(orders_del_fragment)
                 }
             }
             return@setOnItemSelectedListener true
@@ -69,6 +72,14 @@ class Delivery_home : AppCompatActivity() {
 
         }
 
+        orders_del_fragment.navigateUser=object :Orders_del_fragment.Navigate_user{
+            override fun navigate_user(appuserCustomer: appUser_customer) {
+                val userProfile=user_profile(appuserCustomer)
+                userProfile.show(supportFragmentManager,"")
+            }
+
+
+        }
 
 
 

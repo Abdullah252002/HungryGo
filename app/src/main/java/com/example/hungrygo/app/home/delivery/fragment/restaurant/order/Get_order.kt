@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_request
 import com.example.hungrygo.app.model.Item_request.Companion.accept_delivery_request
 import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_del
+import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.GetOrderBinding
+import com.example.hungrygo.login_customer_tofirestore
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.Firebase
@@ -43,19 +46,28 @@ class Get_order(val item: appUser_restaurant) : BottomSheetDialogFragment() {
             openLocationInGoogleMaps(item.latitude!!, item.longitude!!)
         }
         adapterGetorder.clickListener = object : Adapter_getorder.ClickListener {
-            override fun onItemClicked(
+            override fun accept(
                 itemRequest: Item_request,
                 holder: Adapter_getorder.Viewholer
             ) {
+                val newObject=itemRequest
+                newObject.delivery_id=DataUtils.appuser_Delivery?.id
                 accept_delivery_request(
                     itemRequest.user_id!!,
                     itemRequest.resturant_id!!,
-                    current_user_id!!,
-                    itemRequest,
+                    DataUtils.appuser_Delivery?.id!!,
+                    newObject,
                     OnSuccessListener {
                         holder.dataBinding.accept.visibility = View.GONE
                     })//
 
+            }
+
+            override fun location(itemRequest: Item_request, holder: Adapter_getorder.Viewholer) {
+                login_customer_tofirestore(itemRequest.user_id!!, OnSuccessListener {
+                    val item=it.toObject(appUser_customer::class.java)
+                    openLocationInGoogleMaps(item?.latitude!!,item.longitude!!)
+                })
             }
 
 

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_request
@@ -34,10 +33,13 @@ class Adapter_getorder(var items: List<Item_request>?): RecyclerView.Adapter<Ada
     override fun onBindViewHolder(holder: Viewholer, position: Int) {
         val item=items?.get(position)
         holder.dataBinding.refused.visibility=View.GONE
-        holder.dataBinding.profile.visibility=View.GONE
+        holder.dataBinding.profile.setImageResource(R.drawable.location)
         holder.bind(item!!)
         holder.dataBinding.accept.setOnClickListener {
-            clickListener?.onItemClicked(item,holder)
+            clickListener?.accept(item,holder)
+        }
+        holder.dataBinding.profile.setOnClickListener {
+            clickListener?.location(item,holder)
         }
     }
 
@@ -47,6 +49,7 @@ class Adapter_getorder(var items: List<Item_request>?): RecyclerView.Adapter<Ada
     }
     var clickListener: ClickListener? = null
     interface ClickListener{
-        fun onItemClicked(itemRequest: Item_request,holder: Viewholer)
+        fun accept(itemRequest: Item_request, holder: Viewholer)
+        fun location(itemRequest: Item_request, holder: Viewholer)
     }
 }
