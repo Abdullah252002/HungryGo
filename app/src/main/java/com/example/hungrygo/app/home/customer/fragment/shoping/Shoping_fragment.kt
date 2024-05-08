@@ -120,8 +120,8 @@ class Shoping_fragment : Fragment() {
         dataBinding.shop.setOnClickListener {
             var list_item = ""
             for (i in 0 until items.size) {
-
                 list_item += items[i].counter.toString() + " " + items[i].food_name +if (i!=items.size-1){"\n"} else {""}
+
             }
             val itemRequest = Item_request(
                 user_id = userid, resturant_id = items[0].id,items[0].resturant_name!!,

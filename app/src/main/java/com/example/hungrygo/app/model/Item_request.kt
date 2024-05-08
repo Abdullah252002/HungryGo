@@ -190,21 +190,37 @@ data class Item_request(
         ) {
             val db = Firebase.firestore
             db.collection(appUser_delivery.Collection_name_delivery).document(delivery_id)
-                .collection("Request").document(user_id).delete().addOnSuccessListener(onSuccessListener)
+                .collection("Request").document(user_id).delete()
+                .addOnSuccessListener(onSuccessListener)
         }
 
-        fun get_delivery_restarant(resturant_id:String,onSuccessListener: OnSuccessListener<QuerySnapshot>){
-                Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
-                    .collection("Delivery").get().addOnSuccessListener(onSuccessListener)
+        fun get_delivery_restarant(
+            resturant_id: String,
+            onSuccessListener: OnSuccessListener<QuerySnapshot>
+        ) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(resturant_id)
+                .collection("Delivery").get().addOnSuccessListener(onSuccessListener)
         }
 
-        fun delete_delivery_restarant(user_id: String,resturant_id: String,onSuccessListener: OnSuccessListener<Void>){
+        fun delete_delivery_restarant(
+            user_id: String,
+            resturant_id: String,
+            onSuccessListener: OnSuccessListener<Void>
+        ) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(resturant_id)
+                .collection("Delivery").document(user_id).delete()
+                .addOnSuccessListener(onSuccessListener)
+        }
+
+
+        fun get_rating(resturant_id: String,onSuccessListener: OnSuccessListener<QuerySnapshot>) {
             Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant).document(resturant_id)
-                .collection("Delivery").document(user_id).delete().addOnSuccessListener(onSuccessListener)
+                .collection("rating").get().addOnSuccessListener(onSuccessListener)
         }
 
     }
-
 
 
 }

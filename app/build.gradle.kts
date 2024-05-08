@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-analytics-ktx")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-firestore")
@@ -51,6 +52,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-firestore-ktx:24.0.0")
+    implementation ("me.zhanghai.android.materialratingbar:library:1.4.0")
+
 
 
 

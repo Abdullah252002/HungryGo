@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -27,6 +28,7 @@ import com.example.hungrygo.app.model.Item_request
 import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_del
 import com.example.hungrygo.app.model.Item_request.Companion.get_Item_request_res
 import com.example.hungrygo.app.model.Item_request.Companion.get_delivery_restarant
+import com.example.hungrygo.app.model.Item_request.Companion.get_rating
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
@@ -34,6 +36,7 @@ import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 
 class Restaurant_home : AppCompatActivity() {
@@ -66,6 +69,7 @@ class Restaurant_home : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
+
 
 
         handler.post(object : Runnable {
@@ -108,9 +112,14 @@ class Restaurant_home : AppCompatActivity() {
                     }
                 })
 
+
+
+
+
                 handler.postDelayed(this, 5000)
             }
         })
+
 
         menuFragment.onItemClick = object : Menu_fragment.OnItemClick {
             override fun Onitem(view: View) {
