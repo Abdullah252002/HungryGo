@@ -15,4 +15,5 @@
     <string name="create_account"><u>Or Create My Account</u></string>
     <string name="title_activity_set_location">set_Location</string>
     <string name="title_activity_restaurant_home">Restaurant_home</string>
+    <string name="api_key">AIzaSyAyaiu-O_U7oCMDXhf6NskzaA6zp_GAwRI</string>
 </resources>
