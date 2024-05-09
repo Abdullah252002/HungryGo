@@ -99,8 +99,10 @@ class Restaurant_home : AppCompatActivity() {
                 get_Item_request_del(user.id, OnSuccessListener {
                     if (it.toObjects(Item_request::class.java).size != 0) {
                         update_data(true)
+
                     }else{
                         update_data(false)
+
                     }
                 })
 
@@ -230,6 +232,60 @@ class Restaurant_home : AppCompatActivity() {
             .getOrCreateBadge(menuItem?.itemId!!)
         badgeDrawable.isVisible = isVisible
         badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.post(object : Runnable {
+            override fun run() {
+                menuFragment.update = object : Menu_fragment.Update {
+                    override fun onclick() {
+                        menuFragment.getdata()
+                    }
+                }
+                ordersFragment.updateData = object : Orders_fragment.Update_data {
+                    override fun update() {
+                        ordersFragment.getdata()
+                    }
+
+                }
+
+
+                get_Item_request_res(user?.id!!, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                        change_badgeDrawable(true,R.id.orders)
+                    }else{
+                        change_badgeDrawable(false,R.id.orders)
+                    }
+
+                })
+
+                get_Item_request_del(user.id, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).size != 0) {
+                        update_data(true)
+
+                    }else{
+                        update_data(false)
+
+                    }
+                })
+
+                get_delivery_restarant(user.id, OnSuccessListener {
+                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                        change_badgeDrawable(true,R.id.delivery)
+                    }else{
+                        change_badgeDrawable(false,R.id.delivery)
+                    }
+                })
+
+
+
+
+
+                handler.postDelayed(this, 5000)
+            }
+        })
+
     }
 
 
