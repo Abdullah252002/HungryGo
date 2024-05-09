@@ -10,7 +10,6 @@ import com.example.hungrygo.app.signup.delivery.Delivery_signup
 import com.example.hungrygo.app.signup.restaurant.Restaurant_signup
 import com.example.hungrygo.databinding.ActivityAccountTypeBinding
 
-
 class Account_Type : AppCompatActivity() {
     lateinit var dataBinding: ActivityAccountTypeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +43,6 @@ class Account_Type : AppCompatActivity() {
 
     }
 
-    //"${user.id ?: "unknown"}/image.jpg" FJvTgbrjKyNzpslxYq0duqtZ8sr1
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

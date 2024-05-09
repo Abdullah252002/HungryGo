@@ -35,7 +35,6 @@ class Res_menu_fragment(val item: appUser_restaurant) :Fragment() {
 
         }
 
-
     }
     fun getdata(){
         val imageResturant= Image_Resturant()

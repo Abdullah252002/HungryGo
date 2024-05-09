@@ -24,7 +24,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
     val password_error = ObservableField<String>()
 
     private var auth = Firebase.auth
-
     fun navigate_to_signup() {
         navigator?.navigate_to_signup()
     }
@@ -43,9 +42,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                 Log.e("firebase", "success")
                 messageLiveData.value = "Successful Login"
                 getdata(it.result.user?.uid)
-
-
-
             } else {
                 showDialog.value = false
                 Log.e("firebase", it.exception?.localizedMessage!!)
@@ -54,7 +50,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                 handler(password_error)
                 handler(email_error)
             }
-
 
         }
     }

@@ -31,7 +31,6 @@ import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.get_item_into_shoping
 import com.google.android.gms.tasks.OnSuccessListener
 
-
 class Customer_home : AppCompatActivity() {
     lateinit var dataBinding: CustomerHomeBinding
     var currentuser: String? = null
@@ -57,7 +56,6 @@ class Customer_home : AppCompatActivity() {
             return@setOnItemSelectedListener true
         }
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
-
 
         restaurantFragment.navigateToMenu = object : Restaurant_fragment.Navigate_to_menu {
             override fun navigate(item: appUser_restaurant) {
@@ -85,7 +83,6 @@ class Customer_home : AppCompatActivity() {
 
         }
 
-
         handler.post(object : Runnable {
             override fun run() {
                 shopingFragment.updateData=object :Shoping_fragment.Update_data{
@@ -108,10 +105,7 @@ class Customer_home : AppCompatActivity() {
 
         }
 
-
     }
-
-
     fun open_signout() {
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
             dataBinding.drawerLayout.open()
@@ -162,8 +156,6 @@ class Customer_home : AppCompatActivity() {
             } else {
                 val intent = Intent(this, set_Location::class.java)
                 startActivity(intent)
-
-
             }
         }
     }
@@ -201,9 +193,6 @@ class Customer_home : AppCompatActivity() {
         })
         badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
     }
-
-
-
 
 }
 

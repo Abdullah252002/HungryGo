@@ -8,11 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.appbar.MaterialToolbar
-
-
 open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>> :
     AppCompatActivity() {
-
     lateinit var dataBinding: DB
     lateinit var viewModel: VM
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +19,6 @@ open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>
         getMaterialToolbar()?.let { showbackclick(it) }
         Livedata()
     }
-
     fun Livedata(){
         viewModel.messageLiveData.observe(this,{message->
             showDialog(message,"ok")
@@ -35,20 +31,15 @@ open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>
             }
         })
     }
-
     abstract fun initViewmodel(): VM
-
     abstract fun getLayoutId(): Int
-
     abstract fun getMaterialToolbar():MaterialToolbar?
-
     fun showbackclick(toolbar: MaterialToolbar){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = ""
     }
-
     var alertDialog: AlertDialog?=null
     fun showDialog(
         message: String? = null,
@@ -63,7 +54,6 @@ open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>
                 dialog?.dismiss()
             }
         }
-
         val builder = AlertDialog.Builder(this).setMessage(message)
         if(posActionName!=null){
             builder.setPositiveButton(posActionName,posAction?:defaultAction)
@@ -92,11 +82,8 @@ open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>
         progressDialog?.dismiss()
         progressDialog=null
     }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
-
-
 }

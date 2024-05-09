@@ -32,10 +32,8 @@ class set_Location : AppCompatActivity(), OnMapReadyCallback {
         button = findViewById(R.id.button)
         searchView=findViewById(R.id.search)
 
-
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-
 
  searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -61,19 +59,12 @@ class set_Location : AppCompatActivity(), OnMapReadyCallback {
             }
         })
 
-
         mapFragment.getMapAsync(this)
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         enableMyLocation()
-        // val sydney = LatLng(33.0, 33.0)
-        // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        //  mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
-
         mMap.setOnMapClickListener { latLng ->
             mMap.clear()
             mMap.addMarker(MarkerOptions().position(latLng).title("Selected Location"))

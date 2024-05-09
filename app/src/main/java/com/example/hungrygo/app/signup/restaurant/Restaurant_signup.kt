@@ -22,9 +22,6 @@ class Restaurant_signup : Basic_Activity<RestaurantSignupBinding, Restaurant_sig
             dataBinding.errorLocation.setTextColor(Color.RED)
             dataBinding.errorLocation.setText(it)
         })
-
-
-
     }
 
     override fun initViewmodel(): Restaurant_signup_Viewmodel {

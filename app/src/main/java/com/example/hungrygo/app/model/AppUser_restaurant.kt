@@ -27,6 +27,5 @@ data class appUser_restaurant(
                 .orderBy("rating", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(onSuccessListener)
         }
-
     }
 }

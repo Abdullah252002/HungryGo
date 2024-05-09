@@ -14,7 +14,6 @@ class Customer_signup : Basic_Activity<CustomerSignupBinding, Customer_signup_Vi
         dataBinding.vm=viewModel
         viewModel.navigator=this
 
-
     }
 
     override fun initViewmodel(): Customer_signup_Viewmodel {

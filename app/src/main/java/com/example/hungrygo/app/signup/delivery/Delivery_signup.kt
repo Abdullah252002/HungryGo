@@ -47,8 +47,6 @@ class Delivery_signup : Basic_Activity<DeliverySignupBinding, Delivery_signup_Vi
         if(resultCode== RESULT_OK){
            dataBinding.uploadImage.setImageURI(data?.data)
             viewModel.image.value=data?.data
-           //   val uri = Uri.parse(dd)  convert string to uri
-
 
         }
     }

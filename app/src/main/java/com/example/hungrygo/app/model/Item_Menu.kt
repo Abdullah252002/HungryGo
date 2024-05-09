@@ -10,8 +10,6 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.ktx.storage
-
-
 data class Item_Menu(
     var id: String? = null,
     val food_name: String? = null,
@@ -29,18 +27,15 @@ data class Item_Menu(
         onSuccessListener: OnSuccessListener<Void>,
         onFailureListener: OnFailureListener
     ) {
-
         val db =
             Firebase.firestore.collection(Collection_name_restaurant).document(userId)
                 .collection(menuname)
         val collectionref = db.document(food_name!!)
         collectionref.set(itemMenu).addOnSuccessListener(onSuccessListener)
             .addOnFailureListener(onFailureListener)
-
         val storage =
             com.google.firebase.ktx.Firebase.storage.reference.child("${userId ?: "unknown"}/item/${food_name}.jpg")
         val uploadImage = storage.putFile(Image_uri)
-
         uploadImage
             .addOnSuccessListener {
                 storage.downloadUrl.addOnSuccessListener { uri ->
@@ -53,7 +48,6 @@ data class Item_Menu(
                         .document(food_name).update(hash as Map<String, Any>)
                 }
             }
-
     }
 
     companion object{

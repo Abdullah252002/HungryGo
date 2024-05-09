@@ -53,8 +53,6 @@ class AddPhoto : AppCompatActivity() {
 
                 }
 
-
-
         }
     }
 }

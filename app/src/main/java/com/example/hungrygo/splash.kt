@@ -15,7 +15,6 @@ import com.example.hungrygo.app.model.appUser_restaurant
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-
 class splash : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +22,6 @@ class splash : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({ Navigate() }, 3000)
 
     }
-
     private fun Navigate() {
         val firebaseUser = Firebase.auth.currentUser
         if (firebaseUser == null) {
@@ -54,19 +52,16 @@ class splash : AppCompatActivity() {
                 })
         }
     }
-
     fun start_customer_home() {
         val intent = Intent(this, Customer_home::class.java)
         startActivity(intent)
         finish()
     }
-
     fun start_delivery_home() {
         val intent = Intent(this, Delivery_home::class.java)
         startActivity(intent)
         finish()
     }
-
     fun start_restaurant_home() {
         val intent = Intent(this, Restaurant_home::class.java)
         startActivity(intent)

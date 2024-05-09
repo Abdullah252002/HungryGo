@@ -97,7 +97,7 @@ class Restaurant_home : AppCompatActivity() {
                 })
 
                 get_Item_request_del(user.id, OnSuccessListener {
-                    if (it.toObjects(Item_request::class.java).isNotEmpty()) {
+                    if (it.toObjects(Item_request::class.java).size != 0) {
                         update_data(true)
                     }else{
                         update_data(false)

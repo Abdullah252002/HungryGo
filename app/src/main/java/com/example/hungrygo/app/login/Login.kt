@@ -19,11 +19,6 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
         dataBinding.vm = viewModel
         viewModel.navigator = this
 
-
-
-
-
-
     }
 
     override fun initViewmodel(): Login_Viewmodel {
