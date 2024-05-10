@@ -38,11 +38,8 @@ class Item_fragment(val item: Image_Resturant):Fragment() {
         dataBinding.buttonaction.setOnClickListener {
             onItemClick?.Onitem(item)
         }
-
         getdata()
         dataBinding.recycleview.adapter=adapterItem
-
-
     }
 
     fun getdata(){

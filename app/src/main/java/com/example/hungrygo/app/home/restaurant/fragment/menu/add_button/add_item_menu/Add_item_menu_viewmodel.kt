@@ -28,15 +28,6 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
     val res_name=MutableLiveData<String>()
     val menu_name = MutableLiveData<String>()
 
-
-
-    fun Done() {
-        if (isvalid()) {
-            additem()
-
-        }
-    }
-
     fun additem() {
 
         showDialog.value = true
@@ -58,6 +49,17 @@ class Add_item_menu_viewmodel : Basic_Viewmodel<Navigator>() {
                 messageLiveData.value = it.localizedMessage
             })
     }
+
+
+
+    fun Done() {
+        if (isvalid()) {
+            additem()
+
+        }
+    }
+
+
 
     fun isvalid(): Boolean {
         var valid = true
