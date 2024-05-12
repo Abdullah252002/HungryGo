@@ -60,14 +60,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
     }
 
     private fun getdata(uid: String?) {
-        login_customer_tofirestore(uid!!,
-            OnSuccessListener {
-                val user = it.toObject(appUser_customer::class.java)
-                if (user != null) {
-                    DataUtils.appUser_customer=user
-                    navigator?.navigate_customer_home()
-                }
-            })
         login_delivery_tofirestore(uid!!,
             OnSuccessListener {
               val user=it.toObject(appUser_delivery::class.java)
@@ -76,7 +68,7 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                   navigator?.navigate_delivery_home()
               }
             })
-        login_resturant_tofirestore(uid!!,
+        login_resturant_tofirestore(uid,
             OnSuccessListener {
                 val user=it.toObject(appUser_restaurant::class.java)
                 if(user!=null){

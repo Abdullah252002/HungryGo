@@ -13,17 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
-import com.example.hungrygo.app.home.delivery.fragment.orders.Orders_del_fragment
-import com.example.hungrygo.app.home.delivery.fragment.restaurant.Restaurant_del_fragment
-import com.example.hungrygo.app.home.delivery.fragment.restaurant.order.Get_order
-import com.example.hungrygo.app.home.restaurant.fragment.orders.user.user_profile
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
-import com.example.hungrygo.get_item_into_shoping
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -33,8 +28,7 @@ class Delivery_home : AppCompatActivity() {
     lateinit var dataBinding: DeliveryHomeBinding
     var currentuser: String? = null
     private val handler = Handler()
-    val restaurantDelFragment=Restaurant_del_fragment()
-    val orders_del_fragment=Orders_del_fragment()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +36,8 @@ class Delivery_home : AppCompatActivity() {
         currentuser = Firebase.auth.currentUser?.uid
         dataBinding = DataBindingUtil.setContentView(this, R.layout.delivery_home)
         open_signout()
-        dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
+        /*
+                dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.restaurant -> {
                     PushFragment(restaurantDelFragment)
@@ -55,42 +50,10 @@ class Delivery_home : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+
+         */
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
-        handler.post(object : Runnable {
-            override fun run() {
-                restaurantDelFragment.updateListener=object :Restaurant_del_fragment.UpdateListener{
-                    override fun update() {
-                        restaurantDelFragment.getdata()
-                    }
 
-                }
-                handler.postDelayed(this, 15 * 1000) // Repeat every 10 seconds
-            }
-        })
-        restaurantDelFragment.navigate_request=object :Restaurant_del_fragment.Navigate_request{
-            override fun navigate(item: appUser_restaurant) {
-                val getOrder=Get_order(item)
-                getOrder.show(supportFragmentManager,"")
-
-                getOrder.onItemClickListener=object :Get_order.OnItemClickListener{
-                    override fun onItemClick(ckeck: Boolean) {
-                        change_badgeDrawable(ckeck)
-                    }
-
-                }
-
-            }
-
-        }
-
-        orders_del_fragment.navigateUser=object :Orders_del_fragment.Navigate_user{
-            override fun navigate_user(appuserCustomer: appUser_customer) {
-                val userProfile=user_profile(appuserCustomer)
-                userProfile.show(supportFragmentManager,"")
-            }
-
-
-        }
 
     }
     fun open_signout() {
