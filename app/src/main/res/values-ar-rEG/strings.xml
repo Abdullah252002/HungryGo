@@ -28,5 +28,6 @@
     <string name="price_">السعر:</string>
     <string name="delete">حذف</string>
     <string name="restaurants">مطاعم</string>
+    <string name="profile">الملف الشخصي</string>
 
 </resources>

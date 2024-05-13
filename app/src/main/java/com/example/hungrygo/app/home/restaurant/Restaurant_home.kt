@@ -58,6 +58,9 @@ class Restaurant_home : AppCompatActivity() {
 
 
     fun open_drawerLayout() {
+        dataBinding.profile.setOnClickListener {
+            startActivity(Intent(this, Profile_Restaurant::class.java))
+        }
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
             dataBinding.drawerLayout.open()
         }

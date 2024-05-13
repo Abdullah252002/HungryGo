@@ -23,5 +23,6 @@
     <string name="price_">Price :</string>
     <string name="delete">delete</string>
     <string name="restaurants">Restaurants</string>
+    <string name="profile">Profile</string>
 
 </resources>
