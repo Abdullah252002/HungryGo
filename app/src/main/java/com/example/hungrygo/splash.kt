@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hungrygo.app.home.delivery.Delivery_home
 import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.login.Login
+import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.google.android.gms.tasks.OnSuccessListener
@@ -21,7 +22,6 @@ class splash : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({ Navigate() }, 3000)
 
     }
-
     private fun Navigate() {
         val firebaseUser = Firebase.auth.currentUser
         if (firebaseUser == null) {

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu"
-        android:title="Menu"
-        android:icon="@drawable/menu_restaurant"
-        />
+
     <item android:id="@+id/orders"
-        android:title="Orders"
+        android:title="@string/orders"
         android:icon="@drawable/orders"
         />
     <item android:id="@+id/delivery"
-        android:title="Delivery"
+        android:title="@string/delivery"
         android:icon="@drawable/delivery_res"
         />
 

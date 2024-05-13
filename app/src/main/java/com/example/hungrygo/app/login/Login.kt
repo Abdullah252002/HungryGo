@@ -1,5 +1,6 @@
 package com.example.hungrygo.app.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -10,17 +11,29 @@ import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.signup.Account_Type
 import com.example.hungrygo.databinding.LogInBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.yariksoffice.lingver.Lingver
+import java.util.Locale
 
 
 class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
+    private var isArabic = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding.vm = viewModel
         viewModel.navigator = this
 
 
-
-
+        dataBinding.en.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+            finish()
+            if (isArabic) {
+                Lingver.getInstance().setLocale(this, "en")
+            } else {
+                Lingver.getInstance().setLocale(this, "ar")
+            }
+            recreate()
+        }
 
 
     }
@@ -39,7 +52,7 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
 
     override fun navigate_to_signup() {
         val intent = Intent(this, Account_Type::class.java)
-     //   startActivity(intent)
+        //   startActivity(intent)
     }
 
 
@@ -54,6 +67,11 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
         val intent = Intent(this, Restaurant_home::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isArabic = Lingver.getInstance().getLanguage() == "ar"
     }
 
 

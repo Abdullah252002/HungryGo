@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.YarikSOffice:lingver:1.3.0")
+
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-firestore")

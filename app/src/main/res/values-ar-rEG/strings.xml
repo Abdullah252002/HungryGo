@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">دلفري مصر</string>
+    <string name="forgot_password"><u>نسيت كلمة المرور؟</u></string>
+    <string name="create_account"><u>أو أنشئ حسابًا جديدًا</u></string>
+    <string name="title_activity_set_location">set_Location</string>
+    <string name="title_activity_restaurant_home">Restaurant_home</string>
+    <string name="en">en</string>
+
+    <string name="login">تسجيل الدخول</string>
+    <string name="add_your_details_to_login">أضف تفاصيلك لتسجيل الدخول</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+
+    <string name="signout">تسجيل الخروج</string>
+    <string name="language">اللغة</string>
+
+    <string name="orders">الطلبات</string>
+    <string name="delivery">التوصيل</string>
+</resources>

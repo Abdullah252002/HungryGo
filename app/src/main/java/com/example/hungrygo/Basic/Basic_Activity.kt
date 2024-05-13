@@ -2,12 +2,15 @@ package com.example.chat.Basic
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.yariksoffice.lingver.Lingver
+import java.util.Locale
 
 
 open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>> :
@@ -21,7 +24,10 @@ open abstract class Basic_Activity<DB : ViewDataBinding, VM : Basic_Viewmodel<*>
         viewModel = initViewmodel()
         getMaterialToolbar()?.let { showbackclick(it) }
         Livedata()
+
     }
+
+
 
     fun Livedata(){
         viewModel.messageLiveData.observe(this,{message->

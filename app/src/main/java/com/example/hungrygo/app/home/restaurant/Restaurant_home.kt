@@ -14,8 +14,10 @@ import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.yariksoffice.lingver.Lingver
 
 class Restaurant_home : AppCompatActivity() {
+    private var isArabic = true
     val user = DataUtils.appuser_Restaurant
     lateinit var dataBinding: RestaurantHomeBinding
 
@@ -45,16 +47,23 @@ class Restaurant_home : AppCompatActivity() {
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
 
 
-
-
-
-
     }
 
 
     fun open_drawerLayout() {
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
             dataBinding.drawerLayout.open()
+        }
+        dataBinding.language.setOnClickListener {
+            val intent = Intent(this, Restaurant_home::class.java)
+            startActivity(intent)
+            finish()
+            if (isArabic) {
+                Lingver.getInstance().setLocale(this, "en")
+            } else {
+                Lingver.getInstance().setLocale(this, "ar")
+            }
+            recreate()
         }
         dataBinding.signout.setOnClickListener {
             Firebase.auth.signOut()
@@ -63,7 +72,6 @@ class Restaurant_home : AppCompatActivity() {
             finish()
         }
     }
-
 
 
     fun PushFragment(fragment: Fragment, addtobackstack: Boolean = false) {
@@ -82,7 +90,7 @@ class Restaurant_home : AppCompatActivity() {
     }
 
 
-    fun change_badgeDrawable(isVisible: Boolean,item:Int) {
+    fun change_badgeDrawable(isVisible: Boolean, item: Int) {
 
         val menuItem: MenuItem? =
             dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(item)
@@ -90,6 +98,11 @@ class Restaurant_home : AppCompatActivity() {
             .getOrCreateBadge(menuItem?.itemId!!)
         badgeDrawable.isVisible = isVisible
         badgeDrawable.backgroundColor = ContextCompat.getColor(this, R.color.red)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isArabic = Lingver.getInstance().getLanguage() == "ar"
     }
 
 
