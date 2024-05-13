@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+<variable
+    name="items"
+    type="com.example.hungrygo.app.model.Item_Orders" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/tab_selected"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textlocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/location_"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textprice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="qerk;gq;kgr"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/textprice"
+            app:layout_constraintStart_toEndOf="@+id/textlocation"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="7dp"
+            android:text="@{items.location}"
+            />
+
+        <TextView
+            android:id="@+id/textprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/price_"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/textprice"
+            app:layout_constraintTop_toTopOf="@+id/textprice"
+            android:textSize="20sp"
+            tools:text="5000"
+            android:layout_marginStart="7dp"
+            android:text="@{items.price}"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/textprice"
+            app:layout_constraintStart_toEndOf="@id/price"
+            android:layout_marginStart="7dp"
+            android:text="@string/egp"
+            android:textSize="20sp"
+            />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/new_button"
+            />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/button"
+            app:layout_constraintBottom_toBottomOf="@+id/button"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            android:indeterminateTint="@color/white"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

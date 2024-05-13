@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.DeliveryFragment
+import com.example.hungrygo.app.home.restaurant.fragment.orders.add.Add_item_delFragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.databinding.RestaurantHomeBinding
@@ -22,6 +23,9 @@ class Restaurant_home : AppCompatActivity() {
     private var isArabic = true
     val user = DataUtils.appuser_Restaurant
     lateinit var dataBinding: RestaurantHomeBinding
+    var ordersFragment = OrdersFragment()
+    val addItemDelfragment = Add_item_delFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +35,7 @@ class Restaurant_home : AppCompatActivity() {
         dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.orders -> {
-                    PushFragment(OrdersFragment())
+                    PushFragment(ordersFragment)
                 }
 
                 R.id.delivery -> {
@@ -40,8 +44,14 @@ class Restaurant_home : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
-
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.orders
+
+        ordersFragment.navigation = object : OrdersFragment.Navigation {
+            override fun navigateTo() {
+                addItemDelfragment.show(supportFragmentManager, "")
+            }
+
+        }
 
 
     }

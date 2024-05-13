@@ -52,7 +52,7 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
 
     override fun navigate_to_signup() {
         val intent = Intent(this, Account_Type::class.java)
-        //   startActivity(intent)
+           startActivity(intent)
     }
 
 

@@ -17,4 +17,15 @@
 
     <string name="orders">الطلبات</string>
     <string name="delivery">التوصيل</string>
+
+    <string name="search_for_dlivery">البحث عن التوصيل</string>
+    <string name="location">الموقع</string>
+    <string name="price">السعر</string>
+    <string name="egp">ج.م</string>
+    <string name="done">تم</string>
+
+    <string name="location_">الموقع:</string>
+    <string name="price_">السعر:</string>
+
+
 </resources>

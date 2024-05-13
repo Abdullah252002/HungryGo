@@ -10,6 +10,7 @@ import com.example.hungrygo.app.model.appUser_restaurant.Companion.Collection_na
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.FirebaseStorage
@@ -47,6 +48,11 @@ fun addUser_restaurant_ToFirestore(
     onFailureListener: OnFailureListener
 ) {
     val db = Firebase.firestore.collection(Collection_name_restaurant).document(user.id!!).set(user)
+        .addOnSuccessListener(onSuccessListener)
+        .addOnFailureListener(onFailureListener)
+
+    val database = Firebase.database.reference
+    database.child(Collection_name_restaurant).child(user.id).setValue(user)
         .addOnSuccessListener(onSuccessListener)
         .addOnFailureListener(onFailureListener)
 
