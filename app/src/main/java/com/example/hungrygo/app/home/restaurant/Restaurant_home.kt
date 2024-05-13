@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
+import com.example.hungrygo.app.home.restaurant.fragment.delivery.DeliveryFragment
+import com.example.hungrygo.app.home.restaurant.fragment.orders.OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.firebase.Firebase
@@ -25,26 +27,21 @@ class Restaurant_home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
         open_drawerLayout()
-        /*
-                dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.menu -> {
-                    PushFragment(menuFragment)
-                }
 
+        dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
                 R.id.orders -> {
-                    PushFragment(ordersFragment)
+                    PushFragment(OrdersFragment())
                 }
 
                 R.id.delivery -> {
-                    PushFragment(deliveryFragment)
+                    PushFragment(DeliveryFragment())
                 }
             }
             return@setOnItemSelectedListener true
         }
 
-         */
-        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.menu
+        dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.orders
 
 
     }
