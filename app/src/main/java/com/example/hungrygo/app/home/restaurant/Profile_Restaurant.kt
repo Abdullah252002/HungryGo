@@ -30,9 +30,15 @@ class Profile_Restaurant : AppCompatActivity() {
             startActivityForResult(intent, 1000)
         }
 
-
-            Glide.with(this@Profile_Restaurant).load(data_profile?.image)
-                .into(dataBinding.imageProfile)
+        if (data_profile?.image != null) {
+            Firebase.firestore.collection(Collection_name_restaurant).document(data_profile.id!!)
+                .get().addOnSuccessListener {
+                    Glide.with(this).load(it.get("image"))
+                        .into(dataBinding.imageProfile)
+            }
+        } else {
+            dataBinding.imageProfile.setImageResource(R.drawable.profile)
+        }
 
 
     }
@@ -61,6 +67,7 @@ class Profile_Restaurant : AppCompatActivity() {
 
         }
     }
+
 
 }
 
