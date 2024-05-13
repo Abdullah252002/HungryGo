@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/delete"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/new_button"
             />
@@ -95,6 +95,20 @@
             app:layout_constraintEnd_toEndOf="@+id/button"
             android:indeterminateTint="@color/white"
 
+            />
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/button"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/delete"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:drawableStart="@drawable/delete"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

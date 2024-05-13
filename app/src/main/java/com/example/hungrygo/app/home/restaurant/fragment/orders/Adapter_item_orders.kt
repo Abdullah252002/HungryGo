@@ -1,17 +1,14 @@
 package com.example.hungrygo.app.home.restaurant.fragment.orders
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.databinding.ItemOrdersBinding
 
-class Adapter_test : RecyclerView.Adapter<Adapter_test.Viewholder>() {
+class Adapter_item_orders : RecyclerView.Adapter<Adapter_item_orders.Viewholder>() {
     var items: List<Item_Orders?>?=null
     class Viewholder(val dataBinding: ItemOrdersBinding) :
         RecyclerView.ViewHolder(dataBinding.root) {
@@ -36,14 +33,22 @@ class Adapter_test : RecyclerView.Adapter<Adapter_test.Viewholder>() {
     }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
-        holder.bind(items?.get(position)!!)
+        val item = items?.get(position)
+        holder.bind(item!!)
+        holder.dataBinding.delete.setOnClickListener {
+            clickListener?.onClick(item)
+        }
     }
 
     fun setlist(newitems: List<Item_Orders>) {
-        items= newitems.toMutableList()
+        items= newitems
         notifyDataSetChanged()
     }
 
+    var clickListener: ClickOnItem? = null
+    interface ClickOnItem {
+        fun onClick(item: Item_Orders)
+    }
 
 
 }

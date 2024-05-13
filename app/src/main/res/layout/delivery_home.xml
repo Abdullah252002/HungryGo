@@ -40,6 +40,18 @@
                     android:background="@color/Secondcolor"
                     android:scaleType="centerInside"
                     android:src="@drawable/delivery" />
+                <TextView
+                    android:id="@+id/language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/language"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="@string/language"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/signout"
@@ -50,7 +62,7 @@
                     android:drawableStart="@drawable/logout"
                     android:drawablePadding="10dp"
                     android:padding="10dp"
-                    android:text="SignOut"
+                    android:text="@string/signout"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 

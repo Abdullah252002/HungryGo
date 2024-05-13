@@ -11,17 +11,16 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Orders
+import com.example.hungrygo.app.model.Item_Orders.Companion.Delete_item_Orders
 import com.example.hungrygo.app.model.Item_Orders.Companion.Get_item_Orders
-import com.example.hungrygo.app.model.appUser_restaurant
+import com.example.hungrygo.app.model.Item_Orders.Companion.update_item_Orders
 import com.example.hungrygo.databinding.FragmentOrdersBinding
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
-import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.firestore
 
 class OrdersFragment : Fragment() {
     lateinit var dataBinding: FragmentOrdersBinding
@@ -33,7 +32,7 @@ class OrdersFragment : Fragment() {
         return dataBinding.root
     }
 
-    var adapterTest = Adapter_test()
+    var adapterTest = Adapter_item_orders()
     val userid = Firebase.auth.currentUser?.uid
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,13 +41,21 @@ class OrdersFragment : Fragment() {
         dataBinding.buttonaction.setOnClickListener {
             navigation?.navigateTo()
         }
-
-
         getdata()
         dataBinding.recyclerview.adapter = adapterTest
 
-    }
+        adapterTest.clickListener = object : Adapter_item_orders.ClickOnItem {
+            override fun onClick(item: Item_Orders) {
+                Delete_item_Orders(userid!!, item.id!!, OnSuccessListener {
+                    Toast.makeText(requireContext(), "deleted", Toast.LENGTH_SHORT).show()
+                }, OnFailureListener {
+                    Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                })
+            }
 
+        }
+
+    }
     fun getdata() {
         Get_item_Orders(userid!!, EventListener { value, error ->
             if (error != null) {
@@ -56,13 +63,24 @@ class OrdersFragment : Fragment() {
                 return@EventListener
             }
             if (value != null) {
+                update_item_Orders(userid, true)
                 val items = value.toObjects(Item_Orders::class.java)
+                check_size(items)
                 adapterTest.setlist(items)
             } else {
                 Log.d(TAG, "Current data: null")
             }
         })
     }
+
+    private fun check_size(items: List<Item_Orders>) {
+        if (items.size==0){
+            update_item_Orders(userid!!, false)
+        }else{
+            update_item_Orders(userid!!, true)
+        }
+    }
+
 
     var navigation: Navigation? = null
 

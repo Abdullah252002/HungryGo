@@ -26,6 +26,7 @@
 
     <string name="location_">الموقع:</string>
     <string name="price_">السعر:</string>
-
+    <string name="delete">حذف</string>
+    <string name="restaurants">مطاعم</string>
 
 </resources>

@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 
@@ -28,9 +29,30 @@ data class Item_Orders(
                 .addOnFailureListener(onFailureListener)
         }
 
-        fun Get_item_Orders(userid: String,listener:EventListener<QuerySnapshot>) {
-            val db = Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
-                .document(userid).collection("Orders").addSnapshotListener(listener)
+        fun Get_item_Orders(userid: String, listener: EventListener<QuerySnapshot>) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(userid).collection("Orders")
+                .orderBy("createdTimestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(listener)
+        }
+        fun update_item_Orders(userid: String,status:Boolean){
+            val hashMap = hashMapOf(
+                "order" to status
+            )
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(userid).update(hashMap as Map<String, Any>)
+
+        }
+
+        fun Delete_item_Orders(
+            userid: String,
+            id: String,
+            onSuccessListener: OnSuccessListener<Void>,
+            onFailureListener: OnFailureListener
+        ) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .document(userid).collection("Orders").document(id).delete()
+                .addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener)
         }
     }
 }
