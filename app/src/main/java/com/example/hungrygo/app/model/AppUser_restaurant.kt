@@ -13,7 +13,7 @@ data class appUser_restaurant(
     val restaurant_mobile_number:String?=null,
     val email:String?=null,
     val latitude:Double?=null,
-    val photo:Boolean?=false,
+    val longitude:Double?=null,
     val image:String?=null,
     val order:Boolean?=false
 ){
