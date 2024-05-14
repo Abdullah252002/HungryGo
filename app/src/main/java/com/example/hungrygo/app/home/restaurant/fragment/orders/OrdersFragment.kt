@@ -12,7 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.Item_Orders.Companion.Delete_item_Orders
-import com.example.hungrygo.app.model.Item_Orders.Companion.Get_item_Orders
+import com.example.hungrygo.app.model.Item_Orders.Companion.Get_item_Orders_res
 import com.example.hungrygo.app.model.Item_Orders.Companion.update_item_Orders
 import com.example.hungrygo.databinding.FragmentOrdersBinding
 import com.google.android.gms.tasks.OnFailureListener
@@ -57,13 +57,12 @@ class OrdersFragment : Fragment() {
 
     }
     fun getdata() {
-        Get_item_Orders(userid!!, EventListener { value, error ->
+        Get_item_Orders_res(userid!!, EventListener { value, error ->
             if (error != null) {
                 Log.e(TAG, "Listen failed.", error)
                 return@EventListener
             }
             if (value != null) {
-                update_item_Orders(userid, true)
                 val items = value.toObjects(Item_Orders::class.java)
                 check_size(items)
                 adapterTest.setlist(items)

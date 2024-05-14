@@ -15,10 +15,9 @@ import androidx.fragment.app.Fragment
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.delivery.fragment.orders.Orders_delFragment
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.Restaurant_delFragment
-import com.example.hungrygo.app.home.restaurant.Restaurant_home
+import com.example.hungrygo.app.home.delivery.fragment.restaurant.orders.get_OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
-import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
@@ -33,6 +32,7 @@ class Delivery_home : AppCompatActivity() {
     var currentuser = Firebase.auth.currentUser?.uid
     private val handler = Handler()
     private var isArabic = true
+    var restaurantDelfragment=Restaurant_delFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,7 @@ class Delivery_home : AppCompatActivity() {
         dataBinding.appBarRestaurantHome.BottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.restaurant -> {
-                    PushFragment(Restaurant_delFragment())
+                    PushFragment(restaurantDelfragment)
                 }
 
                 R.id.orders -> {
@@ -53,6 +53,14 @@ class Delivery_home : AppCompatActivity() {
         }
 
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
+
+        restaurantDelfragment.navigateToOrders=object :Restaurant_delFragment.Navigate_to_orders{
+            override fun navigate(item: appUser_restaurant) {
+                val getOrdersfragment=get_OrdersFragment(item)
+                getOrdersfragment.show(supportFragmentManager,"")
+            }
+
+        }
 
 
     }

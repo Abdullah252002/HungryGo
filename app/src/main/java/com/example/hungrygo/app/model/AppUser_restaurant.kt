@@ -2,6 +2,8 @@ package com.example.hungrygo.app.model
 
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 
@@ -19,8 +21,9 @@ data class appUser_restaurant(
 ){
     companion object{
         const val Collection_name_restaurant="Restaurant Users"
-        fun getusers_res(onSuccessListener: OnSuccessListener<QuerySnapshot>){
-            Firebase.firestore.collection(Collection_name_restaurant).get().addOnSuccessListener(onSuccessListener)
+        fun getusers_res(listener: EventListener<QuerySnapshot>) {
+            Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                .addSnapshotListener(listener)
         }
 
     }
