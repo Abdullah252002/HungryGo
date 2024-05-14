@@ -40,7 +40,9 @@
             app:layout_constraintStart_toEndOf="@+id/textlocation"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="7dp"
-            android:text="@{items.location}" />
+            android:text="@{items.location}"
+            app:layout_constraintEnd_toStartOf="@+id/add"
+            />
 
         <TextView
             android:id="@+id/textprice"

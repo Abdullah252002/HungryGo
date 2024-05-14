@@ -43,9 +43,9 @@ class Orders_delFragment : Fragment() {
                 Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
                     .document(userid!!).collection("Orders").document(itemorders.id!!)
                     .delete().addOnSuccessListener {
-                        Toast.makeText(context, "Order Deleted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Order Deleted", Toast.LENGTH_SHORT).show()
                     }.addOnFailureListener {
-                        Toast.makeText(context, "Order Not Deleted", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Order Not Deleted", Toast.LENGTH_SHORT).show()
                     }
             }
 

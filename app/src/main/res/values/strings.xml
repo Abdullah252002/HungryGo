@@ -24,5 +24,8 @@
     <string name="delete">delete</string>
     <string name="restaurants">Restaurants</string>
     <string name="profile">Profile</string>
+    <string name="phone">phone :</string>
+    <string name="delete_order">delete order</string>
+
 
 </resources>

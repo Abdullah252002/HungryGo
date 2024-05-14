@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.DeliveryFragment
+import com.example.hungrygo.app.home.restaurant.fragment.delivery.profile.Profile_deliveryFragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.add.Add_item_delFragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.OrdersFragment
 import com.example.hungrygo.app.login.Login
+import com.example.hungrygo.app.model.Item_Orders
+import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -25,6 +28,7 @@ class Restaurant_home : AppCompatActivity() {
     lateinit var dataBinding: RestaurantHomeBinding
     var ordersFragment = OrdersFragment()
     val addItemDelfragment = Add_item_delFragment()
+    val deliveryFragment = DeliveryFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +41,8 @@ class Restaurant_home : AppCompatActivity() {
                 R.id.orders -> {
                     PushFragment(ordersFragment)
                 }
-
                 R.id.delivery -> {
-                    PushFragment(DeliveryFragment())
+                    PushFragment(deliveryFragment)
                 }
             }
             return@setOnItemSelectedListener true
@@ -50,6 +53,15 @@ class Restaurant_home : AppCompatActivity() {
             override fun navigateTo() {
                 addItemDelfragment.show(supportFragmentManager, "")
             }
+
+        }
+
+        deliveryFragment.navigateToDelivery=object :DeliveryFragment.NavigateToDelivery{
+            override fun navigate(appUser_delivery: appUser_delivery, itemOrders: Item_Orders) {
+                val profileDeliveryfragment=Profile_deliveryFragment(appUser_delivery,itemOrders)
+                profileDeliveryfragment.show(supportFragmentManager,"")
+            }
+
 
         }
 

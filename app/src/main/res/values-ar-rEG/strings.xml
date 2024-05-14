@@ -29,5 +29,8 @@
     <string name="delete">حذف</string>
     <string name="restaurants">مطاعم</string>
     <string name="profile">الملف الشخصي</string>
+    <string name="phone">الهاتف:</string>
+
+    <string name="delete_order">حذف الطلب</string>
 
 </resources>
