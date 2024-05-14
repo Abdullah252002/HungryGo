@@ -45,6 +45,7 @@ android {
 
 dependencies {
 
+
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 
     // Add the dependency for the Firebase Authentication library

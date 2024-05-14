@@ -26,6 +26,8 @@
     <string name="profile">Profile</string>
     <string name="phone">phone :</string>
     <string name="delete_order">delete order</string>
+    <string name="phone_number">phone number</string>
+    <string name="phone_">phone :</string>
 
 
 </resources>

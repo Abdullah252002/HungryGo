@@ -12,6 +12,7 @@ data class Item_Orders(
     var id: String? = null,
     val location: String? = null,
     val price: String? = null,
+    val number: String? = null,
     var delivery_id: String? = null,
     val createdTimestamp: Long? = System.currentTimeMillis()
 ) {

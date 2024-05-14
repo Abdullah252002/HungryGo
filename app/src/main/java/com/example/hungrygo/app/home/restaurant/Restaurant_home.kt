@@ -1,10 +1,26 @@
 package com.example.hungrygo.app.home.restaurant
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,9 +33,12 @@ import com.example.hungrygo.app.home.restaurant.fragment.orders.OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.appUser_delivery
+import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.firestore
 import com.yariksoffice.lingver.Lingver
 
 class Restaurant_home : AppCompatActivity() {
@@ -29,7 +48,7 @@ class Restaurant_home : AppCompatActivity() {
     var ordersFragment = OrdersFragment()
     val addItemDelfragment = Add_item_delFragment()
     val deliveryFragment = DeliveryFragment()
-
+    val userid = Firebase.auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +60,7 @@ class Restaurant_home : AppCompatActivity() {
                 R.id.orders -> {
                     PushFragment(ordersFragment)
                 }
+
                 R.id.delivery -> {
                     PushFragment(deliveryFragment)
                 }
@@ -56,18 +76,80 @@ class Restaurant_home : AppCompatActivity() {
 
         }
 
-        deliveryFragment.navigateToDelivery=object :DeliveryFragment.NavigateToDelivery{
+        deliveryFragment.navigateToDelivery = object : DeliveryFragment.NavigateToDelivery {
             override fun navigate(appUser_delivery: appUser_delivery, itemOrders: Item_Orders) {
-                val profileDeliveryfragment=Profile_deliveryFragment(appUser_delivery,itemOrders)
-                profileDeliveryfragment.show(supportFragmentManager,"")
+                val profileDeliveryfragment = Profile_deliveryFragment(appUser_delivery, itemOrders)
+                profileDeliveryfragment.show(supportFragmentManager, "")
             }
-
-
         }
 
+        check_all_drawerLayout()
 
+        /*
+         createNotificationChannel()
+        dataBinding.appBarRestaurantHome.button.setOnClickListener {
+            val notificationContent = "This is the notification content"
+
+            val intent = Intent(this, Restaurant_home::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent,
+                PendingIntent.FLAG_IMMUTABLE)
+
+            val builder = NotificationCompat.Builder(this, "channelId")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Notification Title")
+                .setContentText(notificationContent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+
+            with(NotificationManagerCompat.from(this)) {
+                notify(123, builder.build()) // Use a unique notification ID here
+            }
+        }
+         */
     }
 
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "My Notification Channel"
+            val descriptionText = "This is a notification channel for my app"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("channelId", name, importance).apply {
+                description = descriptionText
+            }
+
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun check_all_drawerLayout() {
+        Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+            .document(userid!!).collection("Delivery")
+            .orderBy("createdTimestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { value, error ->
+
+                if (error != null) {
+                    Log.e(ContentValues.TAG, "Listen failed.", error)
+                    return@addSnapshotListener
+                }
+                if (value != null) {
+                    val items = value.toObjects(Item_Orders::class.java)
+                    if (items.isNotEmpty()) {
+                        change_badgeDrawable(true, R.id.delivery)
+                    } else {
+                        change_badgeDrawable(false, R.id.delivery)
+                    }
+
+                } else {
+                    Log.d(ContentValues.TAG, "Current data: null")
+                }
+            }
+    }
 
     fun open_drawerLayout() {
         dataBinding.profile.setOnClickListener {

@@ -38,9 +38,11 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
             if (checkerror()) {
                 val location = dataBinding.location.editText?.text.toString()
                 val price = dataBinding.price.editText?.text.toString()
+                val number = dataBinding.number.editText?.text.toString()
                 val itemOrders = Item_Orders(
                     location = location,
-                    price = price
+                    price = price,
+                    number = number
                 )
                 Add_item_Orders(userid!!, itemOrders, OnSuccessListener {}, OnFailureListener {})
                 dismiss()
@@ -60,6 +62,15 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
             dataBinding.price.error = "please enter price"
             isvalid = false
             handler(dataBinding.price)
+        }
+        if (dataBinding.number.editText?.text.isNullOrBlank()) {
+            dataBinding.number.error = "please enter number"
+            isvalid = false
+            handler(dataBinding.number)
+        }else if (dataBinding.number.editText?.text.toString().length<11 || dataBinding.number.editText?.text.toString().length>11) {
+            dataBinding.number.error = "please enter 11 number"
+            isvalid = false
+            handler(dataBinding.number)
         }
         return isvalid
     }

@@ -24,10 +24,9 @@
             android:layout_marginStart="15dp"
             android:text="@string/location_"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/textprice"
+            app:layout_constraintBottom_toTopOf="@+id/phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
             />
 
         <TextView
@@ -36,13 +35,40 @@
             android:layout_height="wrap_content"
             tools:text="qerk;gq;kgr"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/textprice"
+            app:layout_constraintBottom_toTopOf="@+id/number"
             app:layout_constraintStart_toEndOf="@+id/textlocation"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="7dp"
             android:text="@{items.location}"
             app:layout_constraintEnd_toStartOf="@+id/add"
             />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/textlocation"
+            app:layout_constraintStart_toStartOf="@+id/textlocation"
+            app:layout_constraintBottom_toTopOf="@id/textprice"
+
+            />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="qergr"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/phone"
+            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintBottom_toTopOf="@+id/price"
+            app:layout_constraintEnd_toStartOf="@id/add"
+            text="@{items.number}"
+            android:autoLink="phone"
+            />
+
 
         <TextView
             android:id="@+id/textprice"
@@ -53,7 +79,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
+            app:layout_constraintTop_toBottomOf="@+id/number" />
 
         <TextView
             android:id="@+id/price"

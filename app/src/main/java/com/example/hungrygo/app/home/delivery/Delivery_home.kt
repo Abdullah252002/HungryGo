@@ -1,10 +1,12 @@
 package com.example.hungrygo.app.home.delivery
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,12 +20,14 @@ import com.example.hungrygo.app.home.delivery.fragment.restaurant.Restaurant_del
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.orders.get_OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
+import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.firestore
 import com.yariksoffice.lingver.Lingver
 
@@ -32,7 +36,7 @@ class Delivery_home : AppCompatActivity() {
     var currentuser = Firebase.auth.currentUser?.uid
     private val handler = Handler()
     private var isArabic = true
-    var restaurantDelfragment=Restaurant_delFragment()
+    var restaurantDelfragment = Restaurant_delFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,15 +58,64 @@ class Delivery_home : AppCompatActivity() {
 
         dataBinding.appBarRestaurantHome.BottomNavigation.selectedItemId = R.id.restaurant
 
-        restaurantDelfragment.navigateToOrders=object :Restaurant_delFragment.Navigate_to_orders{
-            override fun navigate(item: appUser_restaurant) {
-                val getOrdersfragment=get_OrdersFragment(item)
-                getOrdersfragment.show(supportFragmentManager,"")
+        restaurantDelfragment.navigateToOrders =
+            object : Restaurant_delFragment.Navigate_to_orders {
+                override fun navigate(item: appUser_restaurant) {
+                    val getOrdersfragment = get_OrdersFragment(item)
+                    getOrdersfragment.show(supportFragmentManager, "")
+                }
+
             }
 
-        }
+        check_all()
 
 
+    }
+
+    val userid = Firebase.auth.currentUser?.uid
+    private fun check_all() {
+        appUser_restaurant.getusers_res(EventListener { value, error ->
+            if (error != null) {
+                Log.e(ContentValues.TAG, "Listen failed.", error)
+                return@EventListener
+            }
+            if (value != null) {
+                val items = value.toObjects(appUser_restaurant::class.java)
+                var newlist = mutableListOf<appUser_restaurant>()
+                for (i in items) {
+                    if (i.order == true)
+                        newlist.add(i)
+                }
+                if (newlist.isNotEmpty()) {
+                    change_badgeDrawable(true, R.id.restaurant)
+                } else {
+                    change_badgeDrawable(false, R.id.restaurant)
+                }
+
+
+            } else {
+                Log.d(ContentValues.TAG, "Current data: null")
+            }
+        })
+
+        Item_Orders.Get_item_Orders_del(userid!!, EventListener { value, error ->
+            if (error != null) {
+                Log.e(ContentValues.TAG, "Listen failed.", error)
+                return@EventListener
+            }
+            if (value != null) {
+                val items = value.toObjects(Item_Orders::class.java)
+                if (items.isNotEmpty()) {
+                    change_badgeDrawable(true, R.id.orders)
+                } else {
+                    change_badgeDrawable(false, R.id.orders)
+                }
+
+
+            } else {
+                Log.d(ContentValues.TAG, "Current data: null")
+            }
+        })
     }
 
     fun open_signout() {
@@ -151,10 +204,10 @@ class Delivery_home : AppCompatActivity() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    fun change_badgeDrawable(isVisible: Boolean) {
+    fun change_badgeDrawable(isVisible: Boolean, item: Int) {
 
         val menuItem: MenuItem? =
-            dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(R.id.orders)
+            dataBinding.appBarRestaurantHome.BottomNavigation.menu.findItem(item)
         val badgeDrawable = dataBinding.appBarRestaurantHome.BottomNavigation
             .getOrCreateBadge(menuItem?.itemId!!)
         badgeDrawable.isVisible = isVisible

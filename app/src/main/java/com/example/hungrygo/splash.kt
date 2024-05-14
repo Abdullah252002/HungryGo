@@ -1,9 +1,12 @@
 package com.example.hungrygo
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hungrygo.app.home.delivery.Delivery_home
@@ -15,6 +18,7 @@ import com.example.hungrygo.app.model.appUser_restaurant
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.database.database
 import com.google.firebase.firestore.firestore
 
 class splash : AppCompatActivity() {
@@ -27,38 +31,43 @@ class splash : AppCompatActivity() {
 
     private fun Navigate() {
 
-        Firebase.firestore.collection("Room").document("zj93nshuIxac6NY7ESff").get()
-            .addOnSuccessListener {
-                if (it.get("check").toString()=="true"){
-                    val firebaseUser = Firebase.auth.currentUser
-                    if (firebaseUser == null) {
-                        val intent = Intent(this, Login::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        login_delivery_tofirestore(firebaseUser.uid,
-                            OnSuccessListener {
-                                val user = it.toObject(appUser_delivery::class.java)
-                                if (user != null) {
-                                    DataUtils.appuser_Delivery = user
-                                    start_delivery_home()
-                                }
-                            })
-                        login_resturant_tofirestore(firebaseUser.uid,
-                            OnSuccessListener {
-                                val user = it.toObject(appUser_restaurant::class.java)
-                                if (user != null) {
-                                    DataUtils.appuser_Restaurant = user
-                                    start_restaurant_home()
-                                }
-                            })
-                    }
-                }else{
-                    val intent = Intent(this, need_Update::class.java)
+        val database = Firebase.database.reference
+     //   database.child("user").setValue("test")
+        database.child("user").get().addOnSuccessListener {
+            if(it.value.toString().equals("test")){
+
+                val firebaseUser = Firebase.auth.currentUser
+                if (firebaseUser == null) {
+                    val intent = Intent(this, Login::class.java)
                     startActivity(intent)
                     finish()
+                } else {
+                    login_delivery_tofirestore(firebaseUser.uid,
+                        OnSuccessListener {
+                            val user = it.toObject(appUser_delivery::class.java)
+                            if (user != null) {
+                                DataUtils.appuser_Delivery = user
+                                start_delivery_home()
+                            }
+                        })
+                    login_resturant_tofirestore(firebaseUser.uid,
+                        OnSuccessListener {
+                            val user = it.toObject(appUser_restaurant::class.java)
+                            if (user != null) {
+                                DataUtils.appuser_Restaurant = user
+                                start_restaurant_home()
+                            }
+                        })
                 }
+
+            }else{
+                val intent = Intent(this, need_Update::class.java)
+                startActivity(intent)
+                finish()
             }
+        }.addOnFailureListener {
+            Log.e("eeeeeeeeeeeeeeeeeeeeeeeeee", it.message.toString())
+        }
 
 
     }
