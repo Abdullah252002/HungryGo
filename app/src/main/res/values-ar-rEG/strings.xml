@@ -32,5 +32,7 @@
     <string name="phone">الهاتف:</string>
 
     <string name="delete_order">حذف الطلب</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="phone_">الهاتف :</string>
 
 </resources>

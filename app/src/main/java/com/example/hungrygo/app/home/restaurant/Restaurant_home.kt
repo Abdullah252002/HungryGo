@@ -84,48 +84,10 @@ class Restaurant_home : AppCompatActivity() {
         }
 
         check_all_drawerLayout()
-
-        /*
-         createNotificationChannel()
-        dataBinding.appBarRestaurantHome.button.setOnClickListener {
-            val notificationContent = "This is the notification content"
-
-            val intent = Intent(this, Restaurant_home::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_IMMUTABLE)
-
-            val builder = NotificationCompat.Builder(this, "channelId")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Notification Title")
-                .setContentText(notificationContent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-
-
-            with(NotificationManagerCompat.from(this)) {
-                notify(123, builder.build()) // Use a unique notification ID here
-            }
-        }
-         */
     }
 
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "My Notification Channel"
-            val descriptionText = "This is a notification channel for my app"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("channelId", name, importance).apply {
-                description = descriptionText
-            }
 
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
 
     private fun check_all_drawerLayout() {
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)

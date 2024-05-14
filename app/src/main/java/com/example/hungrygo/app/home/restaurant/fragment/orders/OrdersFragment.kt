@@ -1,6 +1,12 @@
 package com.example.hungrygo.app.home.restaurant.fragment.orders
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,8 +14,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import com.example.hungrygo.R
+import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.Item_Orders.Companion.Delete_item_Orders
 import com.example.hungrygo.app.model.Item_Orders.Companion.Get_item_Orders_res
@@ -72,11 +81,14 @@ class OrdersFragment : Fragment() {
         })
     }
 
+
+
     private fun check_size(items: List<Item_Orders>) {
         if (items.size==0){
             update_item_Orders(userid!!, false)
         }else{
             update_item_Orders(userid!!, true)
+
         }
     }
 
@@ -86,5 +98,10 @@ class OrdersFragment : Fragment() {
     interface Navigation {
         fun navigateTo()
     }
+
+
+
+
+
 
 }
