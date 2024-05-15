@@ -2,6 +2,7 @@ package com.example.hungrygo.app.home.restaurant
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,11 +10,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
+import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -35,7 +39,9 @@ import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
+import com.example.hungrygo.splash
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
@@ -52,6 +58,7 @@ class Restaurant_home : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
         open_drawerLayout()
 
@@ -84,9 +91,47 @@ class Restaurant_home : AppCompatActivity() {
         }
 
         check_all_drawerLayout()
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                1
+            )
+        }
+
+        // Create an explicit intent for an Activity in your app.
+        val intent = Intent(this, splash::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val builder = NotificationCompat.Builder(this, "CHANNEL_ID")
+            .setSmallIcon(R.drawable.delivery_res)
+            .setContentTitle("My notification")
+            .setContentText("Hello World!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+        notificationManager.notify(12345, builder.build())
+
     }
 
-
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
 
 
     private fun check_all_drawerLayout() {

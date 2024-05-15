@@ -45,7 +45,8 @@ android {
 
 dependencies {
 
-
+    implementation ("com.google.firebase:firebase-messaging-ktx:23.0.0")
+    
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 
     // Add the dependency for the Firebase Authentication library
@@ -57,7 +58,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
-    implementation ("com.google.firebase:firebase-firestore-ktx:24.0.0")
+    implementation ("com.google.firebase:firebase-firestore-ktx:24.1.0")
     implementation("com.google.firebase:firebase-database")
 
 
