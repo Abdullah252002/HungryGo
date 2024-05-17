@@ -1,30 +1,21 @@
 package com.example.hungrygo.app.home.restaurant
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
-import android.widget.RemoteViews
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -36,12 +27,11 @@ import com.example.hungrygo.app.home.restaurant.fragment.orders.add.Add_item_del
 import com.example.hungrygo.app.home.restaurant.fragment.orders.OrdersFragment
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.Item_Orders
+import com.example.hungrygo.service.MyForegroundService
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.RestaurantHomeBinding
-import com.example.hungrygo.splash
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
@@ -59,7 +49,6 @@ class Restaurant_home : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.restaurant_home)
         open_drawerLayout()
 
@@ -94,8 +83,6 @@ class Restaurant_home : AppCompatActivity() {
         check_all_drawerLayout()
 
 
-        createNotificationChannel()
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
         ) {
@@ -106,40 +93,16 @@ class Restaurant_home : AppCompatActivity() {
             )
         }
 
-        // Create an explicit intent for an Activity in your app.
-        val intent = Intent(this, splash::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 1, intent,
-            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val builder = NotificationCompat.Builder(this, "CHANNEL_ID")
-            .setSmallIcon(R.drawable.delivery_res)
-            .setContentTitle("My notification")
-            .setContentText("Hello World!")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-        notificationManager.notify(1, builder.build())
+
+
 
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "getString(R.string.channel_name)"
-            val descriptionText = "getString(R.string.channel_description)"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system.
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
@@ -198,6 +161,8 @@ class Restaurant_home : AppCompatActivity() {
         }
         dataBinding.signout.setOnClickListener {
             Firebase.auth.signOut()
+            val serviceIntent = Intent(this, MyForegroundService::class.java)
+            stopService(serviceIntent)
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()

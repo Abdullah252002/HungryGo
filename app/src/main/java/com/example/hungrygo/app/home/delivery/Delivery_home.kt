@@ -24,6 +24,7 @@ import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
+import com.example.hungrygo.service.MyForegroundService
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -135,6 +136,8 @@ class Delivery_home : AppCompatActivity() {
         }
         dataBinding.signout.setOnClickListener {
             Firebase.auth.signOut()
+            val serviceIntent = Intent(this, MyForegroundService::class.java)
+            stopService(serviceIntent)
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
