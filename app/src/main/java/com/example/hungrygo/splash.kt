@@ -30,9 +30,7 @@ class splash : AppCompatActivity() {
     }
 
     private fun Navigate() {
-
         val database = Firebase.database.reference
-     //   database.child("user").setValue("test")
         database.child("user").get().addOnSuccessListener {
             if(it.value.toString().equals("test")){
 
