@@ -21,6 +21,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("C:\\Users\\hodah\\AndroidStudioProjects\\HungryGo\\apk.jks")
+            storePassword = "123456"
+            keyPassword = "123456"
+            keyAlias = "abdullah"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -28,8 +37,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
