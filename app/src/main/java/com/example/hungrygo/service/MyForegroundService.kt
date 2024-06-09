@@ -118,20 +118,26 @@ class MyForegroundService : Service() {
         val intent = Intent(this, splash::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
-            this, 1, intent, PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.delivery_res)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-        notificationManager.notify(1, builder.build())
+            .setAutoCancel(true) // Ensure auto-cancel is set
+
+        notificationManager.notify(0, builder.build())
     }
+
+
 
     override fun onBind(intent: Intent): IBinder? {
         return null

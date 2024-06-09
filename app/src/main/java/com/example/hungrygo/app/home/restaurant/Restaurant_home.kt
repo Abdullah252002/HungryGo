@@ -82,16 +82,7 @@ class Restaurant_home : AppCompatActivity() {
 
         check_all_drawerLayout()
 
-
-
-
-
-
     }
-
-
-
-
 
 
     private fun check_all_drawerLayout() {
