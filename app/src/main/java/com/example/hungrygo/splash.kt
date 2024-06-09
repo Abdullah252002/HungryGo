@@ -1,11 +1,16 @@
 package com.example.hungrygo
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.hungrygo.app.home.delivery.Delivery_home
 import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.login.Login
@@ -23,11 +28,13 @@ class splash : AppCompatActivity() {
         setContentView(R.layout.splash)
         Handler(Looper.getMainLooper()).postDelayed({ Navigate() }, 2000)
 
+
+
     }
 
 
     private fun Navigate() {
-        val serviceIntent = Intent(this, MyForegroundService::class.java)
+
         val database = Firebase.database.reference
         database.child("user").get().addOnSuccessListener {
             if(it.value.toString().equals("test")){
@@ -36,9 +43,7 @@ class splash : AppCompatActivity() {
                     val intent = Intent(this, Login::class.java)
                     startActivity(intent)
                     finish()
-                    stopService(serviceIntent)
                 } else {
-                    startService(serviceIntent)
                     login_delivery_tofirestore(firebaseUser.uid,
                         OnSuccessListener {
                             val user = it.toObject(appUser_delivery::class.java)

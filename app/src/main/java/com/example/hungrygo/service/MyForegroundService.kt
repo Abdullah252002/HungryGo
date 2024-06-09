@@ -48,11 +48,13 @@ class MyForegroundService : Service() {
                 }
                 for (i in newlist) {
                     Get_item_Orders_res(i.id!!, EventListener { value, error ->
+                        val items = value?.toObjects(Item_Orders::class.java)
                         for (dc in value!!.documentChanges) {
                             when (dc.type) {
                                 DocumentChange.Type.ADDED ->{
                                     if (DataUtils.appuser_Delivery?.id == userid && value != null && !isAppInForeground() && userid != null) {
-                                        sendNotification("Data Changed", "The data has been updated.")
+                                        sendNotification(getString(R.string.new_order), dc.document.data.get("location").toString())
+
                                     }
                                 }
                                 DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified city: ${dc.document.data}")
@@ -87,8 +89,8 @@ class MyForegroundService : Service() {
     private fun startForegroundService() {
         val channelId = "firestore_service_channel"
         val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("Firestore Service")
-            .setContentText("Listening for data changes...")
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.notifications_enabled))
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT) // تأكد من تحديد الأولوية
             .build()

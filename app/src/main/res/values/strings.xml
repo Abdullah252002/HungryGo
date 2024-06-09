@@ -28,6 +28,8 @@
     <string name="delete_order">delete order</string>
     <string name="phone_number">phone number</string>
     <string name="phone_">phone :</string>
+    <string name="notifications_enabled">Notifications enabled.</string>
+    <string name="new_order">New Order</string>
 
 
 </resources>

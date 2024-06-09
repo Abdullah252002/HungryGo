@@ -1,7 +1,9 @@
 package com.example.hungrygo.app.home.delivery
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -197,9 +199,44 @@ class Delivery_home : AppCompatActivity() {
         })
     }
 
+    fun check_notification() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                1
+            )
+        }else{
+            val serviceIntent = Intent(this, MyForegroundService::class.java)
+            startService(serviceIntent)
+        }
+
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
+                val serviceIntent = Intent(this, MyForegroundService::class.java)
+                startService(serviceIntent)
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+
     override fun onStart() {
         super.onStart()
+        check_notification()
         updateLocation()
+
     }
 
     override fun onStop() {

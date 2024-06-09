@@ -34,5 +34,8 @@
     <string name="delete_order">حذف الطلب</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="phone_">الهاتف :</string>
+    <string name="notifications_enabled">تم تفعيل الإشعارات.</string>
+    <string name="new_order">طلب جديد</string>
+
 
 </resources>
