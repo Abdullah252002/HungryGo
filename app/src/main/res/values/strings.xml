@@ -30,6 +30,7 @@
     <string name="phone_">phone :</string>
     <string name="notifications_enabled">Notifications enabled.</string>
     <string name="new_order">New Order</string>
+    <string name="customer_evaluation">Customer Evaluation</string>
 
 
 </resources>

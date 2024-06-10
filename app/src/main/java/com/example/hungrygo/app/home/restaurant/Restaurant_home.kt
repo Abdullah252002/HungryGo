@@ -1,26 +1,21 @@
 package com.example.hungrygo.app.home.restaurant
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
+import com.example.hungrygo.app.home.restaurant.app_bar.Customer_Evaluation
+import com.example.hungrygo.app.home.restaurant.app_bar.Profile_Restaurant
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.DeliveryFragment
 import com.example.hungrygo.app.home.restaurant.fragment.delivery.profile.Profile_deliveryFragment
 import com.example.hungrygo.app.home.restaurant.fragment.orders.add.Add_item_delFragment
@@ -134,6 +129,9 @@ class Restaurant_home : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
+        }
+        dataBinding.rating.setOnClickListener {
+            startActivity(Intent(this, Customer_Evaluation::class.java))
         }
     }
 

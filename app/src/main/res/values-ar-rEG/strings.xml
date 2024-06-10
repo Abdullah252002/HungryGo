@@ -36,6 +36,6 @@
     <string name="phone_">الهاتف :</string>
     <string name="notifications_enabled">تم تفعيل الإشعارات.</string>
     <string name="new_order">طلب جديد</string>
-
+    <string name="customer_evaluation">تقييم العميل</string>
 
 </resources>

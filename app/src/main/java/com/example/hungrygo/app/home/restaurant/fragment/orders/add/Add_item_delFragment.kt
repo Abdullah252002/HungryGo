@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Orders
 import com.example.hungrygo.app.model.Item_Orders.Companion.Add_item_Orders
+import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.FragmentAddItemDelBinding
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -20,6 +22,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
+import kotlin.math.truncate
 
 class Add_item_delFragment : BottomSheetDialogFragment() {
     lateinit var dataBinding: FragmentAddItemDelBinding
@@ -69,7 +72,7 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
                     number = number
                 )
                 Add_item_Orders(userid!!, itemOrders, OnSuccessListener {}, OnFailureListener {})
-                add_suggestion(location, number)
+                add_suggestion(itemOrders)
                 dataBinding.location.text = null
                 dataBinding.number.text = null
                 dismiss()
@@ -79,13 +82,32 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
 
     }
 
-    fun add_suggestion(location: String, number: String) {
+    fun add_suggestion(itemOrders: Item_Orders) {
         Firebase.firestore.collection("Location").document("Al-Shorouk-City").update(
-            "number", FieldValue.arrayUnion(number)
+            "number", FieldValue.arrayUnion(itemOrders.number)
         )
         Firebase.firestore.collection("Location").document("Al-Shorouk-City").update(
-            "location", FieldValue.arrayUnion(location)
+            "location", FieldValue.arrayUnion(itemOrders.location)
         )
+
+        Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+            .document(userid!!).get().addOnSuccessListener {
+                var check= true
+                val hashMap = it.get("rate_customer") as? HashMap<String, Double> ?: hashMapOf()
+                val keys=hashMap.keys.toList()
+                for (i in keys){
+                    if (i==itemOrders.number.toString()){
+                        check=false
+                    }
+                }
+                if (check){
+                    hashMap[itemOrders.number.toString()] = 0.0
+                    Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
+                        .document(userid).update("rate_customer", hashMap)
+                }
+
+            }
+
     }
 
     fun checkerror(): Boolean {

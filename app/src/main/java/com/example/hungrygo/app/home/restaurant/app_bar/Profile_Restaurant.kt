@@ -1,4 +1,4 @@
-package com.example.hungrygo.app.home.restaurant
+package com.example.hungrygo.app.home.restaurant.app_bar
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +20,9 @@ class Profile_Restaurant : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = DataBindingUtil.setContentView(this, R.layout.profile_restaurant)
+        dataBinding.back.setOnClickListener {
+            onBackPressed()
+        }
         dataBinding.restaurantName.text = data_profile?.restaurant_name
         dataBinding.phoneNumber.text = data_profile?.restaurant_mobile_number
         dataBinding.email.text = data_profile?.email
@@ -42,7 +45,6 @@ class Profile_Restaurant : AppCompatActivity() {
 
 
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -68,7 +70,6 @@ class Profile_Restaurant : AppCompatActivity() {
 
         }
     }
-
 
 }
 

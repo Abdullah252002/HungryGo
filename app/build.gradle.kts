@@ -56,6 +56,7 @@ android {
 
 dependencies {
 
+    implementation ("me.zhanghai.android.materialratingbar:library:1.4.0")
     implementation ("com.google.firebase:firebase-messaging-ktx:23.0.0")
     
     implementation(platform("com.google.firebase:firebase-bom:33.0.0"))

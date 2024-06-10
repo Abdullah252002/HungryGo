@@ -37,9 +37,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:adjustViewBounds="true"
+                    android:background="@color/Secondcolor"
                     android:scaleType="centerInside"
-                    android:src="@drawable/cooking"
-                    android:background="@color/Secondcolor" />
+                    android:src="@drawable/cooking" />
 
                 <TextView
                     android:id="@+id/profile"
@@ -67,6 +67,18 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/rating"
+                    android:drawablePadding="10dp"
+                    android:padding="10dp"
+                    android:text="@string/customer_evaluation"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/signout"

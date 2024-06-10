@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
@@ -21,22 +21,20 @@
         android:theme="@style/Theme.HungryGo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".app.home.restaurant.app_bar.Customer_Evaluation"
+            android:exported="false" />
 
         <service
             android:name=".service.MyForegroundService"
             android:enabled="true"
             android:exported="false" />
 
-
-
-
         <activity
             android:name=".need_Update"
             android:exported="false" />
         <activity
-            android:name=".app.home.restaurant.Profile_Restaurant"
+            android:name=".app.home.restaurant.app_bar.Profile_Restaurant"
             android:exported="false" />
 
         <meta-data
@@ -79,7 +77,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
