@@ -18,7 +18,7 @@ data class appUser_restaurant(
     val longitude:Double?=null,
     val image:String?=null,
     val order:Boolean?=false,
-    val rate_customer:HashMap<String,Double>?=null,
+    val rate_customer:HashMap<String,String>?=null,
 ){
     companion object{
         const val Collection_name_restaurant="Restaurant Users"

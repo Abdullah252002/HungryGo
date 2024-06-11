@@ -93,7 +93,7 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
             .document(userid!!).get().addOnSuccessListener {
                 var check= true
-                val hashMap = it.get("rate_customer") as? HashMap<String, Double> ?: hashMapOf()
+                val hashMap = it.get("rate_customer") as? HashMap<String, String> ?: hashMapOf()
                 val keys=hashMap.keys.toList()
                 for (i in keys){
                     if (i==itemOrders.number.toString()){
@@ -101,7 +101,7 @@ class Add_item_delFragment : BottomSheetDialogFragment() {
                     }
                 }
                 if (check){
-                    hashMap[itemOrders.number.toString()] = 0.0
+                    hashMap[itemOrders.number.toString()] = "0"
                     Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
                         .document(userid).update("rate_customer", hashMap)
                 }
