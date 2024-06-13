@@ -137,9 +137,8 @@ class Delivery_home : AppCompatActivity() {
             recreate()
         }
         dataBinding.signout.setOnClickListener {
+            stopService(Intent(this, MyForegroundService::class.java))
             Firebase.auth.signOut()
-            val serviceIntent = Intent(this, MyForegroundService::class.java)
-            stopService(serviceIntent)
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
@@ -168,6 +167,8 @@ class Delivery_home : AppCompatActivity() {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 100
             )
+        }else{
+            check_notification()
         }
 
         val location = fusedLocationProviderClient.lastLocation
@@ -234,7 +235,7 @@ class Delivery_home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        check_notification()
+     //   check_notification()
         updateLocation()
 
     }

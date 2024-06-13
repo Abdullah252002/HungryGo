@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hungrygo.R
 import com.example.hungrygo.app.model.Item_Orders
@@ -37,12 +36,15 @@ class DeliveryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerView)
         getdata()
+        hideProgressBar(view)
         recyclerView.adapter = adapterDelivery
         adapterDelivery.clickListener = object : Adapter_delivery.ClickOnItemListener {
             override fun onItemClick(itemorders: Item_Orders) {
+                showProgressBar(view)
                 Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
                     .document(itemorders.delivery_id!!).get().addOnSuccessListener {
-                        navigateToDelivery?.navigate(it.toObject(appUser_delivery::class.java)!!,itemorders)
+                        hideProgressBar(view)
+                        navigateToDelivery?.navigate(it.toObject(appUser_delivery::class.java)!!, itemorders)
                     }
 
             }
@@ -73,10 +75,24 @@ class DeliveryFragment : Fragment() {
     var navigateToDelivery: NavigateToDelivery? = null
 
     interface NavigateToDelivery {
-        fun navigate(appUser_delivery: appUser_delivery,itemOrders: Item_Orders)
+        fun navigate(appUser_delivery: appUser_delivery, itemOrders: Item_Orders)
 
     }
 
+    fun showProgressBar(view: View) {
+        val progressOverlay = view.findViewById<View>(R.id.progress_overlay)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+        progressOverlay.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
+    }
+
+
+    fun hideProgressBar(view: View) {
+        val progressOverlay = view.findViewById<View>(R.id.progress_overlay)
+        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+        progressOverlay.visibility = View.GONE
+        progressBar.visibility = View.GONE
+    }
 
 
 }

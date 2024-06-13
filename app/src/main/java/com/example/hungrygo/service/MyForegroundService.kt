@@ -1,5 +1,6 @@
 package com.example.hungrygo.service
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,10 +9,10 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.hungrygo.DataUtils
 import com.example.hungrygo.R
@@ -48,20 +49,30 @@ class MyForegroundService : Service() {
                 }
                 for (i in newlist) {
                     Get_item_Orders_res(i.id!!, EventListener { value, error ->
-                        val items = value?.toObjects(Item_Orders::class.java)
-                        for (dc in value!!.documentChanges) {
-                            when (dc.type) {
-                                DocumentChange.Type.ADDED ->{
-                                    if (DataUtils.appuser_Delivery?.id == userid && value != null && !isAppInForeground() && userid != null) {
-                                        sendNotification(getString(R.string.new_order), dc.document.data.get("location").toString())
+                        if (error != null) {
+                            Log.e(ContentValues.TAG, "Error fetching item orders.", error)
+                            return@EventListener
+                        }
 
+                        if (value != null) {
+                            val items = value.toObjects(Item_Orders::class.java)
+                            for (dc in value.documentChanges) {
+                                when (dc.type) {
+                                    DocumentChange.Type.ADDED -> {
+                                        val userId = Firebase.auth.currentUser?.uid
+                                        if (DataUtils.appuser_Delivery?.id == userId && !isAppInForeground() && userId != null) {
+                                            sendNotification(getString(R.string.new_order), dc.document.data["location"].toString())
+                                        }
                                     }
+                                    DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified order: ${dc.document.data}")
+                                    DocumentChange.Type.REMOVED -> Log.d(TAG, "Removed order: ${dc.document.data}")
                                 }
-                                DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified city: ${dc.document.data}")
-                                DocumentChange.Type.REMOVED -> Log.d(TAG, "Removed city: ${dc.document.data}")
                             }
+                        } else {
+                            Log.d(ContentValues.TAG, "Current data: null")
                         }
                     })
+
                 }
 
             } else {
@@ -72,7 +83,6 @@ class MyForegroundService : Service() {
 
 
     }
-
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -86,17 +96,24 @@ class MyForegroundService : Service() {
         }
     }
 
+    @SuppressLint("ForegroundServiceType")
     private fun startForegroundService() {
         val channelId = "firestore_service_channel"
         val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.notifications_enabled))
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT) // تأكد من تحديد الأولوية
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        startForeground(1, notification)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val serviceType = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION // Adjust type as needed
+            startForeground(1, notification, serviceType)
+        } else {
+            startForeground(1, notification)
+        }
     }
+
 
     private fun isAppInForeground(): Boolean {
         val app = applicationContext as language_app

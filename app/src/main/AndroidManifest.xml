@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+
+
     <application
         android:name=".service.language_app"
         android:allowBackup="true"
@@ -27,8 +30,10 @@
 
         <service
             android:name=".service.MyForegroundService"
+            android:foregroundServiceType="location"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="ForegroundServicePermission" />
 
         <activity
             android:name=".need_Update"
