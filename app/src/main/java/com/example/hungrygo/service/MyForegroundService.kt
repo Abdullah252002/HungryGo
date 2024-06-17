@@ -34,7 +34,6 @@ class MyForegroundService : Service() {
         startForegroundService()
         Log.d("dd", "Service created")
 
-        val userid = Firebase.auth.currentUser?.uid
         getusers_res(EventListener { value, error ->
             if (error != null) {
                 Log.e(ContentValues.TAG, "Listen failed.", error)
@@ -55,7 +54,6 @@ class MyForegroundService : Service() {
                         }
 
                         if (value != null) {
-                            val items = value.toObjects(Item_Orders::class.java)
                             for (dc in value.documentChanges) {
                                 when (dc.type) {
                                     DocumentChange.Type.ADDED -> {
