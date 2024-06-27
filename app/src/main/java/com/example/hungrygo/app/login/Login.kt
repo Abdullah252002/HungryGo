@@ -22,7 +22,6 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
         dataBinding.vm = viewModel
         viewModel.navigator = this
 
-
         dataBinding.en.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
@@ -34,7 +33,6 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
             }
             recreate()
         }
-
 
     }
 
@@ -64,6 +62,12 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
     }
 
     override fun navigate_restaurant_home() {
+        val intent = Intent(this, Restaurant_home::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun navigate_manger_home() {
         val intent = Intent(this, Restaurant_home::class.java)
         startActivity(intent)
         finish()

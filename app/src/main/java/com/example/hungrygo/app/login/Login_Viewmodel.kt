@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import com.example.chat.Basic.Basic_Viewmodel
 import com.example.hungrygo.DataUtils
+import com.example.hungrygo.app.model.AppUser_manger
 import com.example.hungrygo.app.model.appUser_customer
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
@@ -44,8 +45,6 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
                 messageLiveData.value = "Successful Login"
                 getdata(it.result.user?.uid)
 
-
-
             } else {
                 showDialog.value = false
                 Log.e("firebase", it.exception?.localizedMessage!!)
@@ -62,20 +61,27 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
     private fun getdata(uid: String?) {
         login_delivery_tofirestore(uid!!,
             OnSuccessListener {
-              val user=it.toObject(appUser_delivery::class.java)
-              if(user!=null){
-                  DataUtils.appuser_Delivery=user
-                  navigator?.navigate_delivery_home()
-              }
+                val user = it.toObject(appUser_delivery::class.java)
+                if (user != null) {
+                    DataUtils.appuser_Delivery = user
+                    navigator?.navigate_delivery_home()
+                }
             })
         login_resturant_tofirestore(uid,
             OnSuccessListener {
-                val user=it.toObject(appUser_restaurant::class.java)
-                if(user!=null){
-                    DataUtils.appuser_Restaurant=user
+                val user = it.toObject(appUser_restaurant::class.java)
+                if (user != null) {
+                    DataUtils.appuser_Restaurant = user
                     navigator?.navigate_restaurant_home()
                 }
             })
+        AppUser_manger.login_manger_tofirestore(uid, OnSuccessListener {
+            val user = it.toObject(AppUser_manger::class.java)
+            if (user != null) {
+                DataUtils.appuser_manager = user
+                navigator?.navigate_manger_home()
+            }
+        })
 
     }
 
@@ -94,7 +100,8 @@ class Login_Viewmodel : Basic_Viewmodel<Navigator>() {
         }
         return valid
     }
-    fun handler(error:ObservableField<String>){
-        Handler(Looper.getMainLooper()).postDelayed({error.set(null)},3000)
+
+    fun handler(error: ObservableField<String>) {
+        Handler(Looper.getMainLooper()).postDelayed({ error.set(null) }, 3000)
     }
 }

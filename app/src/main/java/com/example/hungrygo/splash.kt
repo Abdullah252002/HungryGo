@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.example.hungrygo.app.home.delivery.Delivery_home
 import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.login.Login
+import com.example.hungrygo.app.model.AppUser_manger
 import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.service.MyForegroundService
@@ -60,6 +61,13 @@ class splash : AppCompatActivity() {
                                 start_restaurant_home()
                             }
                         })
+                    AppUser_manger.login_manger_tofirestore(firebaseUser.uid, OnSuccessListener {
+                        val user = it.toObject(AppUser_manger::class.java)
+                        if (user != null) {
+                            DataUtils.appuser_manager = user
+                            start_manger_home()
+                        }
+                    })
                 }
 
             }else{
@@ -82,6 +90,11 @@ class splash : AppCompatActivity() {
     }
 
     fun start_restaurant_home() {
+        val intent = Intent(this, Restaurant_home::class.java)
+        startActivity(intent)
+        finish()
+    }
+    fun start_manger_home() {
         val intent = Intent(this, Restaurant_home::class.java)
         startActivity(intent)
         finish()
