@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -8,9 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:name=".service.language_app"
@@ -23,16 +21,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HungryGo"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".app.home.delivery.Profile_Delivery"
+            android:exported="false" />
+        <activity
+            android:name=".app.home.manger.Manger_home"
+            android:exported="false"
+            android:label="@string/title_activity_manger_home"
+            android:theme="@style/Theme.HungryGo.NoActionBar" />
         <activity
             android:name=".app.home.restaurant.app_bar.Customer_Evaluation"
             android:exported="false" />
 
         <service
             android:name=".service.MyForegroundService"
-            android:foregroundServiceType="location"
             android:enabled="true"
             android:exported="false"
+            android:foregroundServiceType="location"
             tools:ignore="ForegroundServicePermission" />
 
         <activity
@@ -75,7 +81,7 @@
             android:exported="false" />
         <activity
             android:name=".splash"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

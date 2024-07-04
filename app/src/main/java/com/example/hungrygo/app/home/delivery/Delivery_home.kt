@@ -1,7 +1,6 @@
 package com.example.hungrygo.app.home.delivery
 
 import android.Manifest
-import android.app.NotificationManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -20,6 +19,7 @@ import com.example.hungrygo.R
 import com.example.hungrygo.app.home.delivery.fragment.orders.Orders_delFragment
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.Restaurant_delFragment
 import com.example.hungrygo.app.home.delivery.fragment.restaurant.orders.get_OrdersFragment
+import com.example.hungrygo.app.home.delivery.Profile_Delivery
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.map.set_Location
 import com.example.hungrygo.app.model.Item_Orders
@@ -27,6 +27,7 @@ import com.example.hungrygo.app.model.appUser_delivery
 import com.example.hungrygo.app.model.appUser_restaurant
 import com.example.hungrygo.databinding.DeliveryHomeBinding
 import com.example.hungrygo.service.MyForegroundService
+import com.example.hungrygo.service.language_app
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -121,11 +122,17 @@ class Delivery_home : AppCompatActivity() {
         })
     }
 
+    var onstop=true
     fun open_signout() {
+        dataBinding.profile.setOnClickListener {
+            onstop=false
+            startActivity(Intent(this, Profile_Delivery::class.java))
+        }
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
             dataBinding.drawerLayout.open()
         }
         dataBinding.language.setOnClickListener {
+            onstop=false
             val intent = Intent(this, Delivery_home::class.java)
             startActivity(intent)
             finish()
@@ -139,6 +146,9 @@ class Delivery_home : AppCompatActivity() {
         dataBinding.signout.setOnClickListener {
             stopService(Intent(this, MyForegroundService::class.java))
             Firebase.auth.signOut()
+            val hash= hashMapOf("status" to "offline")
+            Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
+                .document(currentuser!!).update(hash as Map<String, Any>)
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
@@ -167,7 +177,7 @@ class Delivery_home : AppCompatActivity() {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 100
             )
-        }else{
+        } else {
             check_notification()
         }
 
@@ -209,12 +219,13 @@ class Delivery_home : AppCompatActivity() {
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                 1
             )
-        }else{
+        } else {
             val serviceIntent = Intent(this, MyForegroundService::class.java)
             startService(serviceIntent)
         }
 
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
@@ -235,13 +246,22 @@ class Delivery_home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-     //   check_notification()
+        onstop=true
+        val hash= hashMapOf("status" to "online")
+        Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
+            .document(currentuser!!).update(hash as Map<String, Any>)
         updateLocation()
 
     }
 
     override fun onStop() {
         super.onStop()
+        if(onstop){
+            val hash= hashMapOf("status" to "offline")
+            Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
+                .document(currentuser!!).update(hash as Map<String, Any>)
+        }
+
         handler.removeCallbacksAndMessages(null)
     }
 
@@ -259,6 +279,7 @@ class Delivery_home : AppCompatActivity() {
         super.onResume()
         isArabic = Lingver.getInstance().getLanguage() == "ar"
     }
+
 
 
 }

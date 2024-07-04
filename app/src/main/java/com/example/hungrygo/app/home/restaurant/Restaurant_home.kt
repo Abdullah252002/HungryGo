@@ -39,7 +39,6 @@ class Restaurant_home : AppCompatActivity() {
     var ordersFragment = OrdersFragment()
     val addItemDelfragment = Add_item_delFragment()
     val deliveryFragment = DeliveryFragment()
-    val userid = Firebase.auth.currentUser?.uid
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +81,7 @@ class Restaurant_home : AppCompatActivity() {
 
     private fun check_all_drawerLayout() {
         Firebase.firestore.collection(appUser_restaurant.Collection_name_restaurant)
-            .document(userid!!).collection("Delivery")
+            .document(user?.id!!).collection("Delivery")
             .orderBy("createdTimestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
 

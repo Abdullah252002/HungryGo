@@ -82,6 +82,7 @@ class MyForegroundService : Service() {
 
     }
 
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "firestore_service_channel"

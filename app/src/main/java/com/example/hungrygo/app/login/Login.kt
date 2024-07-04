@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.chat.Basic.Basic_Activity
 import com.example.hungrygo.R
 import com.example.hungrygo.app.home.delivery.Delivery_home
+import com.example.hungrygo.app.home.manger.Manger_home
 import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.signup.Account_Type
 import com.example.hungrygo.databinding.LogInBinding
@@ -68,7 +69,7 @@ class Login : Basic_Activity<LogInBinding, Login_Viewmodel>(), Navigator {
     }
 
     override fun navigate_manger_home() {
-        val intent = Intent(this, Restaurant_home::class.java)
+        val intent = Intent(this, Manger_home::class.java)
         startActivity(intent)
         finish()
     }

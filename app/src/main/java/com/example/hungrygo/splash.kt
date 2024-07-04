@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.hungrygo.app.home.delivery.Delivery_home
+import com.example.hungrygo.app.home.manger.Manger_home
 import com.example.hungrygo.app.home.restaurant.Restaurant_home
 import com.example.hungrygo.app.login.Login
 import com.example.hungrygo.app.model.AppUser_manger
@@ -95,7 +96,7 @@ class splash : AppCompatActivity() {
         finish()
     }
     fun start_manger_home() {
-        val intent = Intent(this, Restaurant_home::class.java)
+        val intent = Intent(this, Manger_home::class.java)
         startActivity(intent)
         finish()
     }
