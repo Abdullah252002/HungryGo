@@ -33,10 +33,16 @@
 
     <string name="delete_order">حذف الطلب</string>
     <string name="phone_number">رقم الهاتف</string>
-    <string name="phone_">الهاتف :</string>
+    <string name="phone_">الهاتف </string>
     <string name="notifications_enabled">تم تفعيل الإشعارات.</string>
     <string name="new_order">طلب جديد</string>
     <string name="customer_evaluation">تقييم العميل</string>
     <string name="freelance">مستقل</string>
+    <string name="name">الاسم</string>
+    <string name="shift">فترة عمل</string>
+    <string name="control">التحكم</string>
+    <string name="open_shift">فتح الوردية</string>
+    <string name="close_shift">إغلاق الوردية</string>
+
 
 </resources>

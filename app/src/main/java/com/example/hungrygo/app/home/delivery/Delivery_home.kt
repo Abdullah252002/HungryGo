@@ -122,17 +122,16 @@ class Delivery_home : AppCompatActivity() {
         })
     }
 
-    var onstop=true
     fun open_signout() {
         dataBinding.profile.setOnClickListener {
-            onstop=false
+
             startActivity(Intent(this, Profile_Delivery::class.java))
         }
         dataBinding.appBarRestaurantHome.menu.setOnClickListener {
             dataBinding.drawerLayout.open()
         }
         dataBinding.language.setOnClickListener {
-            onstop=false
+
             val intent = Intent(this, Delivery_home::class.java)
             startActivity(intent)
             finish()
@@ -246,22 +245,11 @@ class Delivery_home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        onstop=true
-        val hash= hashMapOf("status" to "online")
-        Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
-            .document(currentuser!!).update(hash as Map<String, Any>)
         updateLocation()
-
     }
 
     override fun onStop() {
         super.onStop()
-        if(onstop){
-            val hash= hashMapOf("status" to "offline")
-            Firebase.firestore.collection(appUser_delivery.Collection_name_delivery)
-                .document(currentuser!!).update(hash as Map<String, Any>)
-        }
-
         handler.removeCallbacksAndMessages(null)
     }
 

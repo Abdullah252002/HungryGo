@@ -15,8 +15,9 @@ data class appUser_delivery(
     var latitude: Double? = null,
     var longitude: Double? = null,
     val image: String? = null,
-    val status: String? = null,
-    val job: String? = "freelance"
+    val status: String? = "offline",
+    val job: String? = "freelance",
+    val control:Boolean?=false
 ) {
     companion object {
         const val Collection_name_delivery = "Delivery Users"

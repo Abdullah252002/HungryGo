@@ -28,7 +28,7 @@ class Manger_home : AppCompatActivity() {
         dataBinding.appBarMangerHome.recyclerView.adapter=adapterManger
         adapterManger.onClickListner=object :Adapter_manger.OnClickListner{
             override fun onItemClick(position: Int, item: appUser_delivery) {
-                val dialogfragmentProfile=DialogFragment_profile(item)
+                val dialogfragmentProfile=DialogFragment_profile(this@Manger_home,item)
                 dialogfragmentProfile.show(supportFragmentManager,"")
             }
 

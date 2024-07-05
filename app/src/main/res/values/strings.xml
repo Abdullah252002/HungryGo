@@ -27,12 +27,17 @@
     <string name="phone">phone :</string>
     <string name="delete_order">delete order</string>
     <string name="phone_number">phone number</string>
-    <string name="phone_">phone :</string>
+    <string name="phone_">phone </string>
     <string name="notifications_enabled">Notifications enabled.</string>
     <string name="new_order">New Order</string>
     <string name="customer_evaluation">Customer Evaluation</string>
     <string name="title_activity_manger_home">Manger_home</string>
     <string name="freelance">Freelance</string>
+    <string name="name">Name</string>
+    <string name="shift">Shift</string>
+    <string name="control">control</string>
+    <string name="open_shift">open shift</string>
+    <string name="close_shift">close shift</string>
 
 
 </resources>
